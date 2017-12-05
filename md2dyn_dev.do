@@ -1,35 +1,26 @@
-*! version 1.2
-*! Doug Hemken
-*! 5 December 2017
+cd "z:/public_web/stataworkshops/md2dyn"
+clear
+*preserve
 
-// ISSUES
-// ======
-// replace option (for output file)
-// better preamble ?
-// more flexible code fence (Commonmark compatible)
-// dyndoc options in code info tag
-// NOGraph option
-// wrapper with dyndoc
+local linelength = 256
+local using = "example-codeopts.stmd"
+local saving = "example-codeopts.smd"
 
-// capture program drop md2dyn
-program define md2dyn, rclass
-	syntax using/, [LINElength(integer 256)] [SAVing(string)]
-	preserve
-	if ("`saving'" == "" ) {
-		di "  {text:No output file specified.}"
-		_replaceext using "`using'", new("smd")
-		local saving "`r(newfile)'"
-		}
-	clear
-	
 * Read in file
 	quietly infix str doc_line 1-`linelength' using "`using'"
 	quietly compress doc_line
 	
 * Then identify code blocks
 	generate linenum = _n
-	generate codebegin = inlist(usubstr(doc_line, 1, 7), ///
-			"```s", "```s/", "```{s}", "```{s/}")
+	*generate codebegin = inlist(usubstr(doc_line, 1, 7), ///
+	*		"```s", "```s/", "```{s}", "```{s/}")
+	generate codebegin = ustrregexm(doc_line, "^```\{?s(tata)?\/?")
+	generate codeopts = ustrregexm(doc_line, ",") if codebegin
+	generate noecho = ustrregexm(doc_line, "echo=FALSE") if codebegin & codeopts
+	replace noecho = ustrregexm(doc_line, "\/") if codebegin & codeopts
+	generate noresults = ustrregexm(doc_line, "results=FALSE") if codebegin & codeopts
+	generate noprompt = ustrregexm(doc_line, "noprompt=TRUE") if codebegin & codeopts
+	
 	generate codefence = usubstr(doc_line, 1, 3) == "```" if ~codebegin
 	levelsof linenum if codebegin, local(cb)
 	foreach block of local cb {
@@ -92,35 +83,3 @@ program define md2dyn, rclass
 
 * Finish up
 	restore
-	return local outfile "`saving'"
-end
-
-program define _replaceext, rclass
-	syntax using/, new(string)
-	
-	_fileext using "`using'"
-	if "`r(extension)'" ~= "" {
-		local newfile: subinstr local using "`r(extension)'" "`new'"
-		}
-		else {
-		local newfile "`using'.`new'"
-		}
-	
-	return local newfile "`newfile'"
-
-end
-
-program define _fileext, rclass
-	syntax using/
-	local check: subinstr local using "." "", all
-	local dots = length("`using'") - length("`check'")
-	if `dots' {
-		local undot: subinstr local using "." " ", all
-		local wc : word count `undot'
-		local extension: word `wc' of `undot'
-	} 
-	else {
-		local extension
-		}
-	return local extension "`extension'"
-end
