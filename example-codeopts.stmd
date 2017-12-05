@@ -1,0 +1,36 @@
+Code Block Options File
+===============
+
+Some preliminary text.
+
+A code block, no options:
+```{s}
+sysuse auto
+summarize weight
+```
+
+In-line text: `s c(current_date)`
+
+A graph (`nocommands`):
+```{s, echo=FALSE}
+histogram weight
+```
+
+More text.
+Generate a new variable (`quietly`).
+```{s, echo=FALSE, results=FALSE}
+generate gpm = 1/mpg
+```
+
+Yet more text (`nooutput`).
+```{stata, results=FALSE}
+summarize gpm
+```
+
+
+Another graph (`noprompt`):
+```{s, noprompt=TRUE}
+scatter price weight
+```
+
+

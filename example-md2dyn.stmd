@@ -14,7 +14,12 @@ In-line text: `s c(current_date)`
 A graph:
 ```{s}
 histogram weight
-*graph export hist_ms.svg, replace
 ```
 
-! [Weight](hist_ms.svg)
+More text.
+Another graph:
+```{s}
+scatter price weight
+```
+
+

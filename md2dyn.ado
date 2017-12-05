@@ -1,13 +1,12 @@
-*! version 1.2
+*! version 1.3
 *! Doug Hemken
 *! 5 December 2017
 
 // ISSUES
 // ======
-// replace option (for output file)
-// better preamble ?
+// replace option (for output file), eliminate "using"
+// better, more extensive preamble ?
 // more flexible code fence (Commonmark compatible)
-// dyndoc options in code info tag
 // NOGraph option
 // wrapper with dyndoc
 
@@ -28,8 +27,15 @@ program define md2dyn, rclass
 	
 * Then identify code blocks
 	generate linenum = _n
-	generate codebegin = inlist(usubstr(doc_line, 1, 7), ///
-			"```s", "```s/", "```{s}", "```{s/}")
+	*generate codebegin = inlist(usubstr(doc_line, 1, 7), ///
+	*		"```s", "```s/", "```{s}", "```{s/}")
+	generate codebegin = ustrregexm(doc_line, "^```\{?s(tata)?\/?")
+	generate codeopts = ustrregexm(doc_line, ",") if codebegin
+	generate noecho = ustrregexm(doc_line, "echo=FALSE") if codebegin & codeopts
+	replace noecho = 1 if ustrregexm(doc_line, "\/") & codebegin & codeopts
+	generate noresults = ustrregexm(doc_line, "results=FALSE") if codebegin & codeopts
+	generate noprompt = ustrregexm(doc_line, "noprompt=TRUE") if codebegin & codeopts
+	
 	generate codefence = usubstr(doc_line, 1, 3) == "```" if ~codebegin
 	levelsof linenum if codebegin, local(cb)
 	foreach block of local cb {
@@ -43,7 +49,11 @@ program define md2dyn, rclass
 	expand 2 if codebegin ~= 0, generate(dup)
 	sort linenum dup
 	replace doc_line = "```" if codebegin==1 & dup==0
-	replace doc_line = "<<dd_do>>" if codebegin==1 & dup==1
+	replace doc_line = "<<dd_do>>" if codebegin==1 & dup==1 & codeopts==0
+	replace doc_line = "<<dd_do: nocommands>>" if codebegin==1 & dup==1 & noecho==1
+	replace doc_line = "<<dd_do: nooutput>>" if codebegin==1 & dup==1 & noresults==1
+	replace doc_line = "<<dd_do: noprompt>>" if codebegin==1 & dup==1 & noprompt==1
+	replace doc_line = "<<dd_do: quietly>>" if codebegin==1 & dup==1 & noecho==1 & noresults==1
 	replace doc_line = "<</dd_do>>" if codebegin==-1 & dup==0
 	
 	drop dup
@@ -63,19 +73,20 @@ program define md2dyn, rclass
 	replace linenum = _n
 
 * Add new graphics links
-	expand 10 if codefence==1 & doc_line=="```", generate(dupgr)
+	expand 11 if codefence==1 & doc_line=="```", generate(dupgr)
 	sort linenum dupgr
 	by linenum dupgr: generate graphcheck = _n
 //	replace doc_line = "INSERT CODE" if codebegin==-1 & dupgr==1 & graphcheck==1
 	replace doc_line = `"<<dd_do: quietly>>"' if  codebegin==-1 & dupgr==1 & graphcheck==1
 	replace doc_line = `"capture graph describe Graph"' if graphcheck==2
-	replace doc_line = `"<</dd_do>>"' if graphcheck==3
-	replace doc_line = `"<<dd_skip_if: ="\`\`gdate''" ~= "" & "\`r(command_date)' \`r(command_time)'" == "\`\`gdate''">>"' if graphcheck==4
-	replace doc_line = `"<<dd_graph>>"' if graphcheck==5
-	replace doc_line = `"<<dd_skip_end>>"' if graphcheck==6
-	replace doc_line = `"<<dd_do: quietly>>"' if graphcheck==7
-	replace doc_line = `"local \`gdate' = "\`r(command_date)' \`r(command_time)'""' if graphcheck==8
-	replace doc_line = `"<</dd_do>>"' if graphcheck==9
+	replace doc_line = `"local checkdate = "\`r(command_date)' \`r(command_time)'" "' if graphcheck==3
+	replace doc_line = `"<</dd_do>>"' if graphcheck==4
+	replace doc_line = `"<<dd_skip_if: ="\`\`gdate''"~="" & "\`\`gdate''"=="\`checkdate'">>"' if graphcheck==5
+	replace doc_line = `"<<dd_graph>>"' if graphcheck==6
+	replace doc_line = `"<<dd_skip_end>>"' if graphcheck==7
+	replace doc_line = `"<<dd_do: quietly>>"' if graphcheck==8
+	replace doc_line = `"local \`gdate' = "\`r(command_date)' \`r(command_time)'""' if graphcheck==9
+	replace doc_line = `"<</dd_do>>"' if graphcheck==10
 	
 	drop dupgr
 	replace linenum= _n 
