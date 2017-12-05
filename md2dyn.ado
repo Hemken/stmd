@@ -3,9 +3,11 @@
 *! 19 November 2017
 
 // ISSUES
-// better preamble
+// ======
+// replace option (for output file)
+// better preamble ?
 // more flexible code fence (Commonmark compatible)
-// options in code info tag
+// dyndoc options in code info tag
 // NOGraph option
 // wrapper with dyndoc
 
@@ -91,4 +93,34 @@ program define md2dyn, rclass
 * Finish up
 	restore
 	return local outfile "`saving'"
+end
+
+program define _replaceext, rclass
+	syntax using/, new(string)
+	
+	_fileext using "`using'"
+	if "`r(extension)'" ~= "" {
+		local newfile: subinstr local using "`r(extension)'" "`new'"
+		}
+		else {
+		local newfile "`using'.`new'"
+		}
+	
+	return local newfile "`newfile'"
+
+end
+
+program define _fileext, rclass
+	syntax using/
+	local check: subinstr local using "." "", all
+	local dots = length("`using'") - length("`check'")
+	if `dots' {
+		local undot: subinstr local using "." " ", all
+		local wc : word count `undot'
+		local extension: word `wc' of `undot'
+	} 
+	else {
+		local extension
+		}
+	return local extension "`extension'"
 end
