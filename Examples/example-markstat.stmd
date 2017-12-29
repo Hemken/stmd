@@ -1,0 +1,20 @@
+An Example File
+===============
+
+Some preliminary text.
+
+A code block, evaluted:
+```{s}
+sysuse auto
+summarize weight
+```
+
+In-line text: `s c(current_date)`
+
+A graph:
+```{s}
+histogram weight
+graph export hist_ms.svg, replace
+```
+
+![Weight](hist_ms.svg)

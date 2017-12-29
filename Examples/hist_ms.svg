@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- This is a Stata 15.0 generated SVG file (http://www.stata.com) -->
+
+<svg version="1.1" width="5.50in" height="4.00in" viewBox="0 0 3960 2880" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>Stata Graph - Graph</desc>
+	<rect x="0" y="0" width="3960" height="2880" style="fill:#EAF2F3;stroke:none"/>
+	<rect x="0.00" y="0.00" width="3959.88" height="2880.00" style="fill:#EAF2F3"/>
+	<rect x="2.88" y="2.88" width="3954.12" height="2874.24" style="fill:none;stroke:#EAF2F3;stroke-width:5.76"/>
+	<rect x="390.80" y="100.86" width="3468.22" height="2388.33" style="fill:#FFFFFF"/>
+	<rect x="393.68" y="103.74" width="3462.46" height="2382.57" style="fill:none;stroke:#FFFFFF;stroke-width:5.76"/>
+	<line x1="390.80" y1="2489.19" x2="3859.02" y2="2489.19" style="stroke:#EAF2F3;stroke-width:8.64"/>
+	<line x1="390.80" y1="2024.24" x2="3859.02" y2="2024.24" style="stroke:#EAF2F3;stroke-width:8.64"/>
+	<line x1="390.80" y1="1559.17" x2="3859.02" y2="1559.17" style="stroke:#EAF2F3;stroke-width:8.64"/>
+	<line x1="390.80" y1="1094.23" x2="3859.02" y2="1094.23" style="stroke:#EAF2F3;stroke-width:8.64"/>
+	<line x1="390.80" y1="629.16" x2="3859.02" y2="629.16" style="stroke:#EAF2F3;stroke-width:8.64"/>
+	<line x1="390.80" y1="164.22" x2="3859.02" y2="164.22" style="stroke:#EAF2F3;stroke-width:8.64"/>
+	<rect x="641.52" y="204.19" width="374.84" height="2284.99" style="fill:#CAC27E"/>
+	<rect x="645.84" y="208.51" width="366.20" height="2276.35" style="fill:none;stroke:#D7D29E;stroke-width:8.64"/>
+	<rect x="1016.36" y="1020.23" width="374.84" height="1468.96" style="fill:#CAC27E"/>
+	<rect x="1020.68" y="1024.55" width="366.20" height="1460.32" style="fill:none;stroke:#D7D29E;stroke-width:8.64"/>
+	<rect x="1391.20" y="693.76" width="374.71" height="1795.42" style="fill:#CAC27E"/>
+	<rect x="1395.52" y="698.08" width="366.08" height="1786.78" style="fill:none;stroke:#D7D29E;stroke-width:8.64"/>
+	<rect x="1765.91" y="1020.23" width="374.84" height="1468.96" style="fill:#CAC27E"/>
+	<rect x="1770.23" y="1024.55" width="366.20" height="1460.32" style="fill:none;stroke:#D7D29E;stroke-width:8.64"/>
+	<rect x="2140.75" y="204.19" width="374.84" height="2284.99" style="fill:#CAC27E"/>
+	<rect x="2145.07" y="208.51" width="366.20" height="2276.35" style="fill:none;stroke:#D7D29E;stroke-width:8.64"/>
+	<rect x="2515.59" y="693.76" width="374.71" height="1795.42" style="fill:#CAC27E"/>
+	<rect x="2519.91" y="698.08" width="366.08" height="1786.78" style="fill:none;stroke:#D7D29E;stroke-width:8.64"/>
+	<rect x="2890.30" y="1836.38" width="374.84" height="652.80" style="fill:#CAC27E"/>
+	<rect x="2894.62" y="1840.70" width="366.20" height="644.16" style="fill:none;stroke:#D7D29E;stroke-width:8.64"/>
+	<rect x="3265.14" y="2162.72" width="374.84" height="326.46" style="fill:#CAC27E"/>
+	<rect x="3269.46" y="2167.04" width="366.20" height="317.82" style="fill:none;stroke:#D7D29E;stroke-width:8.64"/>
+	<line x1="390.80" y1="2489.19" x2="390.80" y2="100.86" style="stroke:#000000;stroke-width:5.76"/>
+	<line x1="390.80" y1="2489.19" x2="350.83" y2="2489.19" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="300.72" y="2489.19" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" transform="rotate(-90 300.72,2489.19)" text-anchor="middle">0</text>
+	<line x1="390.80" y1="2024.24" x2="350.83" y2="2024.24" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="300.72" y="2024.24" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" transform="rotate(-90 300.72,2024.24)" text-anchor="middle">1.0e-04</text>
+	<line x1="390.80" y1="1559.17" x2="350.83" y2="1559.17" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="300.72" y="1559.17" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" transform="rotate(-90 300.72,1559.17)" text-anchor="middle">2.0e-04</text>
+	<line x1="390.80" y1="1094.23" x2="350.83" y2="1094.23" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="300.72" y="1094.23" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" transform="rotate(-90 300.72,1094.23)" text-anchor="middle">3.0e-04</text>
+	<line x1="390.80" y1="629.16" x2="350.83" y2="629.16" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="300.72" y="629.16" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" transform="rotate(-90 300.72,629.16)" text-anchor="middle">4.0e-04</text>
+	<line x1="390.80" y1="164.22" x2="350.83" y2="164.22" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="300.72" y="164.22" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" transform="rotate(-90 300.72,164.22)" text-anchor="middle">5.0e-04</text>
+	<text x="190.71" y="1294.96" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" transform="rotate(-90 190.71,1294.96)" text-anchor="middle">Density</text>
+	<line x1="390.80" y1="2489.19" x2="3859.02" y2="2489.19" style="stroke:#000000;stroke-width:5.76"/>
+	<line x1="875.16" y1="2489.19" x2="875.16" y2="2529.16" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="875.16" y="2619.14" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" text-anchor="middle">2,000</text>
+	<line x1="1848.70" y1="2489.19" x2="1848.70" y2="2529.16" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="1848.70" y="2619.14" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" text-anchor="middle">3,000</text>
+	<line x1="2822.24" y1="2489.19" x2="2822.24" y2="2529.16" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="2822.24" y="2619.14" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" text-anchor="middle">4,000</text>
+	<line x1="3795.66" y1="2489.19" x2="3795.66" y2="2529.16" style="stroke:#000000;stroke-width:5.76"/>
+	<text x="3795.66" y="2619.14" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" text-anchor="middle">5,000</text>
+	<text x="2124.91" y="2729.16" style="font-family:'Helvetica';font-size:99.99px;fill:#000000" text-anchor="middle">Weight (lbs.)</text>
+</svg>
