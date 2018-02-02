@@ -1,44 +1,60 @@
-*! version 1.3
+*! version 1.5
 *! Doug Hemken
-*! 5 December 2017
+*! 2 February 2018
 
 // ISSUES
 // ======
-// replace option (for output file), eliminate "using"
+// ensure infile does not have "smd" extension -- done?
+// more flexible code fence --
+//   respect not-dynamic code fences
+//   parse info string options
 // better, more extensive preamble ?
-// more flexible code fence (Commonmark compatible)
-// NOGraph option
-// wrapper with dyndoc
+// NOGRaph option
+// wrapper with dyndoc, pandoc
+// rewrite in Mata
 
-// capture program drop md2dyn
+capture program drop md2dyn
 program define md2dyn, rclass
-	syntax using/, [LINElength(integer 256)] [SAVing(string)]
+	syntax anything(name=infile), [LINElength(integer 256)] ///
+		[SAVing(string) replace]
 	preserve
+	
+	local infile = ustrtrim(usubinstr(`"`infile'"', `"""', "", .))
+	confirm file `"`infile'"'
+	
 	if ("`saving'" == "" ) {
-		di "  {text:No output file specified.}"
-		_replaceext using "`using'", new("smd")
-		local saving "`r(newfile)'"
+		mata:(void)pathchangesuffix("`infile'", "smd", "saving", 0)
+		}
+	mata: (void)pathresolve("`c(pwd)'", `"`saving'"', "saving")
+	local issame = 0
+	mata: (void)filesarethesame("`infile'", "`saving'", "issame")
+	if ("`issame'" == "1") {
+display in error "target file can not be the same as the source file"
+		exit 602			
+	}
+	if ("`replace'"=="") {
+		confirm new file "`saving'"
 		}
 	clear
 	
 * Read in file
-	quietly infix str doc_line 1-`linelength' using "`using'"
+	quietly infix str doc_line 1-`linelength' using `"`infile'"'
 	quietly compress doc_line
 	
 * Then identify code blocks
-	generate linenum = _n
+	qui generate linenum = _n
 	*generate codebegin = inlist(usubstr(doc_line, 1, 7), ///
 	*		"```s", "```s/", "```{s}", "```{s/}")
-	generate codebegin = ustrregexm(doc_line, "^```\{?s(tata)?\/?")
-	generate codeopts = ustrregexm(doc_line, ",") if codebegin
-	generate noecho = ustrregexm(doc_line, "echo=FALSE") if codebegin & codeopts
-	replace noecho = 1 if ustrregexm(doc_line, "\/") & codebegin & codeopts
-	generate noresults = ustrregexm(doc_line, "results=FALSE") if codebegin & codeopts
-	generate noprompt = ustrregexm(doc_line, "noprompt=TRUE") if codebegin & codeopts
+	qui generate codebegin = ustrregexm(doc_line, "^( ? ? ?)(```+|~~~+)\{?s(tata)?\/?(,.*)?\}?$")
+	qui generate codeopts = ustrregexm(doc_line, ",") if codebegin
+	qui generate noecho = ustrregexm(doc_line, "echo=FALSE") if codebegin & codeopts
+	qui replace noecho = 1 if ustrregexm(doc_line, "\/") & codebegin & codeopts
+	qui generate noresults = ustrregexm(doc_line, "results=FALSE") if codebegin & codeopts
+	qui generate noprompt = ustrregexm(doc_line, "noprompt=TRUE") if codebegin & codeopts
 	
-	generate codefence = usubstr(doc_line, 1, 3) == "```" if ~codebegin
-	levelsof linenum if codebegin, local(cb)
-	foreach block of local cb {
+	qui generate codefence = ustrregexm(doc_line, "^( ? ? ?)(```+|~~~+)([ ]*)$") if ~codebegin
+	qui levelsof linenum if codebegin, local(cb)
+	qui foreach block of local cb {
 		di "begin at `block'"
 		levelsof linenum if codefence & linenum > `block', local(cbe)
 		local cbe : word 1 of `cbe'
@@ -46,18 +62,18 @@ program define md2dyn, rclass
 		replace codebegin = -1 in `cbe'
 	}
 	* Replace code ```{s}
-	expand 2 if codebegin ~= 0, generate(dup)
-	sort linenum dup
-	replace doc_line = "```" if codebegin==1 & dup==0
-	replace doc_line = "<<dd_do>>" if codebegin==1 & dup==1 & codeopts==0
-	replace doc_line = "<<dd_do: nocommands>>" if codebegin==1 & dup==1 & noecho==1
-	replace doc_line = "<<dd_do: nooutput>>" if codebegin==1 & dup==1 & noresults==1
-	replace doc_line = "<<dd_do: noprompt>>" if codebegin==1 & dup==1 & noprompt==1
-	replace doc_line = "<<dd_do: quietly>>" if codebegin==1 & dup==1 & noecho==1 & noresults==1
-	replace doc_line = "<</dd_do>>" if codebegin==-1 & dup==0
+	qui expand 2 if codebegin ~= 0, generate(dup)
+	qui sort linenum dup
+	qui replace doc_line = "```" if codebegin==1 & dup==0
+	qui replace doc_line = "<<dd_do>>" if codebegin==1 & dup==1 & codeopts==0
+	qui replace doc_line = "<<dd_do: nocommands>>" if codebegin==1 & dup==1 & noecho==1
+	qui replace doc_line = "<<dd_do: nooutput>>" if codebegin==1 & dup==1 & noresults==1
+	qui replace doc_line = "<<dd_do: noprompt>>" if codebegin==1 & dup==1 & noprompt==1
+	qui replace doc_line = "<<dd_do: quietly>>" if codebegin==1 & dup==1 & noecho==1 & noresults==1
+	qui replace doc_line = "<</dd_do>>" if codebegin==-1 & dup==0
 	
-	drop dup
-	replace linenum = _n
+	qui drop dup
+	qui replace linenum = _n
 	
 * Add graphics preamble
 	expand 6 if linenum == 1, generate(duppre)
@@ -104,34 +120,4 @@ program define md2dyn, rclass
 * Finish up
 	restore
 	return local outfile "`saving'"
-end
-
-program define _replaceext, rclass
-	syntax using/, new(string)
-	
-	_fileext using "`using'"
-	if "`r(extension)'" ~= "" {
-		local newfile: subinstr local using "`r(extension)'" "`new'"
-		}
-		else {
-		local newfile "`using'.`new'"
-		}
-	
-	return local newfile "`newfile'"
-
-end
-
-program define _fileext, rclass
-	syntax using/
-	local check: subinstr local using "." "", all
-	local dots = length("`using'") - length("`check'")
-	if `dots' {
-		local undot: subinstr local using "." " ", all
-		local wc : word count `undot'
-		local extension: word `wc' of `undot'
-	} 
-	else {
-		local extension
-		}
-	return local extension "`extension'"
 end
