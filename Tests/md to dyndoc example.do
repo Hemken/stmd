@@ -24,3 +24,8 @@ cscript
 md2dyn example-codeopts.stmd, replace
 dyndoc example-codeopts.smd, replace
 file_equal example-codeopts.html using example-codeopts-bm.html, display
+
+cscript
+sysuse auto
+md2dyn lesson1.smd, saving(lesson1_dd.smd) replace
+dyndoc lesson1_dd.smd, replace

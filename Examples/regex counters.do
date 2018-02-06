@@ -1,0 +1,11 @@
+display ustrregexm("`", "^`{5}")
+display ustrregexm("``", "^`{5}")
+display ustrregexm("```", "^`{5}")
+display ustrregexm("````", "^`{5}")
+display ustrregexm("`````", "^`{5}")
+
+display ustrregexm("`", "^`{3,5}")
+display ustrregexm("``", "^`{3,5}")
+display ustrregexm("```", "^`{3,5}")
+display ustrregexm("````", "^`{3,5}")
+display ustrregexm("`````", "^`{3,5}")

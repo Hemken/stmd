@@ -1,39 +1,11 @@
-*! version 1.5.1
-*! Doug Hemken
-*! 6 February 2018
+cd "z:/public_web/stataworkshops/md2dyn/tests"
+clear
+*preserve
 
-// ISSUES
-// ======
-// ensure infile does not have "smd" extension -- done?
-// better, more extensive preamble ?
-// NOGRaph option
-// wrapper with dyndoc, pandoc
-// rewrite in Mata
+local linelength = 256
+local infile = "y:/stata/lesson1.smd"
+local saving = "y:/stata/lesson1_dd.smd"
 
-capture program drop md2dyn
-program define md2dyn, rclass
-	syntax anything(name=infile), [LINElength(integer 256)] ///
-		[SAVing(string) replace]
-	preserve
-	
-	local infile = ustrtrim(usubinstr(`"`infile'"', `"""', "", .))
-	confirm file `"`infile'"'
-	
-	if ("`saving'" == "" ) {
-		mata:(void)pathchangesuffix("`infile'", "smd", "saving", 0)
-		}
-	mata: (void)pathresolve("`c(pwd)'", `"`saving'"', "saving")
-	local issame = 0
-	mata: (void)filesarethesame("`infile'", "`saving'", "issame")
-	if ("`issame'" == "1") {
-display in error "target file can not be the same as the source file"
-		exit 602			
-	}
-	if ("`replace'"=="") {
-		confirm new file "`saving'"
-		}
-	clear
-	
 * Read in file
 quietly {
 	infix str doc_line 1-`linelength' using `"`infile'"'
@@ -130,8 +102,6 @@ quietly {
 	quietly compress doc_line
 	outfile doc_line using "`saving'", noquote wide replace
 	display "  {text:Output saved as {it:`saving'}}"
-
+	
 * Finish up
-	restore
-	return local outfile "`saving'"
-end
+	*restore

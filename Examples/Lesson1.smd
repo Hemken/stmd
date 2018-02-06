@@ -1,0 +1,78 @@
+The general scheme for writing commands will be something like this
+(see `help language`, this is a pared down version):
+
+````
+[prefix:] command [varlist] [if] [, options]
+````
+
+For example, try:
+
+```{stata, eval=FALSE}
+help summarize
+```
+
+and you will see
+
+````
+summarize [varlist] [if] [in] [weight] [, options]
+````
+
+The name of the command is *summarize*.  It can be abbreviated as
+short as *su* (although *sum* is more common in practice).  This is
+indicated by the underlining.
+
+This command takes ("accepts") a *variable list*.  The square brackets
+indicate that the variable list is actually optional for this command,
+as is everything besides the command name, *summarize*.
+
+Having loaded a data set, we can try out this command
+
+```{stata}
+summarize
+```
+
+## *Varlist*
+
+Next we add a variable list.  There are a number of ways we can 
+write lists of variables in Stata.  (See `help varlist`.)
+
+- write out the variable name(s)
+- use wildcards
+- use a first-to-last (sequential) list
+- the keyword `_all`
+
+```{stata}
+summarize price mpg // spelled-out list
+summarize mpg - trunk // first-to-last list
+summarize *n   // wildcard list
+summarize _all // or use " * "
+```
+
+Some languages have indexed lists, like *myvar1-myvar4*, meaning the
+four variables myvar1, myvar2, myvar3, and myvar4, regardless of where
+they are located in the data set.  Not Stata.  In Stata this would be
+a first-to-last (positional) list.  It might be the list you want, or
+it might not - it depends how the data set was constructed.
+
+### Exercise
+How else could you specify the list with myvar1, myvar2, myvar3, and 
+myvar4?  (State any assumptions you make.)
+
+## *If*
+An `if` condition allows your command to act on a *subset* of the
+observations in your data set.  (See `help if`.)  The syntax for
+most commands can be
+
+````
+command if expression
+````
+
+where *expression* is something that is true or false for each observation
+in the data set.
+
+For example, to see the average price of a foreign car in this
+data set we might try
+
+```{stata}
+summarize price if foreign==1
+```
