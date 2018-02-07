@@ -1,0 +1,95 @@
+<h1><a href="#working-with-data" id="working-with-data">Working With Data</a></h1>
+<p>Examples to accompany <a href="https://www.ssc.wisc.edu/sscc/pubs/sfr-data.htm">Stata for Researchers</a></p>
+<h2><a href="#"><code>generate</code> / <code>replace</code></a></h2>
+<p>Let&rsquo;s start with</p>
+<pre><code>help generate
+</code></pre>
+<p>and our basic form is</p>
+<p><code>generate</code> <em>newvar</em> <code>=</code> <em>expression</em></p>
+<p>Where <em>expressions</em> can take a huge variety of forms: a mix of <em>variable names</em>, <em>constants</em>, <em>operators</em> and <em>functions</em>.</p>
+<p>Using the <code>auto</code> data set, calculate an inflation-adjusted price for each car type.  See <a href="https://www.bls.gov/data/inflation_calculator.htm">BLS Inflation Calculator</a>.</p>
+<pre><code>. sysuse auto
+(1978 Automobile Data)
+
+. generate price2017 = 3.94*price
+
+. * check, this is a linear transformation
+. scatter price2017 price
+
+</code></pre>
+<img src="Graph5.svg" >
+<h3><a href="#conditional-values" id="conditional-values">Conditional Values</a></h3>
+<p>Suppose we wanted to calculate the current price in Euros, but just for foreign cars.</p>
+<pre><code>. generate europrice = .81*price2017 if foreign==1
+(52 missing values generated)
+
+. * check means
+. summarize *price*
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       price |         74    6165.257    2949.496       3291      15906
+   price2017 |         74    24291.11    11621.01   12966.54   62669.64
+   europrice |         22    20376.07     8367.58   11961.37   41456.29
+
+</code></pre>
+<h3><a href="#replacing-values" id="replacing-values">Replacing Values</a></h3>
+<p>Suppose you wanted to recode <code>weight</code> in Scientific Units. You might try</p>
+<pre><code>. generate weight = weight/2.2
+variable weight already defined
+r(110);
+
+</code></pre>
+<p>But that gives you an error.  In general, if you want to write over existing data (or files), you need to say <code>replace</code>.  In this case, <code>replace</code> is a command name (in other cases, it is an option keyword).</p>
+<pre><code>. replace weight = weight/2.2
+variable weight was int now float
+(74 real changes made)
+
+. * check, correlation with price is the same
+. * oops! can't check because we overwrote our data!
+. corr weight price2017
+(obs=74)
+
+             |   weight pri~2017
+-------------+------------------
+      weight |   1.0000
+   price2017 |   0.5386   1.0000
+
+
+</code></pre>
+<h3><a href="#missing-values" id="missing-values">Missing Values</a></h3>
+<p>Suppose you want to reverse the repair scale:  instead of 1 being a poor repair record, 5 should be the worst value.  You could do</p>
+<pre><code>. generate repairs = 6 - rep78
+(5 missing values generated)
+
+. * check, crosstab
+. tabulate rep78 repairs, missing
+
+    Repair |
+    Record |                              repairs
+      1978 |         1          2          3          4          5          . |     Total
+-----------+------------------------------------------------------------------+----------
+         1 |         0          0          0          0          2          0 |         2 
+         2 |         0          0          0          8          0          0 |         8 
+         3 |         0          0         30          0          0          0 |        30 
+         4 |         0         18          0          0          0          0 |        18 
+         5 |        11          0          0          0          0          0 |        11 
+         . |         0          0          0          0          0          5 |         5 
+-----------+------------------------------------------------------------------+----------
+     Total |        11         18         30          8          2          5 |        74 
+
+
+</code></pre>
+<p>Notice that a missing input value becomes a missing output value.</p>
+<h2><a href="#"><code>recode</code></a></h2>
+<h2><a href="#"><code>egen</code></a></h2>
+<h2><a href="#details" id="details">Details</a></h2>
+<h3><a href="#mathematical-expressions" id="mathematical-expressions">Mathematical Expressions</a></h3>
+<h3><a href="#logical-expressions" id="logical-expressions">Logical Expressions</a></h3>
+<h3><a href="#probability-and-random-numbers" id="probability-and-random-numbers">Probability and Random Numbers</a></h3>
+<h3><a href="#dates-and-times" id="dates-and-times">Dates and Times</a></h3>
+<h3><a href="#string-expression" id="string-expression">String Expression</a></h3>
+<h4><a href="#string-conversions" id="string-conversions">String Conversions(<code>real()</code>)</a></h4>
+<h3><a href="#conversions" id="conversions">Conversions</a></h3>
+<h4><a href="#"><code>encode</code> / <code>decode</code></a></h4>
+<h4><a href="#"><code>destring</code> / <code>tostring</code></a></h4>

@@ -1,6 +1,6 @@
-*! version 1.5.1
+*! version 1.5.2
 *! Doug Hemken
-*! 6 February 2018
+*! 7 February 2018
 
 // ISSUES
 // ======
@@ -127,11 +127,27 @@ quietly {
 	replace doc_line = ustrregexra(doc_line, "`", ">>") if dispbegin==1
 }
 * Write out the result
+	quietly keep doc_line
 	quietly compress doc_line
-	outfile doc_line using "`saving'", noquote wide replace
+	mata: document = st_sdata(.,1)
+	mata: saving = st_local("saving")
+	mata: unlink(saving)
+	mata: docwrite(saving, document)
+	*outfile doc_line using "`saving'", noquote wide replace
 	display "  {text:Output saved as {it:`saving'}}"
 
 * Finish up
 	restore
 	return local outfile "`saving'"
+end
+
+mata:
+void function docwrite(string scalar filename, ///
+		string colvector document) {
+	fh = fopen(filename, "w")
+	for (i=1; i<=length(document); i++) {
+		fput(fh, document[i])
+	}
+	fclose(fh)
+	}
 end

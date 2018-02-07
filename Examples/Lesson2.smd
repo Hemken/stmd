@@ -1,0 +1,86 @@
+# Working With Data
+Examples to accompany 
+[Stata for Researchers](https://www.ssc.wisc.edu/sscc/pubs/sfr-data.htm)
+
+## `generate` / `replace`
+Let's start with
+
+```
+help generate
+```
+
+and our basic form is
+
+`generate` *newvar* `=` *expression*
+
+Where *expressions* can take a huge variety of forms: a
+mix of *variable names*, *constants*, *operators* and *functions*.
+
+Using the `auto` data set, calculate an inflation-adjusted price
+for each car type.  See 
+[BLS Inflation Calculator](https://www.bls.gov/data/inflation_calculator.htm).
+
+```{stata}
+sysuse auto
+generate price2017 = 3.94*price
+* check, this is a linear transformation
+scatter price2017 price
+```
+
+### Conditional Values
+Suppose we wanted to calculate the current price in Euros, but just
+for foreign cars.
+
+```s
+generate europrice = .81*price2017 if foreign==1
+* check means
+summarize *price* 
+```
+
+### Replacing Values
+Suppose you wanted to recode `weight` in Scientific Units. You
+might try
+
+```s
+generate weight = weight/2.2
+```
+
+But that gives you an error.  In general, if you want to write
+over existing data (or files), you need to say `replace`.  In
+this case, `replace` is a command name (in other cases, it
+is an option keyword).
+
+```s
+replace weight = weight/2.2
+* check, correlation with price is the same
+* oops! can't check because we overwrote our data!
+corr weight price2017
+```
+
+### Missing Values
+Suppose you want to reverse the repair scale:  instead of 1 being
+a poor repair record, 5 should be the worst value.  You could do
+
+```s
+generate repairs = 6 - rep78
+* check, crosstab
+tabulate rep78 repairs, missing
+```
+
+Notice that a missing input value becomes a missing output value.
+
+## `recode`
+
+## `egen`
+
+## Details
+### Mathematical Expressions
+### Logical Expressions
+### Probability and Random Numbers
+### Dates and Times
+### String Expression
+#### String Conversions(`real()`)
+
+### Conversions
+#### `encode` / `decode`
+#### `destring` / `tostring`
