@@ -15,10 +15,11 @@ program define md2dyn, rclass
 	syntax anything(name=infile), [LINElength(integer 256)] ///
 		[SAVing(string) replace]
 	preserve
-	
+
 	local infile = ustrtrim(usubinstr(`"`infile'"', `"""', "", .))
+display `"infile is `infile'"'	
 	confirm file `"`infile'"'
-	
+display "infile confirmed"	
 	if ("`saving'" == "" ) {
 		mata:(void)pathchangesuffix("`infile'", "smd", "saving", 0)
 		}

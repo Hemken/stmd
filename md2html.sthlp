@@ -1,10 +1,13 @@
 {smcl}
-{* *! version 1.1 19nov2017}{...}
+{* *! version 1.0 16mar2018}{...}
 {* *! Doug Hemken}{...}
 {vieweralsosee "" "--"}{...}
+{vieweralsosee "md2dyn" "help md2dyn"}{...}
 {vieweralsosee "dyndoc" "help dyndoc"}{...}
 {vieweralsosee "dyntext" "help dyntext"}{...}
 {vieweralsosee "dynamic tags" "help dynamic tags"}{...}
+{vieweralsosee "pandoc" "help pandoc"}{...}
+{vieweralsosee "dyn2do" "help dyn2do"}{...}
 {viewerjumpto "Syntax" "md2dyn##syntax"}{...}
 {viewerjumpto "Description" "md2dyn##description"}{...}
 {viewerjumpto "Options" "md2dyn##options"}{...}
@@ -13,15 +16,14 @@
 {title:Title}
 
 {phang}
-{bf:md2dyn} Convert common Markdown to Stata {cmd: dyndoc} 
-dynamic document format{p_end}
+{bf:md2dyn} Convert common Markdown to HTML format using Stata {cmd: dyndoc}{p_end}
 
 
 {marker syntax}{...}
 {title:Syntax}
 
 {p 8 17 2}
-{cmd:md2dyn}
+{cmd:md2html}
 using filename
 [{cmd:,} {it:options}]
 
@@ -29,7 +31,7 @@ using filename
 {synopthdr}
 {synoptline}
 {syntab:Main}
-{synopt:{opt sav:ing(filename2)}}save {cmd: dyndoc} file as {it:filename2}{p_end}
+{synopt:{opt sav:ing(filename2)}}save HTML file as {it:filename2}{p_end}
 {synopt:{opt replace}}replace {it:filename2} if it already exists{p_end}
 {synoptline}
 {p2colreset}{...}
@@ -41,8 +43,9 @@ using filename
 
 {pstd}
 {cmd:md2dyn} Takes a Markdown document using conventional markdown
-	specification and converts it to Stata's dialect using {cmd: dyndoc}
-	dynamic tags.
+	specification and converts it to HTML via Stata's {cmd: dyndoc}
+	command.  This is just a wrapper for {cmd: md2dyn} followed by
+	{cmd: dyndoc}
 
 
 {marker options}{...}
@@ -51,8 +54,7 @@ using filename
 {dlgtab:Main}
 
 {phang}
-{opt saving} {it: filename2} to save the {cmd: dyndoc}, which can
-	then be processed by Stata.{p_end}
+{opt saving} {it: filename2} to specify the final HTML file name.{p_end}
 
 {phang}
 {opt replace} replace {it:filename2} if it already exists{p_end}
@@ -63,14 +65,13 @@ using filename
 
 {pstd}
 If {it: filename2} is not specified, then {it: filename} with an
-.smd file extension is tried.
-
+.html file extension is tried.
 
 
 {marker examples}{...}
 {title:Examples}
 
-{phang}{cmd:. md2dyn using example.stmd}{p_end}
+{phang}{cmd:. md2html using example.stmd}{p_end}
 
 
 {title:Author}
