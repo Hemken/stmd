@@ -1,22 +1,22 @@
 <h1><a href="#an-example-file" id="an-example-file">An Example File</a></h1>
 <p>Some preliminary text.</p>
 <p>A code block, evaluted:</p>
-<pre><code>. sysuse auto                                                    
+<pre><code>. sysuse auto
 (1978 Automobile Data)
 
-. summarize weight                                               
+. summarize weight
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
       weight |         74    3019.459    777.1936       1760       4840
 
 </code></pre>
-<p>In-line text:  2 Feb 2018</p>
+<p>In-line text: 16 Mar 2018</p>
 <p>A graph:</p>
-<pre><code>. histogram weight                                               
+<pre><code>. histogram weight
 (bin=8, start=1760, width=385)
 
-. *graph export hist_ms.svg, replace                             
+. *graph export hist_ms.svg, replace
 </code></pre>
-<img src="Graph.svg" >                                                   
+<img src="Graph.svg" >
 <p>! <a href="hist_ms.svg">Weight</a></p>
