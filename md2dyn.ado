@@ -1,10 +1,9 @@
-*! version 1.5.2
+*! version 1.5.3
 *! Doug Hemken
-*! 7 February 2018
+*! 23 March 2018
 
 // ISSUES
 // ======
-// ensure infile does not have "smd" extension -- done?
 // better, more extensive preamble ?
 // NOGRaph option
 // wrapper with dyndoc, pandoc
@@ -17,13 +16,16 @@ program define md2dyn, rclass
 	preserve
 
 	local infile = ustrtrim(usubinstr(`"`infile'"', `"""', "", .))
-display `"infile is `infile'"'	
+*display `"infile is `infile'"'	
 	confirm file `"`infile'"'
-display "infile confirmed"	
+*display "infile confirmed"	
 	if ("`saving'" == "" ) {
-		mata:(void)pathchangesuffix("`infile'", "smd", "saving", 0)
+		mata:(void)pathchangesuffix("`infile'", "dyn", "saving", 0)
+		mata: (void)st_local("saving", pathjoin("`c(pwd)'", `"`saving'"'))
 		}
 	mata: (void)pathresolve("`c(pwd)'", `"`saving'"', "saving")
+*display `"saving `saving'"'
+	
 	local issame = 0
 	mata: (void)filesarethesame("`infile'", "`saving'", "issame")
 	if ("`issame'" == "1") {
