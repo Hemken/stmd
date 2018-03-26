@@ -1,7 +1,7 @@
 <h1><a href="#code-block-options-file" id="code-block-options-file">Code Block Options File</a></h1>
 <p>Some preliminary text.</p>
 <p>A code block, no options:</p>
-<pre><code>. sysuse auto
+<pre><code class="language-{s}">. sysuse auto
 (1978 Automobile Data)
 
 . summarize weight
@@ -11,19 +11,19 @@
       weight |         74    3019.459    777.1936       1760       4840
 
 </code></pre>
-<p>In-line text: 16 Mar 2018</p>
+<p>In-line text: <code>s c(current_date)</code></p>
 <p>A graph (<code>nocommands</code>):</p>
-<pre><code>(bin=8, start=1760, width=385)
+<pre><code class="language-{s,">(bin=8, start=1760, width=385)
 
 </code></pre>
-<img src="Graph2.svg" >
+<img src="Graph.svg" >
 <p>More text. Generate a new variable (<code>quietly</code>).</p>
-<pre><code></code></pre>
+<pre><code class="language-{s,"></code></pre>
 <p>Yet more text (<code>nooutput</code>).</p>
-<pre><code>. summarize gpm
+<pre><code class="language-{stata,">. summarize gpm
 
 </code></pre>
 <p>Another graph (<code>noprompt</code>):</p>
-<pre><code>scatter price weight
+<pre><code class="language-{s,">scatter price weight
 
 </code></pre>

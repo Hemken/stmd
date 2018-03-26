@@ -9,7 +9,7 @@ Code Block Options File
 Some preliminary text.
 
 A code block, no options:
-```
+```{s}
 <<dd_do>>
 sysuse auto
 summarize weight
@@ -26,10 +26,10 @@ local checkdate = "`r(command_date)' `r(command_time)'"
 local `gdate' = "`r(command_date)' `r(command_time)'"
 <</dd_do>>
 
-In-line text: <<dd_display:  c(current_date)>>
+In-line text: `s c(current_date)`
 
 A graph (`nocommands`):
-```
+```{s, echo=FALSE}
 <<dd_do: nocommands>>
 histogram weight
 <</dd_do>>
@@ -47,7 +47,7 @@ local `gdate' = "`r(command_date)' `r(command_time)'"
 
 More text.
 Generate a new variable (`quietly`).
-```
+```{s, echo=FALSE, results=FALSE}
 <<dd_do: quietly>>
 generate gpm = 1/mpg
 <</dd_do>>
@@ -64,7 +64,7 @@ local `gdate' = "`r(command_date)' `r(command_time)'"
 <</dd_do>>
 
 Yet more text (`nooutput`).
-```
+```{stata, results=FALSE}
 <<dd_do: nooutput>>
 summarize gpm
 <</dd_do>>
@@ -82,7 +82,7 @@ local `gdate' = "`r(command_date)' `r(command_time)'"
 
 
 Another graph (`noprompt`):
-```
+```{s, noprompt=TRUE}
 <<dd_do: noprompt>>
 scatter price weight
 <</dd_do>>
@@ -97,5 +97,3 @@ local checkdate = "`r(command_date)' `r(command_time)'"
 <<dd_do: quietly>>
 local `gdate' = "`r(command_date)' `r(command_time)'"
 <</dd_do>>
-
-

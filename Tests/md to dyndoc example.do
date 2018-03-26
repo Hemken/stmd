@@ -22,7 +22,7 @@ capture erase graph4.svg
 cscript
 //md2dyn using example-codeopts.stmd
 md2dyn example-codeopts.stmd, replace
-dyndoc example-codeopts.smd, replace
+dyndoc example-codeopts.dyn, replace
 file_equal example-codeopts.html using example-codeopts-bm.html, display
 
 cscript
