@@ -1,9 +1,11 @@
-*! version 1.0
+*! version 1.1
 *! Doug Hemken
 *! 16 March 2018
 
-capture program drop md2html
-program define md2html, rclass
+// pass options and arguments to dyndoc
+
+capture program drop stmd2html
+program define stmd2html, rclass
 	syntax anything(name=infile)    /// input file name
 		[, SAVing(string) replace]  //  name of HTML file
 display `"`infile'"'
@@ -29,7 +31,7 @@ display in error "target file can not be the same as the source file"
 	* intermediate dyndoc file
 	tempfile dyn
 	* process
-	md2dyn `infile', saving(`dyn') `replace'
+	stmd2dyn `infile', saving(`dyn') `replace'
 	dyndoc `dyn', saving(`saving') `replace'
 	
 end

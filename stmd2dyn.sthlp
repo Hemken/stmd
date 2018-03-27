@@ -1,37 +1,35 @@
 {smcl}
-{* *! version 1.0 16mar2018}{...}
+{* *! version 1.1 19nov2017}{...}
 {* *! Doug Hemken}{...}
 {vieweralsosee "" "--"}{...}
-{vieweralsosee "md2dyn" "help md2dyn"}{...}
 {vieweralsosee "dyndoc" "help dyndoc"}{...}
 {vieweralsosee "dyntext" "help dyntext"}{...}
 {vieweralsosee "dynamic tags" "help dynamic tags"}{...}
-{vieweralsosee "pandoc" "help pandoc"}{...}
-{vieweralsosee "dyn2do" "help dyn2do"}{...}
-{viewerjumpto "Syntax" "md2dyn##syntax"}{...}
-{viewerjumpto "Description" "md2dyn##description"}{...}
-{viewerjumpto "Options" "md2dyn##options"}{...}
-{viewerjumpto "Remarks" "md2dyn##remarks"}{...}
-{viewerjumpto "Examples" "md2dyn##examples"}{...}
+{viewerjumpto "Syntax" "stmd2dyn##syntax"}{...}
+{viewerjumpto "Description" "stmd2dyn##description"}{...}
+{viewerjumpto "Options" "stmd2dyn##options"}{...}
+{viewerjumpto "Remarks" "stmd2dyn##remarks"}{...}
+{viewerjumpto "Examples" "stmd2dyn##examples"}{...}
 {title:Title}
 
 {phang}
-{bf:md2dyn} Convert common Markdown to HTML format using Stata {cmd: dyndoc}{p_end}
+{bf:stmd2dyn} Convert common Markdown to Stata {cmd: dyndoc} 
+dynamic document format{p_end}
 
 
 {marker syntax}{...}
 {title:Syntax}
 
 {p 8 17 2}
-{cmd:md2html}
-using filename
+{cmd:stmd2dyn}
+filename
 [{cmd:,} {it:options}]
 
 {synoptset 20 tabbed}{...}
 {synopthdr}
 {synoptline}
 {syntab:Main}
-{synopt:{opt sav:ing(filename2)}}save HTML file as {it:filename2}{p_end}
+{synopt:{opt sav:ing(filename2)}}save {cmd: dyndoc} file as {it:filename2}{p_end}
 {synopt:{opt replace}}replace {it:filename2} if it already exists{p_end}
 {synoptline}
 {p2colreset}{...}
@@ -42,10 +40,9 @@ using filename
 {title:Description}
 
 {pstd}
-{cmd:md2dyn} Takes a Markdown document using conventional markdown
-	specification and converts it to HTML via Stata's {cmd: dyndoc}
-	command.  This is just a wrapper for {cmd: md2dyn} followed by
-	{cmd: dyndoc}
+{cmd:stmd2dyn} Takes a Markdown document using conventional markdown
+	specification and converts it to Stata's dialect using {cmd: dyndoc}
+	dynamic tags.
 
 
 {marker options}{...}
@@ -54,7 +51,8 @@ using filename
 {dlgtab:Main}
 
 {phang}
-{opt saving} {it: filename2} to specify the final HTML file name.{p_end}
+{opt saving} {it: filename2} to save the {cmd: dyndoc}, which can
+	then be processed by Stata.{p_end}
 
 {phang}
 {opt replace} replace {it:filename2} if it already exists{p_end}
@@ -65,13 +63,14 @@ using filename
 
 {pstd}
 If {it: filename2} is not specified, then {it: filename} with an
-.html file extension is tried.
+.dyn file extension is tried.
+
 
 
 {marker examples}{...}
 {title:Examples}
 
-{phang}{cmd:. md2html using example.stmd}{p_end}
+{phang}{cmd:. stmd2dyn using example.stmd}{p_end}
 
 
 {title:Author}
@@ -81,4 +80,4 @@ If {it: filename2} is not specified, then {it: filename} with an
 {p 4} Univ of Wisc-Madison{p_end}
 {p 4} {browse "mailto:dehemken@wisc.edu":dehemken@wisc.edu}{p_end}
 {p 4} https://www.ssc.wisc.edu/~hemken/Stataworkshops{p_end}
-{p 4} https://github.com/Hemken/md2dyn{p_end}
+{p 4} https://github.com/Hemken/stmd2dyn{p_end}
