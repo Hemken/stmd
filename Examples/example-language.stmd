@@ -1,0 +1,31 @@
+An Example File
+===============
+
+Some preliminary text.
+
+A code block, not evaluted:
+```
+sysuse auto
+summarize weight
+```
+
+A code block, evaluted:
+```s
+sysuse auto
+summarize weight
+```
+
+A code block with ```stata
+```stata
+summarize price weight
+```
+
+A code block with ```{s}
+```{s}
+summarize mpg displacement
+```
+
+A code block with ```{stata}
+```{stata}
+tabulate foreign
+```

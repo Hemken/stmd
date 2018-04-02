@@ -3,20 +3,25 @@ capture graph describe Graph
 tempname gdate
 local `gdate' = "`r(command_date)' `r(command_time)'" 
 <</dd_do>>
-Code Block Options File
+An Example File
 ===============
 
 Some preliminary text.
 
-A code block, no options:
-```{s}
+A code block, not evaluted:
+```
+sysuse auto
+summarize weight
+```
+
+A code block, evaluted:
+```s
 <<dd_do>>
 sysuse auto
 summarize weight
 <</dd_do>>
 ```
 <<dd_do: quietly>>
-capture _return hold rtemp
 capture graph describe Graph
 local checkdate = "`r(command_date)' `r(command_time)'" 
 <</dd_do>>
@@ -25,20 +30,15 @@ local checkdate = "`r(command_date)' `r(command_time)'"
 <<dd_skip_end>>
 <<dd_do: quietly>>
 local `gdate' = "`r(command_date)' `r(command_time)'"
-capture _return restore rtemp
-sleep 500
 <</dd_do>>
 
-In-line text: <<dd_display:  c(current_date)>>
-
-A graph (`nocommands`):
-```{s, echo=FALSE}
-<<dd_do: nocommands>>
-histogram weight
+A code block with ```stata
+```stata
+<<dd_do>>
+summarize price weight
 <</dd_do>>
 ```
 <<dd_do: quietly>>
-capture _return hold rtemp
 capture graph describe Graph
 local checkdate = "`r(command_date)' `r(command_time)'" 
 <</dd_do>>
@@ -47,19 +47,15 @@ local checkdate = "`r(command_date)' `r(command_time)'"
 <<dd_skip_end>>
 <<dd_do: quietly>>
 local `gdate' = "`r(command_date)' `r(command_time)'"
-capture _return restore rtemp
-sleep 500
 <</dd_do>>
 
-More text.
-Generate a new variable (`quietly`).
-```{s, echo=FALSE, results=FALSE}
-<<dd_do: quietly>>
-generate gpm = 1/mpg
+A code block with ```{s}
+```{s}
+<<dd_do>>
+summarize mpg displacement
 <</dd_do>>
 ```
 <<dd_do: quietly>>
-capture _return hold rtemp
 capture graph describe Graph
 local checkdate = "`r(command_date)' `r(command_time)'" 
 <</dd_do>>
@@ -68,18 +64,15 @@ local checkdate = "`r(command_date)' `r(command_time)'"
 <<dd_skip_end>>
 <<dd_do: quietly>>
 local `gdate' = "`r(command_date)' `r(command_time)'"
-capture _return restore rtemp
-sleep 500
 <</dd_do>>
 
-Yet more text (`nooutput`).
-```{stata, results=FALSE}
-<<dd_do: nooutput>>
-summarize gpm
+A code block with ```{stata}
+```{stata}
+<<dd_do>>
+tabulate foreign
 <</dd_do>>
 ```
 <<dd_do: quietly>>
-capture _return hold rtemp
 capture graph describe Graph
 local checkdate = "`r(command_date)' `r(command_time)'" 
 <</dd_do>>
@@ -88,29 +81,4 @@ local checkdate = "`r(command_date)' `r(command_time)'"
 <<dd_skip_end>>
 <<dd_do: quietly>>
 local `gdate' = "`r(command_date)' `r(command_time)'"
-capture _return restore rtemp
-sleep 500
 <</dd_do>>
-
-
-Another graph (`noprompt`):
-```{s, noprompt=TRUE}
-<<dd_do: noprompt>>
-scatter price weight
-<</dd_do>>
-```
-<<dd_do: quietly>>
-capture _return hold rtemp
-capture graph describe Graph
-local checkdate = "`r(command_date)' `r(command_time)'" 
-<</dd_do>>
-<<dd_skip_if: ="``gdate''"~="" & "``gdate''"=="`checkdate'">>
-<<dd_graph>>
-<<dd_skip_end>>
-<<dd_do: quietly>>
-local `gdate' = "`r(command_date)' `r(command_time)'"
-capture _return restore rtemp
-sleep 500
-<</dd_do>>
-
-

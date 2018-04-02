@@ -1,6 +1,6 @@
-*! version 1.5.4
+*! version 1.5.5
 *! Doug Hemken
-*! 27 March 2018
+*! 2 April 2018
 
 // ISSUES
 // ======
@@ -12,7 +12,10 @@
 capture program drop stmd2dyn
 capture mata: mata clear
 program define stmd2dyn, rclass
-	syntax anything(name=infile), [SAVing(string) replace]
+	syntax anything(name=infile), [ ///
+		SAVing(string) replace ///
+		noGRAPHlinks ///
+		]
 
 	local infile = ustrtrim(usubinstr(`"`infile'"', `"""', "", .))
 *display `"infile is `infile'"'	
@@ -37,7 +40,7 @@ display in error "target file can not be the same as the source file"
 
 * Read in file
 	mata: X=docread("`infile'")
-	
+//mata: X	
 * Then identify code blocks and tags
 	mata: fenceinfo = _fence_info(X) // fences
 	mata: infotags  = _info_tags(X)  // retrieve infotags
@@ -46,10 +49,10 @@ display in error "target file can not be the same as the source file"
 
 * Identify display directives
 	mata: X = _inline_code(X)
-
+//mata: X
 * assemble pieces of a dyndoc
 	mata: document = _stitch(X, fenceinfo, dotags)
-
+//mata: document
 * Write out the result
 	mata: saving = st_local("saving")
 	mata: docwrite(saving, document)
@@ -165,6 +168,7 @@ string colvector function _gr_preamble() {
 
 string colvector function _gr_link() {
 	GL = `"<<dd_do: quietly>>"' \
+		`"capture _return hold rtemp"' \
 		`"capture graph describe Graph"' \
 		`"local checkdate = "\`r(command_date)' \`r(command_time)'" "' \
 		`"<</dd_do>>"' \
@@ -173,6 +177,8 @@ string colvector function _gr_link() {
 		`"<<dd_skip_end>>"' \
 		`"<<dd_do: quietly>>"' \
 		`"local \`gdate' = "\`r(command_date)' \`r(command_time)'""' \
+		`"capture _return restore rtemp"' \
+		`"sleep 500"' \
 		`"<</dd_do>>"' 
 	return(GL)	
 	}
@@ -191,6 +197,9 @@ string colvector function _stitch(string colvector X,
 			Y= Y \X[(lce+1)..(i-1),.]\dotags[i,.]\X[i,.]\_gr_link()
 			lce = i
 			}
+		else if (i==rows(X)) {
+			Y= Y \ X[(lce+1)..i,.]
+			}
 		}
 	return(Y)
 	}
@@ -199,9 +208,9 @@ string colvector function _inline_code(string colvector X) {
 	for (i=1; i<=rows(X); i++) {
 		dispdir = ustrregexm(X[i,1], "(`|~)\{?s(tata)?(.*)(`)")
 		while (dispdir) {
-			X[i,1] = ustrregexra(X[i,1], "(`|~)\{?s(tata)?", "<<dd_display: ")
+			X[i,1] = ustrregexra(X[i,1], "(`|~)\{?s(tata)?\}?", "<<dd_display: ")
 			X[i,1] = ustrregexra(X[i,1], "`", ">>")
-			dispdir = ustrregexm(X[i,1], "(`|~)\{?s(tata)?(.*)(`)")
+			dispdir = ustrregexm(X[i,1], "(`|~)\{?s(tata)?\{?(.*)(`)")
 			}
 		}
 	return(X)

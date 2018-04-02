@@ -1,0 +1,64 @@
+<<dd_do: quietly>>
+capture graph describe Graph
+tempname gdate
+local `gdate' = "`r(command_date)' `r(command_time)'" 
+<</dd_do>>
+An Example File
+===============
+
+Some preliminary text.
+
+A code block, evaluted:
+```{s}
+<<dd_do>>
+sysuse auto
+summarize weight
+<</dd_do>>
+```
+<<dd_do: quietly>>
+capture graph describe Graph
+local checkdate = "`r(command_date)' `r(command_time)'" 
+<</dd_do>>
+<<dd_skip_if: ="``gdate''"~="" & "``gdate''"=="`checkdate'">>
+<<dd_graph>>
+<<dd_skip_end>>
+<<dd_do: quietly>>
+local `gdate' = "`r(command_date)' `r(command_time)'"
+<</dd_do>>
+
+In-line text: <<dd_display:  c(current_date)>>
+
+A graph:
+```{s}
+<<dd_do>>
+histogram weight
+<</dd_do>>
+```
+<<dd_do: quietly>>
+capture graph describe Graph
+local checkdate = "`r(command_date)' `r(command_time)'" 
+<</dd_do>>
+<<dd_skip_if: ="``gdate''"~="" & "``gdate''"=="`checkdate'">>
+<<dd_graph>>
+<<dd_skip_end>>
+<<dd_do: quietly>>
+local `gdate' = "`r(command_date)' `r(command_time)'"
+<</dd_do>>
+
+More text.
+Another graph:
+```{s}
+<<dd_do>>
+scatter price weight
+<</dd_do>>
+```
+<<dd_do: quietly>>
+capture graph describe Graph
+local checkdate = "`r(command_date)' `r(command_time)'" 
+<</dd_do>>
+<<dd_skip_if: ="``gdate''"~="" & "``gdate''"=="`checkdate'">>
+<<dd_graph>>
+<<dd_skip_end>>
+<<dd_do: quietly>>
+local `gdate' = "`r(command_date)' `r(command_time)'"
+<</dd_do>>

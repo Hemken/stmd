@@ -1,0 +1,46 @@
+<h1><a href="#an-example-file" id="an-example-file">An Example File</a></h1>
+<p>Some preliminary text.</p>
+<p>A code block, not evaluted:</p>
+<pre><code>sysuse auto
+summarize weight
+</code></pre>
+<p>A code block, evaluted:</p>
+<pre><code class="language-s">. sysuse auto
+(1978 Automobile Data)
+
+. summarize weight
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      weight |         74    3019.459    777.1936       1760       4840
+
+</code></pre>
+<p>A code block with ```stata</p>
+<pre><code class="language-stata">. summarize price weight
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       price |         74    6165.257    2949.496       3291      15906
+      weight |         74    3019.459    777.1936       1760       4840
+
+</code></pre>
+<p>A code block with ```{s}</p>
+<pre><code class="language-{s}">. summarize mpg displacement
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+         mpg |         74     21.2973    5.785503         12         41
+displacement |         74    197.2973    91.83722         79        425
+
+</code></pre>
+<p>A code block with ```{stata}</p>
+<pre><code class="language-{stata}">. tabulate foreign
+
+   Car type |      Freq.     Percent        Cum.
+------------+-----------------------------------
+   Domestic |         52       70.27       70.27
+    Foreign |         22       29.73      100.00
+------------+-----------------------------------
+      Total |         74      100.00
+
+</code></pre>

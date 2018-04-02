@@ -1,0 +1,33 @@
+<h1><a href="#inline-language-calls" id="inline-language-calls">Inline Language Calls</a></h1>
+<p>Some preliminary text.</p>
+<p>A code block, setup:</p>
+<pre><code class="language-{stata}">. sysuse auto
+(1978 Automobile Data)
+
+. summarize weight
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      weight |         74    3019.459    777.1936       1760       4840
+
+</code></pre>
+<p>The current date is  2 Apr 2018</p>
+<pre><code class="language-{stata}">. return list
+
+scalars:
+                r(sum) =  223440
+                r(max) =  4840
+                r(min) =  1760
+                 r(sd) =  777.1935671373662
+                r(Var) =  604029.8407997037
+               r(mean) =  3019.45945945946
+              r(sum_w) =  74
+                  r(N) =  74
+
+</code></pre>
+<p>Using `s</p>
+<p>The mean weight is 3019.4595.</p>
+<p>Using ```stata</p>
+<p>The maximum weight is 4840.</p>
+<p>Using ```{s}, and two calls per line.</p>
+<p>The weight range is 1760 to 4840.</p>

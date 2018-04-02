@@ -1,0 +1,28 @@
+Inline Language Calls
+===============
+
+Some preliminary text.
+
+A code block, setup:
+```{stata}
+sysuse auto
+summarize weight
+```
+
+The current date is `s c(current_date)`
+
+```{stata}
+return list
+```
+
+Using `s
+
+The mean weight is `s r(mean)`.
+
+Using ```stata
+
+The maximum weight is `s r(max)`.
+
+Using ```{s}, and two calls per line.
+
+The weight range is `{s} r(min)` to `{stata} r(max)`.
