@@ -1,13 +1,20 @@
-*! version 1.1
+*! version 1.2
 *! Doug Hemken
-*! 16 March 2018
+*! 3 April 2018
 
 // pass options and arguments to dyndoc
 
 capture program drop stmd2html
 program define stmd2html, rclass
 	syntax anything(name=infile)    /// input file name
-		[, SAVing(string) replace]  //  name of HTML file
+		[,							/// 
+		SAVing(string) REPLace		///  name of HTML file
+		noREMove					///
+		hardwrap					///
+		nomsg						///
+		nostop						///
+		]
+		
 display `"`infile'"'
 	* infile checks	
 	local infile = ustrtrim(usubinstr(`"`infile'"', `"""', "", .))
@@ -32,6 +39,6 @@ display in error "target file can not be the same as the source file"
 	tempfile dyn
 	* process
 	stmd2dyn `infile', saving(`dyn') `replace'
-	dyndoc `dyn', saving(`saving') `replace'
+	dyndoc `dyn', saving(`saving') `replace' `remove' `hardwrap' `msg' `stop'
 	
 end
