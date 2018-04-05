@@ -2,7 +2,7 @@
 *! Doug Hemken
 *! 3 April 2018
 
-// pass options and arguments to dyndoc
+// pass arguments to dyndoc
 
 capture program drop stmd2html
 program define stmd2html, rclass
@@ -15,7 +15,7 @@ program define stmd2html, rclass
 		nostop						///
 		]
 		
-display `"`infile'"'
+*display `"`infile'"'
 	* infile checks	
 	local infile = ustrtrim(usubinstr(`"`infile'"', `"""', "", .))
 	confirm file `"`infile'"'

@@ -1,0 +1,116 @@
+<<dd_version: 1>>
+<<dd_include: header.txt >>
+
+
+Using Stata dynamic tags in a text file with the dyndoc command
+===============================================================
+
+Let us consider an example where we study the **mpg** and **weight** variables
+in **auto.dta**.  In our examples below, we will first write the commands so
+that they will be displayed in our target HTML file.  Then, we will write the
+commands so that Stata will process the Stata dynamic tags, displaying the
+results of the Stata commands in the target HTML file.
+
+
+We first use the **sysuse** command to load the dataset and then describe
+the data using the **describe** command. 
+
+~~~~
+```{stata}
+sysuse auto, clear
+describe
+```
+~~~~
+
+This produces the following Stata results:
+
+```{stata}
+sysuse auto, clear
+describe
+```
+
+Now, we want to check if **mpg** is always greater than 0 and less than 100.
+We use the **assert** command to perform the check.  In this case, we do not
+want to include any output in the target HTML file, so we use the 
+**echo=FALSE, results="hide"**
+attributes to modify the output of the code block.  
+Alternatively, we could specify **quietly**.    
+
+~~~~
+```{stata, echo=FALSE, results="hide"}
+assert mpg > 0 & mpg < 100
+```
+~~~~
+
+This is executed immediately after this line.
+
+```{stata, echo=FALSE, results="hide"}
+assert mpg > 0 & mpg < 100
+```
+
+If the data had not satisfied the conditions, **dyndoc** would have failed with an error
+message, as would occur if we ran the same **assert** command in a do-file. 
+
+
+Next, we want to summarize the **weight** variable:
+
+~~~~
+```{stata}
+summarize weight
+```
+~~~~
+
+This produces the following in the target HTML file:
+
+```{stata}
+summarize weight
+```
+
+We want to use the minimum and maximum values of **weight** in a sentence.
+Instead of copying and pasting the numbers from the **summarize** output, we can
+use the **dd_display** Stata dynamic tag with the **r(min)** and **r(max)**
+stored results:
+
+~~~~
+> The variable weight has minimum value `s %4.2f r(min)` and 
+has maximum value `s %4.2f `r(max)'`.
+~~~~
+
+This produces the following in the target HTML file:
+
+> The variable weight has minimum value `s %4.2f r(min)` and 
+has maximum value `s %4.2f r(max)`.
+
+
+The **dd_display** dynamic tag uses Stata's **display** command to evaluate
+expressions.  It can be used as a calculator. For example, if we want to
+include the $$range = max - min$$ in a sentence, instead of calculating the
+number and then copying and pasting it, we can use 
+
+~~~~
+> The variable weight has range `s %4.2f r(max)-r(min)`.
+~~~~
+
+which produces the following in the target HTML file:
+
+> The variable weight has range `s %4.2f r(max)-r(min)`.
+
+Now, we want to graph **mpg** and **weight** using a scatterplot.  We use the
+**dd_do** tag with the **nooutput** attribute to generate the scatterplot
+first.  The **nooutput** attribute leaves just the command in the output,
+
+~~~~
+```{stata, nooutput}
+scatter mpg weight, mcolor(blue%50)
+```
+~~~~
+
+which generates a scatterplot of **mpg** and **weight** with 50% opacity 
+color markers.
+
+```{stata, nooutput}
+scatter mpg weight, mcolor(blue%50)
+```
+
+This should have exported the graph to a file and included an image link to the
+HTML file. 

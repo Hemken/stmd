@@ -1,0 +1,18 @@
+# Title
+
+A covered code block, which should not execute.
+
+~~~~
+```{stata}
+sysuse auto
+summarize
+```
+~~~~
+
+And then an uncovered version, which should execute.
+```{stata}
+sysuse auto
+summarize
+```
+
+
