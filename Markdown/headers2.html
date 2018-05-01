@@ -1,0 +1,87 @@
+<h1><a href="#some-examples-of-headers" name="some-examples-of-headers">Some Examples of Headers</a></h1>
+<p>Headers may be written in two different styles, <em>setext</em> headers which are marked up with &quot;underscores&quot;, and <em>ATX</em> headers which are marked up with hash marks (&quot;#&quot;).</p>
+<ol>
+  <li>
+    <p><strong>Setext</strong> headers are denoted with &quot;underscores&quot; (actually, at least 3 equal signs or dashes on the next line of text). The text line of a setext header must usually be preceded by a blank line, it cannot &quot;interrupt&quot; another container.</p>
+    <p>Written:</p>
+    <pre><code>Header 1
+========
+Header 2
+---
+</code></pre>
+    <p>Rendered:</p>
+    <blockquote>
+      <h1><a href="#header-1" name="header-1">Header 1</a></h1>
+      <h2><a href="#header-2" name="header-2">Header 2</a></h2>
+    </blockquote>
+    <pre><code>summarize
+</code></pre>
+    <h2><a href="#after-a-code-fence" name="after-a-code-fence">After a code fence</a></h2>
+    <p>&mdash;</p>
+    <h2><a href="#after-a-theme-break" name="after-a-theme-break">After a theme break</a></h2>
+    <p>(Rules for finding the beginning of a setext header differ slightly between <em>flexmark</em>, <em>pegdown</em>, and <em>pandoc</em>.)</p>
+    <p>In flexmark, no preceding blank line is needed at the beginning of a document or the beginning of a blockquote. Likewise, no preceding blank line is needed where the preceding container has closed after a code fence or after a theme break). Oddly, a setext header cannot be the first element in a list item, but can appear in a later paragraph within the list item.</p>
+    <ul>
+      <li>item 1
+        <h2><a href="#header-2" name="header-2">Header 2</a></h2>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>ATX</strong> headers are denoted with &quot;hash&quot; marks (&quot;#&quot;) and a space, before the header text. Up to six levels of headers are supported in HTML. No preceding blank line required in this style.</p>
+    <p>Written:</p>
+    <pre><code># Header 1
+## Header 2
+### Header 3
+#### Header 4
+##### Header 5
+###### Header 6
+####### not header 7
+</code></pre>
+    <p>Rendered:</p>
+    <blockquote>
+      <h1><a href="#header-1" name="header-1">Header 1</a></h1>
+      <h2><a href="#header-2" name="header-2">Header 2</a></h2>
+      <h3><a href="#header-3" name="header-3">Header 3</a></h3>
+      <h4><a href="#header-4" name="header-4">Header 4</a></h4>
+      <h5><a href="#header-5" name="header-5">Header 5</a></h5>
+      <h6><a href="#header-6" name="header-6">Header 6</a></h6>
+      <h6># not header 7</h6>
+    </blockquote>
+  </li>
+  <li>
+    <p>Inlines within headers</p>
+    <h2><em>Emphatic</em> <strong>Strong</strong> <del>Strikethrough</del> <code>Code</code></h2>
+    <h2><code>Code</code> <del>Strikethrough</del> <strong>Strong</strong> <em>Emphasis</em></h2>
+  </li>
+  <li>
+    <p>Headers may appear within</p>
+    <ul>
+      <li>
+      <p>Blockquotes. Written:</p>
+      <pre><code>&gt; ### Quoted header
+</code></pre>
+      <p>Rendered:</p>
+      <blockquote>
+        <h3><a href="#quoted-header" name="quoted-header">Quoted header</a></h3>
+      </blockquote></li>
+      <li>Lists, written: <del>~
+</del></li>
+    </ul>
+  </li>
+</ol>
+<ul>
+  <li>
+  <h3><a href="#item-1" name="item-1">Item 1</a></h3></li>
+  <li>
+    <h3><a href="#item-2" name="item-2">Item 2</a></h3><del>~ Rendered:
+</del>
+    <ul>
+      <li>
+      <p>
+      <h3><a href="#item-1" name="item-1">Item 1</a></h3></p></li>
+    </ul>
+  </li>
+  <li>
+  <h3><a href="#item-2" name="item-2">Item 2</a></h3></li>
+</ul>

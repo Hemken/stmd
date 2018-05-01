@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>
+Basic Markdown Elements
+</title>
+<p><meta name="author" content="Doug Hemken" /></p>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+<!--#include virtual="../../../Rmd/headInclKB.html" -->
+<link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
+<style>
+table {
+    border-collapse: collapse;
+}
+table, th, td {
+   border: 1px solid black;
+}
+blockquote {
+    border-left: solid blue;
+    padding-left: 10px;
+}
+</style>
+</head>
+<!--#include virtual="/sscc/pubs/Rmd/topInclKB.html" -->
+<h1 id="markdown-elements">Markdown Elements</h1>
+<p>The formatting elements specified by Markdown come in two basic types: there are <em>block</em> elements and <em>inline</em> elements.</p>
+<p><strong>Block</strong> elements include such things as <em>paragraphs</em> of text, <em>code blocks</em>, <em>block quotes</em>, <em>lists</em>, and <em>tables</em>. <em>Headings</em> and <em>theme breaks</em> (horizontal rules) are also thought of as block elements</p>
+<p><strong>Inline</strong> elements includes things like <em>emphasis</em> (italics) and <em>strong emphasis</em> (bold), <em>links</em> (URLs), <em>images</em> (image links), and <em>code spans</em> (inline code).</p>
+<p>One way to keep this straight is that <em>block</em> elements may contain <em>inline</em> elements, but not the other way around.</p>
+<h2 id="inline-examples">Inline Examples</h2>
+<p>Some simple examples:</p>
+<table>
+<colgroup>
+<col width="68%" />
+<col width="31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Markdown</th>
+<th align="center">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><code>*Emphasis*</code></td>
+<td align="center"><em>Emphasis</em></td>
+</tr>
+<tr class="even">
+<td align="center"><code>**Strong** emphasis</code></td>
+<td align="center"><strong>Strong</strong> emphasis</td>
+</tr>
+<tr class="odd">
+<td align="center">`<code>Code</code>`<code>span</code></td>
+<td align="center"><code>Code</code> span</td>
+</tr>
+<tr class="even">
+<td align="center"><code>~~Strikethrough~~</code></td>
+<td align="center"><del>Strikethrough</del></td>
+</tr>
+<tr class="odd">
+<td align="center"><code>[URL](https://www.ssc.wisc.edu/~hemken)</code></td>
+<td align="center"><a href="https://www.ssc.wisc.edu/~hemken">URL</a></td>
+</tr>
+<tr class="even">
+<td align="center"><code>Autolinks &lt;https://www.ssc.wisc.edu/~hemken&gt;</code></td>
+<td align="center">Autolinks <a href="https://www.ssc.wisc.edu/~hemken" class="uri">https://www.ssc.wisc.edu/~hemken</a></td>
+</tr>
+<tr class="odd">
+<td align="center"><code>Image ![](Graph.svg)</code></td>
+<td align="center">Image <img src="Graph.svg" /></td>
+</tr>
+</tbody>
+</table>
+<p>Pandoc extentions that do not work in flexmark or pegdown:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Markdown</th>
+<th align="center">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><code>Some~subscript~</code></td>
+<td align="center">Some<sub>subscript</sub></td>
+</tr>
+<tr class="even">
+<td align="center"><code>Some^superscript^</code></td>
+<td align="center">Some<sup>superscript</sup></td>
+</tr>
+</tbody>
+</table>
+<p>Math is not enabled by flexmark or pegdown by default, but can be enabled with the appropriate javascript in the document head.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Markdown</th>
+<th align="center">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Math <code>$y=x_1+x_2$</code></td>
+<td align="center">Math $y=x_1+x_2$</td>
+</tr>
+</tbody>
+</table>
+<h2 id="block-elements">Block Elements</h2>
+<p>The various block elements - paragraphs, headings, lists, etc. - may be subdivided into two broad categories: atomic blocks, often called &quot;<em>leaf</em> blocks&quot;, and <em>container</em> blocks, which can have other block elements nested within them.</p>
+<p>Most block elements can include inline elements: the exceptions are theme breaks and code blocks.</p>
+<p>Paragraphs, headers, theme breaks, code blocks, and tables are all atomic blocks - they do <em>not</em> contain nested blocks.</p>
+<hr />
+<p>A <em>paragraph</em> is a continous block of text. It begins after another block element ends, or after a blank line (a blank line is often what marks the end of a block element). A paragraph often ends with a blank line, but may be interrupted by some other block elements.<br />
+This is a paragraph.</p>
+<hr />
+<p>A <em>header</em> is a distinct block of text. These are marked either with hash marks (&quot;#&quot; and a space) or with dashes on the following line (either &quot;-&quot; or &quot;=&quot;). There are six levels of hashed headers (&quot;ATX&quot; headers) or two levels of underscore headers (&quot;Setext&quot; headers). Setext headers must be preceded by a blank line, ATX headers may interrupt a paragraph (i.e. need not follow a blank line).</p>
+<p>Markdown:</p>
+<pre><code>Header 2
+--------
+### Header 3</code></pre>
+<p>Output:</p>
+<h2 id="header-2">Header 2</h2>
+<h3 id="header-3">Header 3</h3>
+<hr />
+<p>A <em>theme break</em> consists of three or more asterisks, underscores, or dashes, on a line by themselves. They may be interspersed with spaces. They usually require a preceding blank line, or they may be interpreted as header indicators or as emphasis.</p>
+<p>Markdown:</p>
+<pre><code>***</code></pre>
+<hr />
+<p>A <em>code block</em> is a continuous block of text that is formated as <code>&lt;code&gt;</code>. Code blocks may be marked in two ways: by indenting the text four spaces, and with code fences. Code fences may include an information tag (often used to process the code) or not.</p>
+<p>Markdown:</p>
+<pre><code>    indented code block
+```
+fenced code block
+```</code></pre>
+<p>Output:</p>
+<pre><code>indented code block</code></pre>
+<pre><code>fenced code block</code></pre>
+<hr />
+<p>A <em>table</em> (a &quot;piped table&quot;) is marked with vertical bars between the cells, rows on separate lines, and a required header line (similar to underscore headers). While not a part of strict Markdown, they are available in all the Markdown flavors we use with Stata.</p>
+<p>Markdown:</p>
+<pre><code>column 1 | column 2
+---------|---------
+value 1  | value 2</code></pre>
+<p>Output:</p>
+<table>
+<thead>
+<tr class="header">
+<th>column 1</th>
+<th>column 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>value 1</td>
+<td>value 2</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p>Block quotes and lists are container blocks, which may contain other block elements.</p>
+<p>Block quotes are marked with a preceding right angle, &quot;&gt;&quot; and a space.</p>
+<pre><code>&gt; A block quote with a
+&gt; ##### header 4
+&gt; and a table
+&gt;
+&gt; column 1 | column 2
+&gt; ---------|---------
+&gt; value 1  | value 2</code></pre>
+<blockquote>
+<p>A block quote with a ##### header 4 and a table</p>
+<table>
+<thead>
+<tr class="header">
+<th>column 1</th>
+<th>column 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>value 1</td>
+<td>value 2</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<hr />
+<p>Lists may be either unordered or ordered. Unordered lists are marked with a dash, and asterisk, or a plus followed by a space before each list item. Ordered lists begin each element with a numeral and a period, followed by a space.</p>
+<p>List items can contain other blocks (not illustrated here).</p>
+<p>Markdown:</p>
+<pre><code>- item 1
+- item 2
+
+1. item 1
+2. item 2</code></pre>
+<p>Output:</p>
+<ul>
+<li>item 1</li>
+<li>item 2</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>item 1</li>
+<li>item 2</li>
+</ol>
+<!--#include virtual="/sscc/pubs/Rmd/bottomInclKB.html" -->
+</body>
+</body>
+</html>

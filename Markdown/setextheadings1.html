@@ -1,0 +1,280 @@
+<h2><a href="#setext-headings" id="setext-headings">Setext headings</a></h2>
+<p>Flexmark and pegdown differ in their treatment of setext headings. Flexmark makes such headings an anchor regardless of inline formatting, while pegdown does not when there is inline formatting.</p>
+<p>A <a href="@">setext heading</a> consists of one or more lines of text, each containing at least one [non-whitespace character], with no more than 3 spaces indentation, followed by a [setext heading underline].  The lines of text must be such that, were they not followed by the setext heading underline, they would be interpreted as a paragraph:  they cannot be interpretable as a [code fence], [ATX heading][ATX headings], [block quote][block quotes], [thematic break][thematic breaks], [list item][list items], or [HTML block][HTML blocks].</p>
+<p>A <a href="@">setext heading underline</a> is a sequence of at least 3 <code>=</code> characters or a sequence of <code>-</code> characters, with no more than 3 spaces indentation and any number of trailing spaces.  If a line containing a single <code>-</code> can be interpreted as an empty [list items], it should be interpreted this way and not as a [setext heading underline].</p>
+<p>The heading is a level 1 heading if <code>=</code> characters are used in the [setext heading underline], and a level 2 heading if <code>-</code> characters are used.  The contents of the heading are the result of parsing the preceding lines of text as inline content.</p>
+<p>In general, a setext heading need not be preceded or followed by a blank line.  However, it cannot interrupt a paragraph, so when a setext heading comes after a paragraph, a blank line is needed between them.</p>
+<p>Simple examples:</p>
+<p>Example extra - number of underline characters</p>
+<pre><code>```
+Foobar
+=
+
+Foobar
+==
+
+Foobar
+===
+```
+</code></pre>
+<p>Foobar =</p>
+<p>Foobar ==</p>
+<h1><a href="#foobar" id="foobar">Foobar</a></h1>
+<p>Example 50 - headings with emphasis (differ in flexmark vs. pegdown)</p>
+<pre><code>```
+Foo *bar*
+=========
+
+Foo *bar*
+---------
+```
+</code></pre>
+<h1><a href="#foo-bar" id="foo-bar">Foo <em>bar</em></a></h1>
+<h2><a href="#foo-bar" id="foo-bar">Foo <em>bar</em></a></h2>
+<p>The content of the header may span more than one line in flexmark, but not in pegdown:</p>
+<p>Example 51 - two-line header</p>
+<pre><code>```
+Foo bar
+baz
+====
+```
+</code></pre>
+<h1><a href="#foo-barbaz" id="foo-barbaz">Foo bar baz</a></h1>
+<p>The underlining can be any length &gt; 3:</p>
+<p>Example 52 - long and short underlining</p>
+<pre><code>```
+Foo
+-------------------------
+
+Foo
+=====
+```
+</code></pre>
+<h2><a href="#foo" id="foo">Foo</a></h2>
+<h1><a href="#foo" id="foo">Foo</a></h1>
+<p>The heading content can be indented up to three spaces, and need not line up with the underlining.  However, there can be no spaces preceding the underlining.</p>
+<p>Example 53 - spaces in heading content</p>
+<pre><code>```
+   Foo
+---
+
+  Foo
+-----
+
+  Foo
+  ===
+
+  Foo
+ ===
+
+  Foo
+===
+```
+</code></pre>
+<h2><a href="#foo" id="foo">Foo</a></h2>
+<h2><a href="#foo" id="foo">Foo</a></h2>
+<p>Foo ===</p>
+<p>Foo ===</p>
+<h1><a href="#foo" id="foo">Foo</a></h1>
+<p>Four spaces indent for content is too much:</p>
+<pre><code>```
+    Foo
+---
+```
+</code></pre>
+<pre><code>Foo
+</code></pre>
+<hr />
+<p>The setext heading underline may have trailing spaces:</p>
+<pre><code>```
+Foo
+----      
+```
+</code></pre>
+<h2><a href="#foo" id="foo">Foo</a></h2>
+<p>The setext heading underline cannot contain internal spaces:</p>
+<pre><code>```
+Foo
+=== =
+
+Foo
+--- -
+```
+</code></pre>
+<p>Foo === =</p>
+<p>Foo &mdash; -</p>
+<p>Trailing spaces in the content line do not cause a line break:</p>
+<pre><code class="language-example">Foo  
+-----
+.
+&lt;h2&gt;Foo&lt;/h2&gt;
+</code></pre>
+<p>Nor does a backslash at the end:</p>
+<pre><code class="language-example">Foo\
+----
+.
+&lt;h2&gt;Foo\&lt;/h2&gt;
+</code></pre>
+<p>Since indicators of block structure take precedence over indicators of inline structure, the following are setext headings:</p>
+<pre><code class="language-example">`Foo
+----
+`
+
+&lt;a title=&quot;a lot
+---
+of dashes&quot;/&gt;
+.
+&lt;h2&gt;`Foo&lt;/h2&gt;
+&lt;p&gt;`&lt;/p&gt;
+&lt;h2&gt;&amp;lt;a title=&amp;quot;a lot&lt;/h2&gt;
+&lt;p&gt;of dashes&amp;quot;/&amp;gt;&lt;/p&gt;
+</code></pre>
+<p>The setext heading underline cannot be a [lazy continuation line] in a list item or block quote:</p>
+<pre><code class="language-example">&gt; Foo
+---
+.
+&lt;blockquote&gt;
+&lt;p&gt;Foo&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+</code></pre>
+<pre><code class="language-example">&gt; foo
+bar
+===
+.
+&lt;blockquote&gt;
+&lt;p&gt;foo
+bar
+===&lt;/p&gt;
+&lt;/blockquote&gt;
+</code></pre>
+<pre><code class="language-example">- Foo
+---
+.
+&lt;ul&gt;
+&lt;li&gt;Foo&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+</code></pre>
+<p>A blank line is needed between a paragraph and a following setext heading, since otherwise the paragraph becomes part of the heading&rsquo;s content:</p>
+<pre><code class="language-example">Foo
+Bar
+---
+.
+&lt;h2&gt;Foo
+Bar&lt;/h2&gt;
+</code></pre>
+<p>But in general a blank line is not required before or after setext headings:</p>
+<pre><code class="language-example">---
+Foo
+---
+Bar
+---
+Baz
+.
+&lt;hr /&gt;
+&lt;h2&gt;Foo&lt;/h2&gt;
+&lt;h2&gt;Bar&lt;/h2&gt;
+&lt;p&gt;Baz&lt;/p&gt;
+</code></pre>
+<p>Setext headings cannot be empty:</p>
+<pre><code class="language-example">
+====
+.
+&lt;p&gt;====&lt;/p&gt;
+</code></pre>
+<p>Setext heading text lines must not be interpretable as block constructs other than paragraphs.  So, the line of dashes in these examples gets interpreted as a thematic break:</p>
+<pre><code class="language-example">---
+---
+.
+&lt;hr /&gt;
+&lt;hr /&gt;
+</code></pre>
+<pre><code class="language-example">- foo
+-----
+.
+&lt;ul&gt;
+&lt;li&gt;foo&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+</code></pre>
+<pre><code class="language-example">    foo
+---
+.
+&lt;pre&gt;&lt;code&gt;foo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+</code></pre>
+<pre><code class="language-example">&gt; foo
+-----
+.
+&lt;blockquote&gt;
+&lt;p&gt;foo&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+</code></pre>
+<p>If you want a heading with <code>&gt; foo</code> as its literal text, you can use backslash escapes:</p>
+<pre><code class="language-example">\&gt; foo
+------
+.
+&lt;h2&gt;&amp;gt; foo&lt;/h2&gt;
+</code></pre>
+<p><strong>Compatibility note:</strong>  Most existing Markdown implementations do not allow the text of setext headings to span multiple lines. But there is no consensus about how to interpret</p>
+<pre><code class="language-markdown">Foo
+bar
+---
+baz
+</code></pre>
+<p>One can find four different interpretations:</p>
+<ol>
+<li>paragraph &ldquo;Foo&rdquo;, heading &ldquo;bar&rdquo;, paragraph &ldquo;baz&rdquo;</li>
+<li>paragraph &ldquo;Foo bar&rdquo;, thematic break, paragraph &ldquo;baz&rdquo;</li>
+<li>paragraph &ldquo;Foo bar &mdash; baz&rdquo;</li>
+<li>heading &ldquo;Foo bar&rdquo;, paragraph &ldquo;baz&rdquo;</li>
+</ol>
+<p>We find interpretation 4 most natural, and interpretation 4 increases the expressive power of CommonMark, by allowing multiline headings.  Authors who want interpretation 1 can put a blank line after the first paragraph:</p>
+<pre><code class="language-example">Foo
+
+bar
+---
+baz
+.
+&lt;p&gt;Foo&lt;/p&gt;
+&lt;h2&gt;bar&lt;/h2&gt;
+&lt;p&gt;baz&lt;/p&gt;
+</code></pre>
+<p>Authors who want interpretation 2 can put blank lines around the thematic break,</p>
+<pre><code class="language-example">Foo
+bar
+
+---
+
+baz
+.
+&lt;p&gt;Foo
+bar&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;baz&lt;/p&gt;
+</code></pre>
+<p>or use a thematic break that cannot count as a [setext heading underline], such as</p>
+<pre><code class="language-example">Foo
+bar
+* * *
+baz
+.
+&lt;p&gt;Foo
+bar&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;baz&lt;/p&gt;
+</code></pre>
+<p>Authors who want interpretation 3 can use backslash escapes:</p>
+<pre><code class="language-example">Foo
+bar
+\---
+baz
+.
+&lt;p&gt;Foo
+bar
+---
+baz&lt;/p&gt;
+</code></pre>

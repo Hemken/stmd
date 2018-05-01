@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="theme-breaks-horizontal-rules">Theme Breaks (horizontal rules)</h1>
+<p>A theme break (a horizontal rule) is written as three or more dashes, underscores, or asterisks. These may be preceded by up to three spaces. (When rendered with <em>pegdown</em> or <em>pandoc</em> (default) they usually must be preceded by a blank line, and followed by a blank line.)</p>
+<p>Written as:</p>
+<pre><code>---
+___
+***</code></pre>
+<p>Rendered as:</p>
+<table style="width:4%;">
+<colgroup>
+<col width="4%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>___ ***</td>
+</tr>
+<tr class="even">
+<td>Too few marks do not work:</td>
+</tr>
+</tbody>
+</table>
+<p>__</p>
+<p>**</p>
+<p>The marks may be interspersed with spaces, but not any other characters.</p>
+<p>Written: <sub>~</sub> - - - _ _ _ * * * <sub>~</sub></p>
+<hr />
+<hr />
+<hr />
+<p>Theme breaks do not interrupt paragraphs (the marks may be interpreted as emphasis or setext headings).</p>
+<p>A theme break may appear in a block quote.</p>
+<p>Written: <sub>~</sub> &gt; <strong><em> &gt; quoted &gt; &gt; </em></strong> &gt; text <sub>~</sub> Rendered: &gt; <strong><em> &gt; quoted &gt; &gt; </em></strong> &gt; text</p>
+<p>A theme break may be contained in a list, if it is composed of characters that contrast with the list item marker. Notice using the same character as a list item and as a theme break yields a pure theme break, interrupting the list.</p>
+<p>Written: <sub>~</sub> - item 1 - *** - --- - ___ - item 2 * *** <sub>~</sub> Rendered:</p>
+<ul>
+<li>item 1</li>
+<li><hr />
+<hr /></li>
+<li><hr /></li>
+<li>item 2 * ***</li>
+</ul>
+</body>
+</html>

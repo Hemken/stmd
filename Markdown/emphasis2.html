@@ -1,0 +1,807 @@
+<h2><a href="#emphasis-and-strong-emphasis" name="emphasis-and-strong-emphasis">Emphasis and strong emphasis</a></h2>
+<p>John Gruber&rsquo;s original <a href="http://daringfireball.net/projects/markdown/syntax#em">Markdown syntax description</a> says:</p>
+<blockquote>
+  <p>Markdown treats asterisks (<code>*</code>) and underscores (<code>_</code>) as indicators of emphasis. Text wrapped with one <code>*</code> or <code>_</code> will be wrapped with an HTML <code>&lt;em&gt;</code> tag; double <code>*</code>&rsquo;s or <code>_</code>&rsquo;s will be wrapped with an HTML <code>&lt;strong&gt;</code> tag.</p>
+</blockquote>
+<p>This is enough for most users, but these rules leave much undecided, especially when it comes to nested emphasis. The original <code>Markdown.pl</code> test suite makes it clear that triple <code>***</code> and <code>___</code> delimiters can be used for strong emphasis, and most implementations have also allowed the following patterns (pegdown does not recognize <strong>*strong</strong> in emph*):</p>
+<pre><code>```
+***strong emph***  
+***strong** in emph*  
+***emph* in strong**  
+**in strong *emph***  
+*in emph **strong***
+```
+</code></pre>
+<p><strong><em>strong emph</em></strong><br/><strong>*strong</strong> in emph*<br/><strong><em>emph</em> in strong</strong><br/><strong>in strong <em>emph</em></strong><br/><em>in emph <strong>strong</strong></em></p>
+<p>The following patterns are less widely supported, but the intent is clear and they are useful (especially in contexts like bibliography entries)(flexmark and pegdown see these are straight emphasis and strong):</p>
+<pre><code>```
+*emph *with emph* in it*  
+**strong **with strong** in it**
+```
+</code></pre>
+<p><em>emph <em>with emph</em> in it</em><br/><strong>strong <strong>with strong</strong> in it</strong></p>
+<p>Many implementations have also restricted intraword emphasis to the <code>*</code> forms, to avoid unwanted emphasis in words containing internal underscores. (It is best practice to put these in code spans, but users often do not.) (Flexmark recognizes internal emphasis, pegdown does not.)</p>
+<pre><code>```
+internal emphasis: foo*bar*baz
+no emphasis: foo_bar_baz
+```
+</code></pre>
+<p>internal emphasis: foo*bar*baz<br/>no emphasis: foo_bar_baz</p>
+<p>The rules given below capture all of these patterns, while allowing for efficient parsing strategies that do not backtrack.</p>
+<p>First, some definitions. A <a href="@">delimiter run</a> is either a sequence of one or more <code>*</code> characters that is not preceded or followed by a non-backslash-escaped <code>*</code> character, or a sequence of one or more <code>_</code> characters that is not preceded or followed by a non-backslash-escaped <code>_</code> character.</p>
+<p>A <a href="@">left-flanking delimiter run</a> is a [delimiter run] that is (a) not followed by [Unicode whitespace], and (b) not followed by a [punctuation character], or preceded by [Unicode whitespace] or a [punctuation character]. For purposes of this definition, the beginning and the end of the line count as Unicode whitespace.</p>
+<p>A <a href="@">right-flanking delimiter run</a> is a [delimiter run] that is (a) not preceded by [Unicode whitespace], and (b) not preceded by a [punctuation character], or followed by [Unicode whitespace] or a [punctuation character]. For purposes of this definition, the beginning and the end of the line count as Unicode whitespace.</p>
+<p>Here are some examples of delimiter runs.</p>
+<ul>
+  <li>
+    <p>left-flanking but not right-flanking:</p>
+    <pre><code>***abc
+  _abc
+**&quot;abc&quot;
+ _&quot;abc&quot;
+</code></pre>
+  </li>
+  <li>
+    <p>right-flanking but not left-flanking:</p>
+    <pre><code> abc***
+ abc_
+&quot;abc&quot;**
+&quot;abc&quot;_
+</code></pre>
+  </li>
+  <li>
+    <p>Both left and right-flanking:</p>
+    <pre><code> abc***def
+&quot;abc&quot;_&quot;def&quot;
+</code></pre>
+  </li>
+  <li>
+    <p>Neither left nor right-flanking:</p>
+    <pre><code>abc *** def
+a _ b
+</code></pre>
+  </li>
+</ul>
+<p>(The idea of distinguishing left-flanking and right-flanking delimiter runs based on the character before and the character after comes from Roopesh Chander&rsquo;s <a href="http://www.vfmd.org/vfmd-spec/specification/#procedure-for-identifying-emphasis-tags">vfmd</a>. vfmd uses the terminology &ldquo;emphasis indicator string&rdquo; instead of &ldquo;delimiter run,&rdquo; and its rules for distinguishing left- and right-flanking runs are a bit more complex than the ones given here.)</p>
+<p>The following rules define emphasis and strong emphasis:</p>
+<ol>
+  <li>
+  <p>A single <code>*</code> character <a href="@">can open emphasis</a> iff (if and only if) it is part of a [left-flanking delimiter run].</p></li>
+  <li>
+  <p>A single <code>_</code> character [can open emphasis] iff it is part of a [left-flanking delimiter run] and either (a) not part of a [right-flanking delimiter run] or (b) part of a [right-flanking delimiter run] preceded by punctuation.</p></li>
+  <li>
+  <p>A single <code>*</code> character <a href="@">can close emphasis</a> iff it is part of a [right-flanking delimiter run].</p></li>
+  <li>
+  <p>A single <code>_</code> character [can close emphasis] iff it is part of a [right-flanking delimiter run] and either (a) not part of a [left-flanking delimiter run] or (b) part of a [left-flanking delimiter run] followed by punctuation.</p></li>
+  <li>
+  <p>A double <code>**</code> <a href="@">can open strong emphasis</a> iff it is part of a [left-flanking delimiter run].</p></li>
+  <li>
+  <p>A double <code>__</code> [can open strong emphasis] iff it is part of a [left-flanking delimiter run] and either (a) not part of a [right-flanking delimiter run] or (b) part of a [right-flanking delimiter run] preceded by punctuation.</p></li>
+  <li>
+  <p>A double <code>**</code> <a href="@">can close strong emphasis</a> iff it is part of a [right-flanking delimiter run].</p></li>
+  <li>
+  <p>A double <code>__</code> [can close strong emphasis] iff it is part of a [right-flanking delimiter run] and either (a) not part of a [left-flanking delimiter run] or (b) part of a [left-flanking delimiter run] followed by punctuation.</p></li>
+  <li>
+  <p>Emphasis begins with a delimiter that [can open emphasis] and ends with a delimiter that [can close emphasis], and that uses the same character (<code>_</code> or <code>*</code>) as the opening delimiter. The opening and closing delimiters must belong to separate [delimiter runs]. If one of the delimiters can both open and close emphasis, then the sum of the lengths of the delimiter runs containing the opening and closing delimiters must not be a multiple of 3.</p></li>
+  <li>
+  <p>Strong emphasis begins with a delimiter that [can open strong emphasis] and ends with a delimiter that [can close strong emphasis], and that uses the same character (<code>_</code> or <code>*</code>) as the opening delimiter. The opening and closing delimiters must belong to separate [delimiter runs]. If one of the delimiters can both open and close strong emphasis, then the sum of the lengths of the delimiter runs containing the opening and closing delimiters must not be a multiple of 3.</p></li>
+  <li>
+  <p>A literal <code>*</code> character cannot occur at the beginning or end of <code>*</code>-delimited emphasis or <code>**</code>-delimited strong emphasis, unless it is backslash-escaped.</p></li>
+  <li>
+  <p>A literal <code>_</code> character cannot occur at the beginning or end of <code>_</code>-delimited emphasis or <code>__</code>-delimited strong emphasis, unless it is backslash-escaped.</p></li>
+</ol>
+<p>Where rules 1&ndash;12 above are compatible with multiple parsings, the following principles resolve ambiguity:</p>
+<ol>
+  <li>
+  <p>The number of nestings should be minimized. Thus, for example, an interpretation <code>&lt;strong&gt;...&lt;/strong&gt;</code> is always preferred to <code>&lt;em&gt;&lt;em&gt;...&lt;/em&gt;&lt;/em&gt;</code>.</p></li>
+  <li>
+  <p>An interpretation <code>&lt;em&gt;&lt;strong&gt;...&lt;/strong&gt;&lt;/em&gt;</code> is always preferred to <code>&lt;strong&gt;&lt;em&gt;...&lt;/em&gt;&lt;/strong&gt;</code>.</p></li>
+  <li>
+  <p>When two potential emphasis or strong emphasis spans overlap, so that the second begins before the first ends and ends after the first ends, the first takes precedence. Thus, for example, <code>*foo _bar* baz_</code> is parsed as <code>&lt;em&gt;foo _bar&lt;/em&gt; baz_</code> rather than <code>*foo &lt;em&gt;bar* baz&lt;/em&gt;</code>.</p></li>
+  <li>
+  <p>When there are two potential emphasis or strong emphasis spans with the same closing delimiter, the shorter one (the one that opens later) takes precedence. Thus, for example, <code>**foo **bar baz**</code> is parsed as <code>**foo &lt;strong&gt;bar baz&lt;/strong&gt;</code> rather than <code>&lt;strong&gt;foo **bar baz&lt;/strong&gt;</code>.</p></li>
+  <li>
+  <p>Inline code spans, links, images, and HTML tags group more tightly than emphasis. So, when there is a choice between an interpretation that contains one of these elements and one that does not, the former always wins. Thus, for example, <code>*[foo*](bar)</code> is parsed as <code>*&lt;a href=&quot;bar&quot;&gt;foo*&lt;/a&gt;</code> rather than as <code>&lt;em&gt;[foo&lt;/em&gt;](bar)</code>.</p></li>
+</ol>
+<p>These rules can be illustrated through a series of examples.</p>
+<p>Rule 1:</p>
+<pre><code>```
+*foo bar*
+```
+</code></pre>
+<p><em>foo bar</em></p>
+<p>This is not emphasis, because the opening <code>*</code> is followed by whitespace, and hence not part of a [left-flanking delimiter run]:</p>
+<pre><code>```
+a * foo bar*
+```
+</code></pre>
+<p>a * foo bar*</p>
+<p>This is not emphasis, because the opening <code>*</code> is preceded by an alphanumeric and followed by punctuation, and hence not part of a [left-flanking delimiter run]:</p>
+<pre><code>```
+a*&quot;foo&quot;*
+```
+</code></pre>
+<p>a*&ldquo;foo&rdquo;*</p>
+<p>Unicode nonbreaking spaces count as whitespace, too:</p>
+<pre><code>```
+* a *
+```
+</code></pre>
+<ul>
+  <li>a *</li>
+</ul>
+<p>Intraword emphasis with <code>*</code> is permitted (flexmark, not pegdown):</p>
+<pre><code>```
+foo*bar*
+```
+</code></pre>
+<p>foo*bar*</p>
+<pre><code>```
+5*6*78
+```
+</code></pre>
+<p>5*6*78</p>
+<p>Rule 2:</p>
+<pre><code>```
+_foo bar_
+```
+</code></pre>
+<p><em>foo bar</em></p>
+<p>This is not emphasis, because the opening <code>_</code> is followed by whitespace:</p>
+<pre><code>```
+_ foo bar_
+```
+</code></pre>
+<p>_ foo bar_</p>
+<p>This is not emphasis, because the opening <code>_</code> is preceded by an alphanumeric and followed by punctuation:</p>
+<pre><code>```
+a_&quot;foo&quot;_
+```
+</code></pre>
+<p>a_&ldquo;foo&rdquo;_</p>
+<p>Emphasis with <code>_</code> is not allowed inside words:</p>
+<pre><code>```
+foo_bar_
+```
+</code></pre>
+<p>foo_bar_</p>
+<pre><code>```
+5_6_78
+```
+</code></pre>
+<p>5_6_78</p>
+<pre><code>```
+пристаням_стремятся_
+```
+</code></pre>
+<p>пристаням_стремятся_</p>
+<p>Here <code>_</code> does not generate emphasis, because the first delimiter run is right-flanking and the second left-flanking:</p>
+<pre><code>```
+aa_&quot;bb&quot;_cc
+```
+</code></pre>
+<p>aa_&ldquo;bb&rdquo;_cc</p>
+<p>This is emphasis, even though the opening delimiter is both left- and right-flanking, because it is preceded by punctuation (flexmark, not pegdown):</p>
+<pre><code>```
+foo-_(bar)_
+```
+</code></pre>
+<p>foo-_(bar)_</p>
+<p>Rule 3:</p>
+<p>This is not emphasis, because the closing delimiter does not match the opening delimiter:</p>
+<pre><code>```
+_foo*
+```
+</code></pre>
+<p>_foo*</p>
+<p>This is not emphasis, because the closing <code>*</code> is preceded by whitespace:</p>
+<pre><code>```
+*foo bar *
+```
+</code></pre>
+<p>*foo bar *</p>
+<p>A newline also counts as whitespace:</p>
+<pre><code>```
+*foo bar
+*
+```
+</code></pre>
+<p>*foo bar *</p>
+<p>This is not emphasis, because the second <code>*</code> is preceded by punctuation and followed by an alphanumeric (hence it is not part of a [right-flanking delimiter run]:</p>
+<pre><code>```
+*(*foo)
+```
+</code></pre>
+<p>*(*foo)</p>
+<p>The point of this restriction is more easily appreciated with this example:</p>
+<pre><code>```
+*(*foo*)*
+```
+</code></pre>
+<p><em>(*foo</em>)*</p>
+<p>Intraword emphasis with <code>*</code> is allowed:</p>
+<pre><code>```
+*foo*bar
+```
+</code></pre>
+<p>*foo*bar</p>
+<p>Rule 4:</p>
+<p>This is not emphasis, because the closing <code>_</code> is preceded by whitespace:</p>
+<pre><code class="```">_foo bar _
+.
+&lt;p&gt;_foo bar _&lt;/p&gt;
+```~~~~
+
+
+This is not emphasis, because the second `_` is
+preceded by punctuation and followed by an alphanumeric:
+
+</code></pre>
+<p><em>(_foo) . <p></em>(_foo)</p></p>
+<pre><code class="~~~~"><br/><br/>This is emphasis within emphasis:
+
+~~~~```
+_(_foo_)_
+.
+&lt;p&gt;&lt;em&gt;(&lt;em&gt;foo&lt;/em&gt;)&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<p>Intraword emphasis is disallowed for <code>_</code>:</p>
+<pre><code class="```">_foo_bar
+.
+&lt;p&gt;_foo_bar&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><em>пристаням</em>стремятся . <p>_пристаням_стремятся</p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+_foo_bar_baz_
+.
+&lt;p&gt;&lt;em&gt;foo_bar_baz&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<p>This is emphasis, even though the closing delimiter is both left- and right-flanking, because it is followed by punctuation:</p>
+<pre><code class="```">_(bar)_.
+.
+&lt;p&gt;&lt;em&gt;(bar)&lt;/em&gt;.&lt;/p&gt;
+```~~~~
+
+
+Rule 5:
+
+</code></pre>
+<p><strong>foo bar</strong> . <p><strong>foo bar</strong></p></p>
+<pre><code class="~~~~"><br/><br/>This is not strong emphasis, because the opening delimiter is
+followed by whitespace:
+
+~~~~```
+** foo bar**
+.
+&lt;p&gt;** foo bar**&lt;/p&gt;
+</code></pre>
+<p>This is not strong emphasis, because the opening <code>**</code> is preceded by an alphanumeric and followed by punctuation, and hence not part of a [left-flanking delimiter run]:</p>
+<pre><code class="```">a**&quot;foo&quot;**
+.
+&lt;p&gt;a**&amp;quot;foo&amp;quot;**&lt;/p&gt;
+```~~~~
+
+
+Intraword strong emphasis with `**` is permitted:
+
+</code></pre>
+<p>foo**bar** . <p>foo<strong>bar</strong></p></p>
+<pre><code class="~~~~"><br/><br/>Rule 6:
+
+~~~~```
+__foo bar__
+.
+&lt;p&gt;&lt;strong&gt;foo bar&lt;/strong&gt;&lt;/p&gt;
+</code></pre>
+<p>This is not strong emphasis, because the opening delimiter is followed by whitespace:</p>
+<pre><code class="```">__ foo bar__
+.
+&lt;p&gt;__ foo bar__&lt;/p&gt;
+```~~~~
+
+
+A newline counts as whitespace:
+</code></pre>
+<p>__ foo bar__ . <p>__ foo bar__</p></p>
+<pre><code class="~~~~"><br/><br/>This is not strong emphasis, because the opening `__` is preceded
+by an alphanumeric and followed by punctuation:
+
+~~~~```
+a__&quot;foo&quot;__
+.
+&lt;p&gt;a__&amp;quot;foo&amp;quot;__&lt;/p&gt;
+</code></pre>
+<p>Intraword strong emphasis is forbidden with <code>__</code>:</p>
+<pre><code class="```">foo__bar__
+.
+&lt;p&gt;foo__bar__&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p>5__6__78 . <p>5__6__78</p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+пристаням__стремятся__
+.
+&lt;p&gt;пристаням__стремятся__&lt;/p&gt;
+</code></pre>
+<pre><code class="```">__foo, __bar__, baz__
+.
+&lt;p&gt;&lt;strong&gt;foo, &lt;strong&gt;bar&lt;/strong&gt;, baz&lt;/strong&gt;&lt;/p&gt;
+```~~~~
+
+
+This is strong emphasis, even though the opening delimiter is
+both left- and right-flanking, because it is preceded by
+punctuation:
+
+</code></pre>
+<p>foo-__(bar)__ . <p>foo-<strong>(bar)</strong></p></p>
+<pre><code class="~~~~"><br/><br/><br/>Rule 7:
+
+This is not strong emphasis, because the closing delimiter is preceded
+by whitespace:
+
+~~~~```
+**foo bar **
+.
+&lt;p&gt;**foo bar **&lt;/p&gt;
+</code></pre>
+<p>(Nor can it be interpreted as an emphasized <code>*foo bar *</code>, because of Rule 11.)</p>
+<p>This is not strong emphasis, because the second <code>**</code> is preceded by punctuation and followed by an alphanumeric:</p>
+<pre><code class="```">**(**foo)
+.
+&lt;p&gt;**(**foo)&lt;/p&gt;
+```~~~~
+
+
+The point of this restriction is more easily appreciated
+with these examples:
+
+</code></pre>
+<p><em>(</em>*foo**)* . <p><em>(<strong>foo</strong>)</em></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+**Gomphocarpus (*Gomphocarpus physocarpus*, syn.
+*Asclepias physocarpa*)**
+.
+&lt;p&gt;&lt;strong&gt;Gomphocarpus (&lt;em&gt;Gomphocarpus physocarpus&lt;/em&gt;, syn.
+&lt;em&gt;Asclepias physocarpa&lt;/em&gt;)&lt;/strong&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">**foo &quot;*bar*&quot; foo**
+.
+&lt;p&gt;&lt;strong&gt;foo &amp;quot;&lt;em&gt;bar&lt;/em&gt;&amp;quot; foo&lt;/strong&gt;&lt;/p&gt;
+```~~~~
+
+
+Intraword emphasis:
+
+</code></pre>
+<p><strong>foo</strong>bar . <p><strong>foo</strong>bar</p></p>
+<pre><code class="~~~~"><br/><br/>Rule 8:
+
+This is not strong emphasis, because the closing delimiter is
+preceded by whitespace:
+
+~~~~```
+__foo bar __
+.
+&lt;p&gt;__foo bar __&lt;/p&gt;
+</code></pre>
+<p>This is not strong emphasis, because the second <code>__</code> is preceded by punctuation and followed by an alphanumeric:</p>
+<pre><code class="```">__(__foo)
+.
+&lt;p&gt;__(__foo)&lt;/p&gt;
+```~~~~
+
+
+The point of this restriction is more easily appreciated
+with this example:
+
+</code></pre>
+<p><em>(</em>_foo__)_ . <p><em>(<strong>foo</strong>)</em></p></p>
+<pre><code class="~~~~"><br/><br/>Intraword strong emphasis is forbidden with `__`:
+
+~~~~```
+__foo__bar
+.
+&lt;p&gt;__foo__bar&lt;/p&gt;
+</code></pre>
+<pre><code class="```">__пристаням__стремятся
+.
+&lt;p&gt;__пристаням__стремятся&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><strong>foo</strong>bar__baz__ . <p><strong>foo__bar__baz</strong></p></p>
+<pre><code class="~~~~"><br/><br/>This is strong emphasis, even though the closing delimiter is
+both left- and right-flanking, because it is followed by
+punctuation:
+
+~~~~```
+__(bar)__.
+.
+&lt;p&gt;&lt;strong&gt;(bar)&lt;/strong&gt;.&lt;/p&gt;
+</code></pre>
+<p>Rule 9:</p>
+<p>Any nonempty sequence of inline elements can be the contents of an emphasized span.</p>
+<pre><code class="```">*foo [bar](/url)*
+.
+&lt;p&gt;&lt;em&gt;foo &lt;a href=&quot;/url&quot;&gt;bar&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><em>foo bar</em> . <p><em>foo bar</em></p></p>
+<pre><code class="~~~~"><br/><br/>In particular, emphasis and strong emphasis can be nested
+inside emphasis:
+
+~~~~```
+_foo __bar__ baz_
+.
+&lt;p&gt;&lt;em&gt;foo &lt;strong&gt;bar&lt;/strong&gt; baz&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">_foo _bar_ baz_
+.
+&lt;p&gt;&lt;em&gt;foo &lt;em&gt;bar&lt;/em&gt; baz&lt;/em&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p>__foo_ bar_ . <p><em><em>foo</em> bar</em></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+*foo *bar**
+.
+&lt;p&gt;&lt;em&gt;foo &lt;em&gt;bar&lt;/em&gt;&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">*foo **bar** baz*
+.
+&lt;p&gt;&lt;em&gt;foo &lt;strong&gt;bar&lt;/strong&gt; baz&lt;/em&gt;&lt;/p&gt;
+```~~~~
+
+</code></pre>
+<p><em>foo</em>*bar**baz* . <p><em>foo<strong>bar</strong>baz</em></p></p>
+<pre><code class="~~~~"><br/>Note that in the preceding case, the interpretation
+
+</code></pre>
+<p><em>foo</em><em>bar<em></em>baz</em></p>
+<pre><code><br/><br/>is precluded by the condition that a delimiter that
+can both open and close (like the `*` after `foo`)
+cannot form emphasis if the sum of the lengths of
+the delimiter runs containing the opening and
+closing delimiters is a multiple of 3.
+
+The same condition ensures that the following
+cases are all strong emphasis nested inside
+emphasis, even when the interior spaces are
+omitted:
+
+
+~~~~```
+***foo** bar*
+.
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;foo&lt;/strong&gt; bar&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">*foo **bar***
+.
+&lt;p&gt;&lt;em&gt;foo &lt;strong&gt;bar&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><em>foo</em>*bar*** . <p><em>foo<strong>bar</strong></em></p></p>
+<pre><code class="~~~~"><br/><br/>Indefinite levels of nesting are possible:
+
+~~~~```
+*foo **bar *baz* bim** bop*
+.
+&lt;p&gt;&lt;em&gt;foo &lt;strong&gt;bar &lt;em&gt;baz&lt;/em&gt; bim&lt;/strong&gt; bop&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">*foo [*bar*](/url)*
+.
+&lt;p&gt;&lt;em&gt;foo &lt;a href=&quot;/url&quot;&gt;&lt;em&gt;bar&lt;/em&gt;&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+```~~~~
+
+
+There can be no empty emphasis or strong emphasis:
+
+</code></pre>
+<p>** is not an empty emphasis . <p>** is not an empty emphasis</p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+**** is not an empty strong emphasis
+.
+&lt;p&gt;**** is not an empty strong emphasis&lt;/p&gt;
+</code></pre>
+<p>Rule 10:</p>
+<p>Any nonempty sequence of inline elements can be the contents of an strongly emphasized span.</p>
+<pre><code class="```">**foo [bar](/url)**
+.
+&lt;p&gt;&lt;strong&gt;foo &lt;a href=&quot;/url&quot;&gt;bar&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><strong>foo bar</strong> . <p><strong>foo bar</strong></p></p>
+<pre><code class="~~~~"><br/><br/>In particular, emphasis and strong emphasis can be nested
+inside strong emphasis:
+
+~~~~```
+__foo _bar_ baz__
+.
+&lt;p&gt;&lt;strong&gt;foo &lt;em&gt;bar&lt;/em&gt; baz&lt;/strong&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">__foo __bar__ baz__
+.
+&lt;p&gt;&lt;strong&gt;foo &lt;strong&gt;bar&lt;/strong&gt; baz&lt;/strong&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p>____foo__ bar__ . <p><strong><strong>foo</strong> bar</strong></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+**foo **bar****
+.
+&lt;p&gt;&lt;strong&gt;foo &lt;strong&gt;bar&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">**foo *bar* baz**
+.
+&lt;p&gt;&lt;strong&gt;foo &lt;em&gt;bar&lt;/em&gt; baz&lt;/strong&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><strong>foo*bar*baz</strong> . <p><strong>foo<em>bar</em>baz</strong></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+***foo* bar**
+.
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;foo&lt;/em&gt; bar&lt;/strong&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">**foo *bar***
+.
+&lt;p&gt;&lt;strong&gt;foo &lt;em&gt;bar&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+```~~~~
+
+
+Indefinite levels of nesting are possible:
+
+</code></pre>
+<p><strong>foo <em>bar <strong>baz</strong> bim</em> bop</strong> . <p><strong>foo <em>bar <strong>baz</strong> bim</em> bop</strong></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+**foo [*bar*](/url)**
+.
+&lt;p&gt;&lt;strong&gt;foo &lt;a href=&quot;/url&quot;&gt;&lt;em&gt;bar&lt;/em&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+</code></pre>
+<p>There can be no empty emphasis or strong emphasis:</p>
+<pre><code class="```">__ is not an empty emphasis
+.
+&lt;p&gt;__ is not an empty emphasis&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p>____ is not an empty strong emphasis . <p>____ is not an empty strong emphasis</p></p>
+<pre><code class="~~~~"><br/><br/><br/>Rule 11:
+
+~~~~```
+foo ***
+.
+&lt;p&gt;foo ***&lt;/p&gt;
+</code></pre>
+<pre><code class="```">foo *\**
+.
+&lt;p&gt;foo &lt;em&gt;*&lt;/em&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p>foo *<em>* . <p>foo <em></em></em></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+foo *****
+.
+&lt;p&gt;foo *****&lt;/p&gt;
+</code></pre>
+<pre><code class="```">foo **\***
+.
+&lt;p&gt;foo &lt;strong&gt;*&lt;/strong&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p>foo **<em>** . <p>foo <strong></em></strong></p></p>
+<pre><code class="~~~~"><br/><br/>Note that when delimiters do not match evenly, Rule 11 determines
+that the excess literal `*` characters will appear outside of the
+emphasis, rather than inside it:
+
+~~~~```
+**foo*
+.
+&lt;p&gt;*&lt;em&gt;foo&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">*foo**
+.
+&lt;p&gt;&lt;em&gt;foo&lt;/em&gt;*&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><strong>*foo</strong> . <p>*<strong>foo</strong></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+****foo*
+.
+&lt;p&gt;***&lt;em&gt;foo&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">**foo***
+.
+&lt;p&gt;&lt;strong&gt;foo&lt;/strong&gt;*&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><em>foo</em>*** . <p><em>foo</em>***</p></p>
+<pre><code class="~~~~"><br/><br/><br/>Rule 12:
+
+~~~~```
+foo ___
+.
+&lt;p&gt;foo ___&lt;/p&gt;
+</code></pre>
+<pre><code class="```">foo _\__
+.
+&lt;p&gt;foo &lt;em&gt;_&lt;/em&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p>foo _<em>_ . <p>foo <em></em></em></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+foo _____
+.
+&lt;p&gt;foo _____&lt;/p&gt;
+</code></pre>
+<pre><code class="```">foo __\___
+.
+&lt;p&gt;foo &lt;strong&gt;_&lt;/strong&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p>foo __<em>__ . <p>foo <strong></em></strong></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+__foo_
+.
+&lt;p&gt;_&lt;em&gt;foo&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<p>Note that when delimiters do not match evenly, Rule 12 determines that the excess literal <code>_</code> characters will appear outside of the emphasis, rather than inside it:</p>
+<pre><code class="```">_foo__
+.
+&lt;p&gt;&lt;em&gt;foo&lt;/em&gt;_&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><strong>_foo</strong> . <p>_<strong>foo</strong></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+____foo_
+.
+&lt;p&gt;___&lt;em&gt;foo&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">__foo___
+.
+&lt;p&gt;&lt;strong&gt;foo&lt;/strong&gt;_&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><em>foo</em>___ . <p><em>foo</em>___</p></p>
+<pre><code class="~~~~"><br/><br/>Rule 13 implies that if you want emphasis nested directly inside
+emphasis, you must use different delimiters:
+
+~~~~```
+**foo**
+.
+&lt;p&gt;&lt;strong&gt;foo&lt;/strong&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">*_foo_*
+.
+&lt;p&gt;&lt;em&gt;&lt;em&gt;foo&lt;/em&gt;&lt;/em&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><strong>foo</strong> . <p><strong>foo</strong></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+_*foo*_
+.
+&lt;p&gt;&lt;em&gt;&lt;em&gt;foo&lt;/em&gt;&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<p>However, strong emphasis within strong emphasis is possible without switching delimiters:</p>
+<pre><code class="```">****foo****
+.
+&lt;p&gt;&lt;strong&gt;&lt;strong&gt;foo&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p>____foo____ . <p><strong><strong>foo</strong></strong></p></p>
+<pre><code class="~~~~"><br/><br/><br/>Rule 13 can be applied to arbitrarily long sequences of
+delimiters:
+
+~~~~```
+******foo******
+.
+&lt;p&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;foo&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;
+</code></pre>
+<p>Rule 14:</p>
+<pre><code class="```">***foo***
+.
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;foo&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p>_____foo_____ . <p><em><strong><strong>foo</strong></strong></em></p></p>
+<pre><code class="~~~~"><br/><br/>Rule 15:
+
+~~~~```
+*foo _bar* baz_
+.
+&lt;p&gt;&lt;em&gt;foo _bar&lt;/em&gt; baz_&lt;/p&gt;
+</code></pre>
+<pre><code class="```">*foo __bar *baz bim__ bam*
+.
+&lt;p&gt;&lt;em&gt;foo &lt;strong&gt;bar *baz bim&lt;/strong&gt; bam&lt;/em&gt;&lt;/p&gt;
+```~~~~
+
+
+Rule 16:
+
+</code></pre>
+<p><strong>foo <strong>bar baz</strong> . <p></strong>foo <strong>bar baz</strong></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+*foo *bar baz*
+.
+&lt;p&gt;*foo &lt;em&gt;bar baz&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<p>Rule 17:</p>
+<pre><code class="```">*[bar*](/url)
+.
+&lt;p&gt;*&lt;a href=&quot;/url&quot;&gt;bar*&lt;/a&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><em>foo <a href="/url">bar_</a> . <p>_foo <a href="/url">bar</em></a></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+*&lt;img src=&quot;foo&quot; title=&quot;*&quot;/&gt;
+.
+&lt;p&gt;*&lt;img src=&quot;foo&quot; title=&quot;*&quot;/&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">**&lt;a href=&quot;**&quot;&gt;
+.
+&lt;p&gt;**&lt;a href=&quot;**&quot;&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><strong><a href="__"> . <p></strong><a href="__"></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+*a `*`*
+.
+&lt;p&gt;&lt;em&gt;a &lt;code&gt;*&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
+</code></pre>
+<pre><code class="```">_a `_`_
+.
+&lt;p&gt;&lt;em&gt;a &lt;code&gt;_&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
+```~~~~
+
+
+</code></pre>
+<p><strong>a<a href="http://foo.bar/?q=**">http://foo.bar/?q=**</a> . <p></strong>a<a href="http://foo.bar/?q=**"><a href="http://foo.bar/?q=**">http://foo.bar/?q=**</a></a></p></p>
+<pre><code class="~~~~"><br/><br/>~~~~```
+__a&lt;http://foo.bar/?q=__&gt;
+.
+&lt;p&gt;__a&lt;a href=&quot;http://foo.bar/?q=__&quot;&gt;http://foo.bar/?q=__&lt;/a&gt;&lt;/p&gt;
+</code></pre>

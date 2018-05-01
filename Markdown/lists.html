@@ -1,0 +1,117 @@
+<h1><a href="#lists" id="lists">Lists</a></h1>
+<p>Lists may be ordered (numbered) or not (bulleted).</p>
+<p>Bulleted:</p>
+<ul>
+<li>item A</li>
+<li>item Z</li>
+</ul>
+<p>Ordered:</p>
+<ol>
+<li>first item</li>
+<li>second item</li>
+</ol>
+<p>No distinction is made between list markers, which may be asterisks, dashes, or pluses.</p>
+<ul>
+<li>asterisk item</li>
+<li>dash item</li>
+<li>plus item</li>
+<li>asterisk item</li>
+<li>dash item</li>
+<li>plus item</li>
+</ul>
+<p>Ordered lists are marked by numerals and periods (not right parentheses).</p>
+<ol>
+<li>first item, <code>1.</code></li>
+<li>second item, <code>1.</code></li>
+</ol>
+<p>2) not a list item</p>
+<p>Begin after a blank line, a blockquote, or a code block, or a header. (A blank is required after an ordinary paragraph.)</p>
+<p>Lists may be nested.  Sub-items are indented at least 4 spaces and any marker may be used.</p>
+<ul>
+<li>
+<p>item A</p>
+<ul>
+<li>sub item A-1</li>
+<li>sub item A-2</li>
+</ul>
+</li>
+<li>
+<p>level 1</p>
+<ul>
+<li>level 2
+<ul>
+<li>level 3
+<ul>
+<li>level 4
+<ul>
+<li>level 5</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>level 3</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>
+<p>item A</p>
+<ol>
+<li>sub item A-1</li>
+<li>sub item A-2</li>
+</ol>
+</li>
+<li>
+<p>level 1</p>
+<ul>
+<li>level 2
+<ol>
+<li>level 3
+<ul>
+<li>level 4
+<ul>
+<li>level 5</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>level 3</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<p>List markers and numerals are set by style, not by markdown.</p>
+<p>Lists may be blockquoted.  Lazy blockquotes produce flat lists.</p>
+<pre><code>~~~
+&gt; 1. item A
+    1. sub item A-1
+    1. sub item A-2
+~~~
+</code></pre>
+<blockquote>
+<ol>
+<li>item A</li>
+<li>sub item A-1</li>
+<li>sub item A-2</li>
+</ol>
+</blockquote>
+<p>Explicit blockquotes can render sublists.</p>
+<pre><code>~~~
+&gt; 1. item A
+&gt;      1. sub item A-1
+&gt;      1. sub item A-2
+~~~
+</code></pre>
+<blockquote>
+<ol>
+<li>item A
+<ol>
+<li>sub item A-1</li>
+<li>sub item A-2</li>
+</ol>
+</li>
+</ol>
+</blockquote>

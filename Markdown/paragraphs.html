@@ -1,0 +1,75 @@
+<h1><a href="#paragraph-examples" id="paragraph-examples">Paragraph examples</a></h1>
+<p>A paragraph is a basic block element.  It is composed of consecutive non-blank lines that are not headers, blockquotes, code blocks, or lists.</p>
+<p>A paragraph begins where a header, or code block ends, or after a blank line.</p>
+<hr />
+<h3><a href="#header-text" id="header-text">Header text</a></h3>
+<p>After a header.</p>
+<pre><code>generate x = y
+</code></pre>
+<p>After a code block.</p>
+<hr />
+<p>After lists or blockquotes requires an intervening blank line.</p>
+<pre><code>~~~
+- item 1
+
+After a list item.
+~~~
+</code></pre>
+<ul>
+<li>item 1</li>
+</ul>
+<p>After a list item.</p>
+<pre><code>~~~
+&gt; Quoted text.
+
+After a blockquote requires a blank line.
+~~~
+</code></pre>
+<blockquote>
+<p>Quoted text.</p>
+</blockquote>
+<p>After a blockquote requires a blank line.</p>
+<hr />
+<p>A paragraph <em>within</em> a blockquote.</p>
+<pre><code>~~~
+&gt; First this.
+
+&gt; Then that.
+~~~
+</code></pre>
+<blockquote>
+<p>First this.</p>
+<p>Then that.</p>
+</blockquote>
+<p>A paragraph <em>within</em> a list item.</p>
+<pre><code>~~~
+1. item 1
+
+    second paragraph
+2. item 2
+~~~
+</code></pre>
+<ol>
+<li>item 1
+<p>second paragraph</p>
+</li>
+<li>item 2</li>
+</ol>
+<hr />
+<p>A paragraph may begin with up to three spaces in the first line. Subsequent lines may have any number of spaces</p>
+<hr />
+<p>Written:</p>
+<pre><code>   Begin a
+      paragraph.
+</code></pre>
+<p>Rendered as:</p>
+<p>Begin a paragraph.</p>
+<hr />
+<p>Too many leading spaces renders as code:</p>
+<pre><code>     Too many
+	   spaces.
+</code></pre>
+<p>Renders as:</p>
+<pre><code> Too many
+   spaces.
+</code></pre>

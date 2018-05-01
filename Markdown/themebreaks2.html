@@ -1,0 +1,78 @@
+<h1>Theme Breaks (horizontal rules)</h1>
+<p>A theme break (a horizontal rule) is written as three or more dashes, underscores, or asterisks. These may be preceded by up to three spaces. When rendered with <em>pegdown</em> or <em>pandoc</em> (default) they usually must be preceded by a blank line, and followed by a blank line.</p>
+<p>Written as:</p>
+<pre><code>---
+
+___
+
+***
+</code></pre>
+<p>Rendered as:</p>
+<hr/>
+<hr/>
+<hr/>
+<p>Too few marks do not work:</p>
+<p>&ndash;</p>
+<p>__</p>
+<p>**</p>
+<p>The marks may be interspersed with spaces, but not any other characters.</p>
+<p>Written:</p>
+<pre><code>- - -
+
+_ _ _
+
+* * *
+</code></pre>
+<p>Rendered:</p>
+<hr/>
+<hr/>
+<hr/>
+<p>A theme break may appear in a block quote.</p>
+<p>Written:</p>
+<pre><code>&gt; ***
+&gt;
+&gt; quoted
+&gt;
+&gt; ***
+&gt;
+&gt; text
+</code></pre>
+<p>Rendered:</p>
+<blockquote>
+  <hr/>
+  <p>quoted</p>
+  <hr/>
+  <p>text</p>
+</blockquote>
+<p>Can a theme break be contained in a list? Not in <em>pegdown</em> where it appears theme breaks interrupt a list. However, <em>pandoc</em> appears the same as <em>flexmark</em>.</p>
+<p>Notice using the same character as a list and as a theme break yields a pure theme break (it is interpreted as a theme break containing spaces).</p>
+<p>Written:</p>
+<pre><code>- item 1
+- 
+    ***
+
+- ---
+
+- 
+  ___
+
+- item 2
+
+* ***
+</code></pre>
+<p>Rendered:</p>
+<ul>
+  <li>item 1</li>
+  <li>***
+
+  </li>
+</ul>
+<hr/>
+<ul>
+  <li></li>
+</ul>
+<hr/>
+<ul>
+  <li>item 2</li>
+</ul>
+<hr/>

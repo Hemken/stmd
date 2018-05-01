@@ -1,0 +1,72 @@
+<h1>Some Examples of Headers</h1>
+<ol>
+<li>Denoted with &quot;underscores&quot; (actually, at least 3
+equal signs or dashes on the next line of text).  Must
+be preceded by a blank line.
+Written:</li>
+</ol>
+<pre><code>Header 1
+========
+Header 2
+---
+</code></pre>
+<p>Rendered:</p>
+<h1>Header 1</h1>
+<h2>Header 2</h2>
+<ol start="2">
+<li>Denoted with &quot;hash&quot; marks (&quot;#&quot;) and a space, before the
+header text.  Up to six levels of headers are supported in Stata.
+No preceding blank line required in this style.
+Written:</li>
+</ol>
+<pre><code># Header 1
+## Header 2
+### Header 3
+#### Header 4
+##### Header 5
+###### Header 6
+####### Header 7
+</code></pre>
+<pre><code>Rendered:
+</code></pre>
+<h1>Header 1</h1>
+<h2>Header 2</h2>
+<h3>Header 3</h3>
+<h4>Header 4</h4>
+<h5>Header 5</h5>
+<h6>Header 6</h6>
+<p>####### Header 7</p>
+<ol start="3">
+<li>
+<p>Headers may appear within</p>
+<ul>
+<li>Blockquotes.
+Written:</li>
+</ul>
+<pre><code>&gt; ### Quoted header
+</code></pre>
+<pre><code> Rendered:
+</code></pre>
+<blockquote>
+<h3>Quoted header</h3>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li>
+<p>Lists (but not in R's sundown), written:</p>
+<pre><code>* ### Item 1
+* ### Item 2
+</code></pre>
+<p>Rendered:</p>
+<ul>
+<li>
+<h3>Item 1</h3>
+</li>
+<li>
+<h3>Item 2</h3>
+</li>
+</ul>
+</li>
+</ul>
+

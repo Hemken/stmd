@@ -1,0 +1,59 @@
+<h1><a href="#theme-breaks-horizontal-rules" id="theme-breaks-horizontal-rules">Theme Breaks (horizontal rules)</a></h1>
+<p>Three or more dashes, underscores, or asterisks.  May be preceded by up to three spaces.</p>
+<p>Written as:</p>
+<pre><code>---
+___
+***
+</code></pre>
+<p>Rendered as:</p>
+<hr />
+<hr />
+<hr />
+<p>Too few:</p>
+<p>&ndash;</p>
+<p>__</p>
+<p>**</p>
+<p>Interspersed with spaces:</p>
+<pre><code>- - -
+_ _ _
+* * *
+</code></pre>
+<hr />
+<hr />
+<hr />
+<p>Theme break in a paragraph? No.  (Underscores and dashes become headers.)</p>
+<pre><code>standard
+***
+deviation
+</code></pre>
+<p>standard *** deviation</p>
+<p>Break in a blockquote? No. (Underscores and dashes become headers.)</p>
+<pre><code>&gt; quoted
+&gt; ***
+&gt; text
+</code></pre>
+<blockquote>
+<p>quoted *** text</p>
+</blockquote>
+<p>Break in a list? Yes. Notice using the same character as a list and as a theme break yields a pure theme break.</p>
+<pre><code>- item 1
+- ***
+- ---
+- ___
+- item 2
+* ***
+</code></pre>
+<ul>
+<li>item 1</li>
+<li>
+<hr />
+</li>
+</ul>
+<hr />
+<ul>
+<li>
+<hr />
+</li>
+<li>item 2</li>
+</ul>
+<hr />

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Markdown Inlines Combined</title>
+<meta name="author" content="Doug Hemken" />
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+<!--#include virtual="../../../Rmd/headInclKB.html" -->
+<link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
+<style>
+table {
+    border-collapse: collapse;
+}
+table, th, td {
+   border: 1px solid black;
+}
+blockquote {
+    border-left: solid blue;
+	padding-left: 10px;
+}
+</style>
+</head>
+<body>
+<!--#include virtual="/sscc/pubs/Rmd/topInclKB.html" -->
+<h1><a href="#markdown-inlines-combined" id="markdown-inlines-combined">Markdown Inlines Combined</a></h1>
+<p>Combining inline Markdown elements:</p>
+<p>With asterisks:</p>
+<p><em>Emphasis</em><br />
+<strong>Strong</strong><br />
+<strong><em>Emphatic strong</em></strong><br />
+*** not Emphatic strong (leading space)*** <br />
+***Emphatic strong (trailing space) *** <br />
+* <strong>spaced markers</strong> * (a leading space)<br />
+** <em>spaced markers</em> **</p>
+<p>With underscores:</p>
+<p><em>Emphasis</em> <br />
+<strong>Strong</strong> <br />
+<strong><em>Emphatic strong</em></strong></p>
+<p>Mixed underscores and asterisks - must be properly nested:</p>
+<p><em><strong>Emphatic strong</strong></em> <br />
+<em><strong>Emphatic strong</strong></em></p>
+<p>Overlapping (not nested) demarcation:</p>
+<p><em>**emphatic strong</em>** <br />
+<strong>*strong emphasis</strong>* <br />
+<em>~~emphatic strikethrough</em>~~ <br />
+<del>**striken strong</del>**</p>
+<p>With tildes:</p>
+<p><del>Strikethrough</del><br />
+<em><del>Emphatic strikethrough</del></em><br />
+<del><em>Stricken emphasis</em></del><br />
+<strong><del><em>Strong stricken emphasis</em></del></strong></p>
+<p><a href="@">url text</a><br />
+<em><a href="@">url text</a></em> emphasized<br />
+<a href="@"><em>url text</em></a> embedded<br />
+<strong><a href="@">url text</a></strong> strong<br />
+<em><a href="@"><strong>url text</strong></a></em> emphasized, strong embedded<br />
+<del><a href="@">url text</a></del> stricken</p>
+<p>Code spans may be embedded in other inlines, but not vice versa.</p>
+<p><em><code>code span</code></em> emphatic<br />
+<strong><code>code span</code></strong> strong<br />
+<del><code>code span</code></del> stricken<br />
+<a href="@"><code>url text</code></a> embedded code in url</p>
+<p>But not</p>
+<p><code>*code span*</code> emphatic<br />
+<code>**code span**</code> strong<br />
+<code>~~code span~~</code> stricken<br />
+<code>[url text](@)</code> embedded code in url</p>
+<p>Math (where enabled) ignores emphasis:</p>
+<p>$y=x_1+x_2$ <br />
+<em>$y=x_1+x_2$</em> emphatic<br />
+<del>$y=x_1+x_2$</del> striken<br />
+<a href="@">$y=x_1+x_2$</a> as url text</p>
+<p>Code spans and math can&rsquo;t mix.</p>
+<!--#include virtual="/sscc/pubs/Rmd/bottomInclKB.html" -->
+</body>
