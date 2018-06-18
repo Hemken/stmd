@@ -1,11 +1,11 @@
-*! version 1.2
+*! version 1.3
 *! Doug Hemken
-*! 3 April 2018
+*! 18 June 2018
 
 // pass arguments to dyndoc
 
-capture program drop stmd2html
-program define stmd2html, rclass
+capture program drop stmd
+program define stmd, rclass
 	syntax anything(name=infile)    /// input file name
 		[,							/// 
 		SAVing(string) REPLace		///  name of HTML file
