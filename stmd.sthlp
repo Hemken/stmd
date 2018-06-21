@@ -70,6 +70,49 @@ filename
 If {it: filename2} is not specified, then {it: filename} with an
 .html file extension is tried.
 
+{pstd}
+The conventional style for dynamic Markdown files is for the dynamic
+content to be specified in {it: fenced code blocks} with an
+information tag.  For example {p_end}
+
+{pin}
+{cmd: ```{stata}} {p_end}
+{pin}{cmd: sysuse auto} {p_end}
+{pin}{cmd: ```} {p_end}
+
+{pstd}would be a dynamic code block that loaded the {cmd: auto} data set.  To
+accomodate some existing Stata markdown usage, this may be written as three
+or more backticks or tildes, the curly braces around "stata" are optional,
+and "stata" may be abbreviated simply "s".
+
+{pstd}
+In addition to marking a fenced code block for dynamic execution, various
+options may be included in the information tag that control whether a
+block is executed, and what may be included in the document.
+
+{pin}
+{it: NO EVAL}: To prevent code evaluation, simply don't include an
+information tag.  Alternatively, include the {cmd: eval=FALSE} option
+(from R).
+
+{pin}
+{it: NO COMMANDS}: To prevent the code from being echoed in your
+document use any of {cmd: nocommands}, {cmd: echo=FALSE}, or a forward
+slash immediately after "stata".
+
+{pin}
+{it: NO PROMPT}: To prevent the typical period prefixing echoed commands,
+use the option {cmd: noprompt}.
+
+{pin}
+{it: NO OUTPUT}: To prevent the output from appearing in your document
+(but to still see the commands and have them execute),
+use the option {cmd: nooutput}, {cmd: results=FALSE} or {cmd: results="hide"}.
+
+{pin}
+{it: NO COMMANDS OR OUTPUT}: To prevent ANY output from appearing in your document
+(but to still have your code execute),
+use the option {cmd: quietly}.
 
 {marker examples}{...}
 {title:Examples}
