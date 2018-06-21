@@ -12,11 +12,11 @@ SUPPORT:    dehemken@wisc.edu
 HELP:       After installation, type
 
             . help stmd2dyn
-            . help stmd2html
+            . help stmd
 
 FILES:
 
+stmd.ado
+stmd.sthlp
 stmd2dyn.ado
 stmd2dyn.sthlp
-stmd2html.ado
-stmd2html.sthlp
