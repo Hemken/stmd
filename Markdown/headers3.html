@@ -1,69 +1,306 @@
-<h1>Some Examples of Headers</h1>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
+  <link rel="shortcut icon" href="/sscc/assets/FavIcon/favicon.ico" />
+  <link href="/sscc/CSS/Publication.css" rel="stylesheet" media="screen" type="text/css" /> 
+  <link href="/sscc/CSS/Print.css" rel="stylesheet" type="text/css" media="print" />
+  <link rel="alternate" type="application/rss+xml" title="SSCC Info" href="http://www.ssc.wisc.edu/sscc/wp/?feed=rss2&cat=-12" />
+  
+  <link href="../Rmd/Rmd.css" rel="stylesheet" media="screen" type="text/css" /> 
+  <link href="../Rmd/RmdPrint.css" rel="stylesheet" type="text/css" media="print" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116005186-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-116005186-3');
+  </script>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-26623692-1']);
+    _gaq.push(['_trackPageview']);
+  
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  
+  </script>
+  
+  
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+  /* rhorrisberger 12/2014 R Markdown does not allow
+     centering of Last Revised.  This does it */
+  $(document).ready (function(){
+      var lastRevisedTag, found;
+      lastRevisedTag = $("#RightContent p").last();
+      found = lastRevisedTag.html().search(/last revised/i);
+      if (found != -1){
+        lastRevisedTag.addClass("reviseDate");
+      }
+  });
+  </script>
+</head>
+<body>
+<div id="OuterWrapper">
+    <!-- #BeginLibraryItem "/Library/Header.lbi" -->
+    <div id="Header">
+        <div id="HeaderImage"> <a href="#table"><img src="/sscc/assets/main_header.jpg"  height="130" width="800" alt="SSCC - Social Science Computing Cooperative" border="0" usemap="#Map" title="SSCC - Social Science Computing Cooperative" /></a>
+          <map name="Map">
+            <area shape="rect" coords="5,24,298,120" href="/sscc/" alt="SSCC Home Page">
+          </map>
+          
+        </div>
+		<div id="HeaderNav">
+			&bull; <a id="lnkHome" href="https://www.ssc.wisc.edu/sscc/" title="HOME">HOME</a> 
+			&bull; <a href="http://www.ssc.wisc.edu/sscc/winstat" title="Log in to Winstat">WINSTAT</a> 
+			&bull; <a href="https://webmail.ssc.wisc.edu" title="Read your SSCC email on the web">WEBMAIL</a> 
+			&bull; <a href="http://www.ssc.wisc.edu/sscc/helpdesk.htm" title="Contact the SSCC Help Desk">HELP DESK</a> 
+			&bull; <a href="http://www.ssc.wisc.edu/sscc/statconsult.htm" title="SSCC Statistical Consulting">STAT CONSULTING</a> 
+			&bull;  
+			<span style="visibility:visible;">
+				<a href="https://www.ssc.wisc.edu/sscc_jsp/authenticate/logout.jsp" title="Log out of all SSCC web tools">LOG OUT</a> 
+				&bull;
+			</span>
+			<span style="visibility:hidden">
+			    <!--#include file="/authenticate/logoutlink.jsp" -->
+			</span>
+		</div>
+		<div id="HeaderSearch">
+			<form action="/sscc/results.html" id="cse-search-box">
+				<div>
+				   <input type="hidden" name="cx" value="009976823638626595604:fyieafx208s" />
+				   <input type="hidden" name="cof" value="FORID:11" />
+				   <input type="hidden" name="ie" value="UTF-8" />
+				   <input type="text" id="SearchInput" class="SearchBox" title="Search" name="q" value="Search" onblur="if (this.value == '') {this.value = 'Search';}" onfocus="if (this.value == 'Search') {this.value = '';}" size="31" />
+	 
+				</div>
+			</form>
+		</div>
 
-<ol>
-<li>Denoted with &ldquo;underscores&rdquo; (actually, at least 3
-equal signs or dashes on the next line of text).  Must
-be preceded by a blank line.
-Written:</li>
-</ol>
+</div><!-- #EndLibraryItem -->
 
+<div id="MainWrapper">
+    <div id="RightWrapper">
+        <div id="RightInnerWrapper">
+            <div id="RightHeader">
+                <div id="RightHeaderContent">
+			        <a href="/sscc/pubs/home.htm">SSCC Knowledge Base</a>
+		        </div>
+            </div>
+            <div class="Clear"></div>
+                <div id="RightContent"> 
+                <!-- InstanceBeginEditable name="Text" -->
+<h1 id="markdown-header-examples">Markdown Header Examples</h1>
+<h2 id="using-pegdown-and-pandoc-in-stata">Using <em>Pegdown</em> and <em>Pandoc</em> in Stata</h2>
+<h3 id="doug-hemken">Doug Hemken</h3>
+<h3 id="may-2018">May 2018</h3>
+<p>A header, like a paragraph, is a container block and any inline markdown may be used within it.</p>
+<p>Headers may be written in two different styles, <em>setext</em> headers which are marked up with &quot;underscores&quot;, and <em>ATX</em> headers which are marked up with hash marks (&quot;#&quot;).</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Setext</strong> headers are denoted with &quot;underscores&quot; (actually, at least 3 equal signs or dashes on the next line of text). The text line of a setext header must usually be <em>preceded</em> by a blank line, it cannot &quot;interrupt&quot; a paragraph.</p>
+<p>Written:</p>
 <pre><code>Header 1
 ========
 Header 2
----
-</code></pre>
-
+---</code></pre>
 <p>Rendered:</p>
-
-<h1>Header 1</h1>
-
-<h2>Header 2</h2>
-
-<ol>
-<li>Denoted with &ldquo;hash&rdquo; marks (&ldquo;#&rdquo;) and a space, before the
-header text.  Up to six levels of headers are supported in Stata.
-No preceding blank line required in this style.
-Written:
+<blockquote>
+<h1 id="header-1">Header 1</h1>
+<h2 id="header-2">Header 2</h2>
+</blockquote>
+<p>However, no blank line is needed after another header, after a fenced code block, or after an indented code block.</p>
+<p>A blank line is required after a block quote, a list item, or a table in order to prevent it from being interpreted as a lazy header.</p>
+<pre><code>~~~
+summarize z
 ~~~
-# Header 1
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
-###### Header 6
-####### Header 7
-~~~
-Rendered:
-# Header 1
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
-###### Header 6
-####### Header 7</li>
-<li>Headers may appear within
+After a code fence
+---
+    generate y = x
+After indented code
+---
 
+-----
+
+After a theme break
+---
+&gt; Quoted text.
+
+After a block quote
+---
+- item 1
+
+After a list item
+---
+column 1 | column 2
+---------|---------
+value 1  | value 2
+
+After a table
+---</code></pre>
+<pre><code>summarize z</code></pre>
+<h2 id="after-a-code-fence">After a code fence</h2>
+<pre><code>generate y = x</code></pre>
+<h2 id="after-indented-code">After indented code</h2>
+<hr />
+<h2 id="after-a-theme-break">After a theme break</h2>
+<blockquote>
+<p>Quoted text.</p>
+</blockquote>
+<h2 id="after-a-block-quote">After a block quote</h2>
 <ul>
-<li>Blockquotes.
-Written:
+<li>item 1</li>
+</ul>
+<h2 id="after-a-list-item">After a list item</h2>
+<table>
+<thead>
+<tr class="header">
+<th>column 1</th>
+<th>column 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>value 1</td>
+<td>value 2</td>
+</tr>
+</tbody>
+</table>
+<h2 id="after-a-table">After a table</h2>
+<p>(Rules for finding the beginning of a setext header differ slightly in <em>pegdown</em> after a paragraph, and after a theme break in both <em>pegdown</em> and <em>pandoc</em>.)</p>
+<p>In <em>flexmark</em>, no preceding blank line is needed at the beginning of a document or the beginning of a blockquote. Oddly, a setext header cannot be the first element in a list item, but can appear in a later paragraph within the list item.</p>
+<pre><code>~~~
+&gt; Within a blockquote
+&gt; ---
+
+- item 1
+
+    Header 2
+    ---
+~~~</code></pre>
+<blockquote>
+<h2 id="within-a-blockquote">Within a blockquote</h2>
+</blockquote>
+<ul>
+<li><p>item 1</p>
+<h2 id="header-2-1">Header 2</h2></li>
+</ul></li>
+<li><p><strong>ATX</strong> headers are denoted with &quot;hash&quot; marks (&quot;#&quot;) and a space, before the header text. Up to six levels of headers are supported in HTML. No preceding or trailing blank line required in this style, with the exception of block quotes (and headers after list items are interpreted <em>within</em> the item in <em>pegdown</em> and <em>pandoc</em>).</p>
+<p>Written:</p>
+<pre><code># Header 1
+## Header 2
+### Header 3
+#### Header 4
+##### Header 5
+###### Header 6
+####### no header 7 in HTML</code></pre>
+<p>Rendered:</p>
+<blockquote>
+<h1 id="header-1-1">Header 1</h1>
+<h2 id="header-2-2">Header 2</h2>
+<h3 id="header-3">Header 3</h3>
+<h4 id="header-4">Header 4</h4>
+<h5 id="header-5">Header 5</h5>
+<h6 id="header-6">Header 6</h6>
+<p id="no-header-7-in-html">no header 7 in HTML</p>
+</blockquote>
+<pre><code>~~~
+summarize z
 ~~~
-&gt; ### Quoted header
-~~~
-Rendered:
-&gt; ### Quoted header</li>
-<li>Lists, written:
-~~~
-* ### Item 1
-* ### Item 2
-~~~
-Rendered:</li>
+#### After a code fence
+    generate y = x
+#### After indented code
+
+-----
+
+#### After a theme break
+&gt; Quoted text.
+
+#### After a block quote
+- item 1
+#### After a list item
+column 1 | column 2
+---------|---------
+value 1  | value 2
+#### After a table
+~~~</code></pre>
+<pre><code>summarize z</code></pre>
+<h4 id="after-a-code-fence-1">After a code fence</h4>
+<pre><code>generate y = x</code></pre>
+<h4 id="after-indented-code-1">After indented code</h4>
+<hr />
+<h4 id="after-a-theme-break-1">After a theme break</h4>
+<blockquote>
+<p>Quoted text.</p>
+</blockquote>
+<h4 id="after-a-block-quote-1">After a block quote</h4>
+<ul>
+<li>item 1</li>
+</ul>
+<h4 id="after-a-list-item-1">After a list item</h4>
+<table>
+<thead>
+<tr class="header">
+<th>column 1</th>
+<th>column 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>value 1</td>
+<td>value 2</td>
+</tr>
+</tbody>
+</table>
+<h4 id="after-a-table-1">After a table</h4></li>
+<li><p>Inlines within headers</p>
+<pre><code>*Emphatic* **Strong** ~~Strikethrough~~ `Code`
+---
+#### `Code` ~~Strikethrough~~ **Strong** _Emphasis_</code></pre>
+<h2 id="emphatic-strong-strikethrough-code"><em>Emphatic</em> <strong>Strong</strong> <del>Strikethrough</del> <code>Code</code></h2>
+<h4 id="code-strikethrough-strong-emphasis"><code>Code</code> <del>Strikethrough</del> <strong>Strong</strong> <em>Emphasis</em></h4></li>
+<li>Headers may appear within
+<ul>
+<li><p>Blockquotes. Written:</p>
+<pre><code>&gt; ### Quoted header</code></pre>
+<p>Rendered: &gt; ### Quoted header</p></li>
+<li><p>Lists, written:</p>
+<pre><code>* ### Item 1
+* ### Item 2</code></pre>
+<p>Rendered:</p>
+<ul>
+<li><h3 id="item-1">Item 1</h3></li>
+<li><h3 id="item-2">Item 2</h3></li>
+</ul></li>
 </ul></li>
 </ol>
-
-<pre><code>* ### Item 1
-</code></pre>
-
-<ul>
-<li>### Item 2</li>
-</ul>
-
+                </div>
+            </div>
+      </div>
+  </div>
+    <div class="Clear"></div><!-- #BeginLibraryItem "/Library/footer.lbi" -->
+	<div id="Footer">
+        <div id="UWLogo">
+            <div id="UWPic"><a href="http://www.wisc.edu" title="University of Wisconsin - Madison"><img src="/sscc/assets/UWLogo.jpg" alt="University of Wisconsin - Madison" title="University of Wisconsin - Madison" /></a></div>
+        </div>
+        <div id="BlueCurve">
+            <div id="FooterCopy">&copy;2009-2017 UW Board of Regents, <a href="http://www.wisc.edu">University of Wisconsin - Madison</a></div>
+            <div id="FooterNav">| <a href="/sscc/helpdesk.htm">Contact Us</a> | <a href="http://www.ssc.wisc.edu/sscc/wp/?feed=rss2"><img src="/sscc/assets/feed-icon-14x14.png" width="14" height="14" alt="RSS Feed Icon" class="RSSicon"/>RSS</a> |</div>
+        </div>
+    </div>
+<!-- #EndLibraryItem --></div>
+<div id="PrintLogo">
+<img src="/sscc/assets/SSCC_logoBW3.gif" width="350" height="85" alt="Social Science Computing Cooperative" /></div>
+</body>
+</html>

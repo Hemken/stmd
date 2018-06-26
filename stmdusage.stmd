@@ -6,9 +6,49 @@ returning the commands and adding their output to the document.
 
 The `stmd` adds to this facility by allowing users to write dynamic
 documents in the standard dynamic Markdown style common with other
-programming languages.
+programming languages.  Code to be executed is enclosed in a code
+fence with an *information tag* that includes the language of
+the dynamic code, and may include options.
 
-## Install ` stmd`
+Stata code to be executed is included in a document
+within a fenced code block like
+the following:
+````
+```{stata, ... }
+
+--- stata commands here ---
+
+```
+````
+
+## Install `stmd`
+
+Use
+```
+net from https://www.ssc.wisc.edu/~hemken/Stataworkshops
+```
+
+and follow the links to install `stmd`.
+
+Alternatively, use
+```
+net install stmd, from(https://www.ssc.wisc.edu/~hemken/Stataworkshops)
+```
+
+## Process Documents
+
+See `help stmd` for details.
+
+Basic use to process a document is
+```
+stmd example.stmd, saving(example.html) replace
+```
+
+or just
+```
+stmd example.stmd
+```
+
 
 ## The Goal: Easy-to-write source text
 

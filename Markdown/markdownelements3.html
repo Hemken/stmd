@@ -6,23 +6,103 @@
   <meta name="generator" content="pandoc" />
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <link rel="shortcut icon" href="/sscc/assets/FavIcon/favicon.ico" />
+  <link href="/sscc/CSS/Publication.css" rel="stylesheet" media="screen" type="text/css" /> 
+  <link href="/sscc/CSS/Print.css" rel="stylesheet" type="text/css" media="print" />
+  <link rel="alternate" type="application/rss+xml" title="SSCC Info" href="http://www.ssc.wisc.edu/sscc/wp/?feed=rss2&cat=-12" />
+  
+  <link href="../Rmd/Rmd.css" rel="stylesheet" media="screen" type="text/css" /> 
+  <link href="../Rmd/RmdPrint.css" rel="stylesheet" type="text/css" media="print" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116005186-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-116005186-3');
+  </script>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-26623692-1']);
+    _gaq.push(['_trackPageview']);
+  
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  
+  </script>
+  
+  
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+  /* rhorrisberger 12/2014 R Markdown does not allow
+     centering of Last Revised.  This does it */
+  $(document).ready (function(){
+      var lastRevisedTag, found;
+      lastRevisedTag = $("#RightContent p").last();
+      found = lastRevisedTag.html().search(/last revised/i);
+      if (found != -1){
+        lastRevisedTag.addClass("reviseDate");
+      }
+  });
+  </script>
 </head>
 <body>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>
-Basic Markdown Elements
-</title>
-<p><meta name="author" content="Doug Hemken" /></p>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-</script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
-</script>
-<!--#include virtual="../../../Rmd/headInclKB.html" -->
-<link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
+<div id="OuterWrapper">
+    <!-- #BeginLibraryItem "/Library/Header.lbi" -->
+    <div id="Header">
+        <div id="HeaderImage"> <a href="#table"><img src="/sscc/assets/main_header.jpg"  height="130" width="800" alt="SSCC - Social Science Computing Cooperative" border="0" usemap="#Map" title="SSCC - Social Science Computing Cooperative" /></a>
+          <map name="Map">
+            <area shape="rect" coords="5,24,298,120" href="/sscc/" alt="SSCC Home Page">
+          </map>
+          
+        </div>
+		<div id="HeaderNav">
+			&bull; <a id="lnkHome" href="https://www.ssc.wisc.edu/sscc/" title="HOME">HOME</a> 
+			&bull; <a href="http://www.ssc.wisc.edu/sscc/winstat" title="Log in to Winstat">WINSTAT</a> 
+			&bull; <a href="https://webmail.ssc.wisc.edu" title="Read your SSCC email on the web">WEBMAIL</a> 
+			&bull; <a href="http://www.ssc.wisc.edu/sscc/helpdesk.htm" title="Contact the SSCC Help Desk">HELP DESK</a> 
+			&bull; <a href="http://www.ssc.wisc.edu/sscc/statconsult.htm" title="SSCC Statistical Consulting">STAT CONSULTING</a> 
+			&bull;  
+			<span style="visibility:visible;">
+				<a href="https://www.ssc.wisc.edu/sscc_jsp/authenticate/logout.jsp" title="Log out of all SSCC web tools">LOG OUT</a> 
+				&bull;
+			</span>
+			<span style="visibility:hidden">
+			    <!--#include file="/authenticate/logoutlink.jsp" -->
+			</span>
+		</div>
+		<div id="HeaderSearch">
+			<form action="/sscc/results.html" id="cse-search-box">
+				<div>
+				   <input type="hidden" name="cx" value="009976823638626595604:fyieafx208s" />
+				   <input type="hidden" name="cof" value="FORID:11" />
+				   <input type="hidden" name="ie" value="UTF-8" />
+				   <input type="text" id="SearchInput" class="SearchBox" title="Search" name="q" value="Search" onblur="if (this.value == '') {this.value = 'Search';}" onfocus="if (this.value == 'Search') {this.value = '';}" size="31" />
+	 
+				</div>
+			</form>
+		</div>
+
+</div><!-- #EndLibraryItem -->
+
+<div id="MainWrapper">
+    <div id="RightWrapper">
+        <div id="RightInnerWrapper">
+            <div id="RightHeader">
+                <div id="RightHeaderContent">
+			        <a href="/sscc/pubs/home.htm">SSCC Knowledge Base</a>
+		        </div>
+            </div>
+            <div class="Clear"></div>
+                <div id="RightContent"> 
+                <!-- InstanceBeginEditable name="Text" -->
 <style>
 table {
     border-collapse: collapse;
@@ -35,8 +115,6 @@ blockquote {
     padding-left: 10px;
 }
 </style>
-</head>
-<!--#include virtual="/sscc/pubs/Rmd/topInclKB.html" -->
 <h1 id="markdown-elements">Markdown Elements</h1>
 <p>The formatting elements specified by Markdown come in two basic types: there are <em>block</em> elements and <em>inline</em> elements.</p>
 <p><strong>Block</strong> elements include such things as <em>paragraphs</em> of text, <em>code blocks</em>, <em>block quotes</em>, <em>lists</em>, and <em>tables</em>. <em>Headings</em> and <em>theme breaks</em> (horizontal rules) are also thought of as block elements</p>
@@ -116,7 +194,7 @@ blockquote {
 <tbody>
 <tr class="odd">
 <td align="center">Math <code>$y=x_1+x_2$</code></td>
-<td align="center">Math $y=x_1+x_2$</td>
+<td align="center">Math <span class="math inline">\(y=x_1+x_2\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -216,7 +294,22 @@ value 1  | value 2</code></pre>
 <li>item 1</li>
 <li>item 2</li>
 </ol>
-<!--#include virtual="/sscc/pubs/Rmd/bottomInclKB.html" -->
-</body>
+                </div>
+            </div>
+      </div>
+  </div>
+    <div class="Clear"></div><!-- #BeginLibraryItem "/Library/footer.lbi" -->
+	<div id="Footer">
+        <div id="UWLogo">
+            <div id="UWPic"><a href="http://www.wisc.edu" title="University of Wisconsin - Madison"><img src="/sscc/assets/UWLogo.jpg" alt="University of Wisconsin - Madison" title="University of Wisconsin - Madison" /></a></div>
+        </div>
+        <div id="BlueCurve">
+            <div id="FooterCopy">&copy;2009-2017 UW Board of Regents, <a href="http://www.wisc.edu">University of Wisconsin - Madison</a></div>
+            <div id="FooterNav">| <a href="/sscc/helpdesk.htm">Contact Us</a> | <a href="http://www.ssc.wisc.edu/sscc/wp/?feed=rss2"><img src="/sscc/assets/feed-icon-14x14.png" width="14" height="14" alt="RSS Feed Icon" class="RSSicon"/>RSS</a> |</div>
+        </div>
+    </div>
+<!-- #EndLibraryItem --></div>
+<div id="PrintLogo">
+<img src="/sscc/assets/SSCC_logoBW3.gif" width="350" height="85" alt="Social Science Computing Cooperative" /></div>
 </body>
 </html>

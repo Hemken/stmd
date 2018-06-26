@@ -1,8 +1,40 @@
-<h1><a href="#some-examples-of-headers" id="some-examples-of-headers">Some Examples of Headers</a></h1>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Markdown Paragraph Examples</title>
+<meta name="author" content="Doug Hemken" />
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+<!--#include virtual="../../../Rmd/headInclKB.html" -->
+<link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
+<style>
+table {
+    border-collapse: collapse;
+}
+table, th, td {
+   border: 1px solid black;
+}
+blockquote {
+    border-left: solid blue;
+	padding-left: 10px;
+}
+</style>
+</head>
+<body>
+<!--#include virtual="/sscc/pubs/Rmd/topInclKB.html" -->
+<h1><a href="#markdown-header-examples" id="markdown-header-examples">Markdown Header Examples</a></h1>
+<h2><a href="#using-flexmark-in-stata" id="using-flexmark-in-stata">Using <em>Flexmark</em> in Stata</a></h2>
+<h3><a href="#doug-hemken" id="doug-hemken">Doug Hemken</a></h3>
+<h3><a href="#may-2018" id="may-2018">May 2018</a></h3>
+<p>A header, like a paragraph, is a container block and any inline markdown may be used within it.</p>
 <p>Headers may be written in two different styles, <em>setext</em> headers which are marked up with &quot;underscores&quot;, and <em>ATX</em> headers which are marked up with hash marks (&quot;#&quot;).</p>
 <ol>
 <li>
-<p><strong>Setext</strong> headers are denoted with &quot;underscores&quot; (actually, at least 3 equal signs or dashes on the next line of text).  The text line of a setext header must usually be preceded by a blank line, it cannot &quot;interrupt&quot; another container.</p>
+<p><strong>Setext</strong> headers are denoted with &quot;underscores&quot; (actually, at least 3 equal signs or dashes on the next line of text).  The text line of a setext header must usually be <em>preceded</em> by a blank line, it cannot &quot;interrupt&quot; a paragraph.</p>
 <p>Written:</p>
 <pre><code>Header 1
 ========
@@ -14,13 +46,75 @@ Header 2
 <h1><a href="#header-1" id="header-1">Header 1</a></h1>
 <h2><a href="#header-2" id="header-2">Header 2</a></h2>
 </blockquote>
-<pre><code>summarize
+<p>However, no blank line is needed after another header, after a fenced code block, or after an indented code block.</p>
+<p>A blank line is required after a block quote, a list item, or a table in order to prevent it from being interpreted as a lazy header.</p>
+<pre><code>~~~
+summarize z
+~~~
+After a code fence
+---
+    generate y = x
+After indented code
+---
+
+-----
+After a theme break
+---
+&gt; Quoted text.
+
+After a block quote
+---
+- item 1
+
+After a list item
+---
+column 1 | column 2
+---------|---------
+value 1  | value 2
+
+After a table
+---
+</code></pre>
+<pre><code>summarize z
 </code></pre>
 <h2><a href="#after-a-code-fence" id="after-a-code-fence">After a code fence</a></h2>
+<pre><code>generate y = x
+</code></pre>
+<h2><a href="#after-indented-code" id="after-indented-code">After indented code</a></h2>
 <hr />
 <h2><a href="#after-a-theme-break" id="after-a-theme-break">After a theme break</a></h2>
-<p>(Rules for finding the beginning of a setext header differ slightly between <em>flexmark</em>, <em>pegdown</em>, and <em>pandoc</em>.)</p>
-<p>In flexmark, no preceding blank line is needed at the beginning of a document or the beginning of a blockquote.  Likewise, no preceding blank line is needed where the preceding container has closed after a code fence or after a theme break).  Oddly, a setext header cannot be the first element in a list item, but can appear in a later paragraph within the list item.</p>
+<blockquote>
+<p>Quoted text.</p>
+</blockquote>
+<h2><a href="#after-a-block-quote" id="after-a-block-quote">After a block quote</a></h2>
+<ul>
+<li>item 1</li>
+</ul>
+<h2><a href="#after-a-list-item" id="after-a-list-item">After a list item</a></h2>
+<table>
+<thead>
+<tr><th>column 1 </th><th> column 2</th></tr>
+</thead>
+<tbody>
+<tr><td>value 1  </td><td> value 2</td></tr>
+</tbody>
+</table>
+<h2><a href="#after-a-table" id="after-a-table">After a table</a></h2>
+<p>(Rules for finding the beginning of a setext header differ slightly in <em>pegdown</em> after a paragraph, and after a theme break in both <em>pegdown</em> and <em>pandoc</em>.)</p>
+<p>In <em>flexmark</em>, no preceding blank line is needed at the beginning of a document or the beginning of a blockquote.  Oddly, a setext header cannot be the first element in a list item, but can appear in a later paragraph within the list item.</p>
+<pre><code>~~~
+&gt; Within a blockquote
+&gt; ---
+
+- item 1
+
+    Header 2
+    ---
+~~~
+</code></pre>
+<blockquote>
+<h2><a href="#within-a-blockquote" id="within-a-blockquote">Within a blockquote</a></h2>
+</blockquote>
 <ul>
 <li>item 1
 <h2><a href="#header-2" id="header-2">Header 2</a></h2>
@@ -28,7 +122,7 @@ Header 2
 </ul>
 </li>
 <li>
-<p><strong>ATX</strong> headers are denoted with &quot;hash&quot; marks (&quot;#&quot;) and a space, before the header text.  Up to six levels of headers are supported in HTML. No preceding blank line required in this style.</p>
+<p><strong>ATX</strong> headers are denoted with &quot;hash&quot; marks (&quot;#&quot;) and a space, before the header text.  Up to six levels of headers are supported in HTML. No preceding or trailing blank line required in this style, with the exception of block quotes (and headers after list items are interpreted <em>within</em> the item in <em>pegdown</em> and <em>pandoc</em>).</p>
 <p>Written:</p>
 <pre><code># Header 1
 ## Header 2
@@ -36,7 +130,7 @@ Header 2
 #### Header 4
 ##### Header 5
 ###### Header 6
-####### not header 7
+####### no header 7 in HTML
 </code></pre>
 <p>Rendered:</p>
 <blockquote>
@@ -46,34 +140,79 @@ Header 2
 <h4><a href="#header-4" id="header-4">Header 4</a></h4>
 <h5><a href="#header-5" id="header-5">Header 5</a></h5>
 <h6><a href="#header-6" id="header-6">Header 6</a></h6>
-<h6><a href="#not-header-7" id="not-header-7"># not header 7</a></h6>
+<h6><a href="#no-header-7-in-html" id="no-header-7-in-html"># no header 7 in HTML</a></h6>
 </blockquote>
+<pre><code>~~~
+summarize z
+~~~
+#### After a code fence
+    generate y = x
+#### After indented code
+
+-----
+#### After a theme break
+&gt; Quoted text.
+
+#### After a block quote
+- item 1
+#### After a list item
+column 1 | column 2
+---------|---------
+value 1  | value 2
+#### After a table
+~~~
+</code></pre>
+<pre><code>summarize z
+</code></pre>
+<h4><a href="#after-a-code-fence" id="after-a-code-fence">After a code fence</a></h4>
+<pre><code>generate y = x
+</code></pre>
+<h4><a href="#after-indented-code" id="after-indented-code">After indented code</a></h4>
+<hr />
+<h4><a href="#after-a-theme-break" id="after-a-theme-break">After a theme break</a></h4>
+<blockquote>
+<p>Quoted text.</p>
+</blockquote>
+<h4><a href="#after-a-block-quote" id="after-a-block-quote">After a block quote</a></h4>
+<ul>
+<li>item 1</li>
+</ul>
+<h4><a href="#after-a-list-item" id="after-a-list-item">After a list item</a></h4>
+<table>
+<thead>
+<tr><th>column 1 </th><th> column 2</th></tr>
+</thead>
+<tbody>
+<tr><td>value 1  </td><td> value 2</td></tr>
+</tbody>
+</table>
+<h4><a href="#after-a-table" id="after-a-table">After a table</a></h4>
 </li>
-<li>Inlines within headers
+<li>
+<p>Inlines within headers</p>
+<pre><code>*Emphatic* **Strong** ~~Strikethrough~~ `Code`
+---
+#### `Code` ~~Strikethrough~~ **Strong** _Emphasis_
+</code></pre>
 <h2><a href="#emphatic-strong-strikethrough-" id="emphatic-strong-strikethrough-"><em>Emphatic</em> <strong>Strong</strong> <del>Strikethrough</del> <code>Code</code></a></h2>
-<h2><a href="#strikethrough-strong-emphasis" id="strikethrough-strong-emphasis"><code>Code</code> <del>Strikethrough</del> <strong>Strong</strong> <em>Emphasis</em></a></h2>
+<h4><a href="#strikethrough-strong-emphasis" id="strikethrough-strong-emphasis"><code>Code</code> <del>Strikethrough</del> <strong>Strong</strong> <em>Emphasis</em></a></h4>
 </li>
 <li>
 <p>Headers may appear within</p>
 <ul>
-<li>Blockquotes. Written:</li>
-</ul>
-</li>
-</ol>
+<li>Blockquotes. Written:
 <pre><code>&gt; ### Quoted header
 </code></pre>
-<pre><code>	Rendered:
-</code></pre>
+<p>Rendered:</p>
 <blockquote>
 <h3><a href="#quoted-header" id="quoted-header">Quoted header</a></h3>
-<ul>
-<li>Lists, written:</li>
-</ul>
+</blockquote>
+</li>
+<li>Lists, written:
 <pre><code>* ### Item 1
 * ### Item 2
 </code></pre>
 <p>Rendered:</p>
-</blockquote>
 <ul>
 <li>
 <h3><a href="#item-1" id="item-1">Item 1</a></h3>
@@ -82,3 +221,9 @@ Header 2
 <h3><a href="#item-2" id="item-2">Item 2</a></h3>
 </li>
 </ul>
+</li>
+</ul>
+</li>
+</ol>
+<!--#include virtual="/sscc/pubs/Rmd/bottomInclKB.html" -->
+</body>

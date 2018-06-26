@@ -1,7 +1,29 @@
 <h1><a href="#using-the-command-in-stata" id="using-the-command-in-stata">Using the <code>stmd</code> command in Stata</a></h1>
 <p>Stata provides commands to turn Markdown documents into HTML, and commands to execute Stata commands embedded within text documents, returning the commands and adding their output to the document.</p>
-<p>The <code>stmd</code> adds to this facility by allowing users to write dynamic documents in the standard dynamic Markdown style common with other programming languages.</p>
+<p>The <code>stmd</code> adds to this facility by allowing users to write dynamic documents in the standard dynamic Markdown style common with other programming languages.  Code to be executed is enclosed in a code fence with an <em>information tag</em> that includes the language of the dynamic code, and may include options.</p>
+<p>Stata code to be executed is included in a document within a fenced code block like the following:</p>
+<pre><code>```{stata, ... }
+
+--- stata commands here ---
+
+```
+</code></pre>
 <h2><a href="#install-" id="install-">Install <code>stmd</code></a></h2>
+<p>Use</p>
+<pre><code>net from https://www.ssc.wisc.edu/~hemken/Stataworkshops
+</code></pre>
+<p>and follow the links to install <code>stmd</code>.</p>
+<p>Alternatively, use</p>
+<pre><code>net install stmd, from(https://www.ssc.wisc.edu/~hemken/Stataworkshops)
+</code></pre>
+<h2><a href="#process-documents" id="process-documents">Process Documents</a></h2>
+<p>See <code>help stmd</code> for details.</p>
+<p>Basic use to process a document is</p>
+<pre><code>stmd example.stmd, saving(example.html) replace
+</code></pre>
+<p>or just</p>
+<pre><code>stmd example.stmd
+</code></pre>
 <h2><a href="#the-goal-easy-to-write-source-text" id="the-goal-easy-to-write-source-text">The Goal: Easy-to-write source text</a></h2>
 <p>Conventional dynamic Markdown looks like the text in the first column, and is turned into a web document (HTML) that appears like the second column.</p>
 <table>
@@ -63,7 +85,7 @@ More text.
 (bin=8, start=1760, width=385)
 
 </code></pre>
-<img src="Graph8.svg" >
+<img src="Graph11.svg" >
 <p>More text.</p>
 </td></tr>
 </tbody>

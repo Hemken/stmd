@@ -1,10 +1,12 @@
-<h1>Theme Breaks (horizontal rules)</h1>
-<p>A theme break (a horizontal rule) is written as three or more dashes, underscores, or asterisks. These may be preceded by up to three spaces. When rendered with <em>pegdown</em> or <em>pandoc</em> (default) they usually must be preceded by a blank line, and followed by a blank line.</p>
+<h1>Markdown Theme Break Examples (horizontal rules)</h1>
+<h2>Using <em>Pegdown</em> and <em>Pandoc</em></h2>
+<h3><a href="#doug-hemken" name="doug-hemken">Doug Hemken</a></h3>
+<h3><a href="#may-2018" name="may-2018">May 2018</a></h3>
+<p>A theme break (a horizontal rule) is written as three or more dashes, underscores, or asterisks. These may be preceded by up to three spaces. (When rendered with <em>pegdown</em> or <em>pandoc</em> they usually must be preceded by a blank line, and followed by a blank line.)</p>
+<p>This is a block element that <strong>cannot</strong> contain inline elements.</p>
 <p>Written as:</p>
 <pre><code>---
-
 ___
-
 ***
 </code></pre>
 <p>Rendered as:</p>
@@ -23,18 +25,122 @@ _ _ _
 
 * * *
 </code></pre>
-<p>Rendered:</p>
 <hr/>
 <hr/>
 <hr/>
-<p>A theme break may appear in a block quote.</p>
+<h3><a href="#theme-breaks-and-headers" name="theme-breaks-and-headers">Theme breaks and headers</a></h3>
+<p>A theme break may appear before or after a header with the usual blank lines.</p>
+<pre><code>#### Header 4
+
+---
+
+#### Another header
+
+Header 2
+---
+
+---
+
+Header 2 again
+---
+</code></pre>
+<h4><a href="#header-4" name="header-4">Header 4</a></h4>
+<hr/>
+<h4><a href="#another-header" name="another-header">Another header</a></h4>
+<h2><a href="#header-2" name="header-2">Header 2</a></h2>
+<hr/>
+<h2><a href="#header-2-again" name="header-2-again">Header 2 again</a></h2>
+<h3><a href="#theme-breaks-and-paragraphs" name="theme-breaks-and-paragraphs">Theme breaks and paragraphs</a></h3>
+<p>Theme breaks do not interrupt paragraphs (dashes may be interpreted as setext headings). A blank line is required.</p>
+<pre><code>Some text.
+---
+
+More text.
+___
+
+Yet more.
+***
+</code></pre>
+<h2>Some text.</h2>
+<p>More text. ___</p>
+<p>Yet more. ***</p>
+<h3><a href="#theme-breaks-and-code-blocks" name="theme-breaks-and-code-blocks">Theme breaks and code blocks</a></h3>
+<p>A theme break may appear before or after a fenced code block or an indented code block, with the usual blank lines.</p>
+<pre><code>~~~
+generate y = x
+~~~
+
+***
+
+~~~
+summarize y
+~~~
+
+	generate y = x
+	
+***
+
+	summarize y
+</code></pre>
+<pre><code>generate y = x
+</code></pre>
+<hr/>
+<pre><code>summarize y
+</code></pre>
+<pre><code>generate y = x
+</code></pre>
+<hr/>
+<pre><code>summarize y
+</code></pre>
+<h3><a href="#theme-breaks-and-tables" name="theme-breaks-and-tables">Theme breaks and tables</a></h3>
+<p>A theme break requires a blank line before or after a table.</p>
+<pre><code>***
+
+column 1 | column 2
+---------|---------
+value 1  | value 2
+
+---
+</code></pre>
+<hr/>
+<table>
+  <thead>
+    <tr>
+      <th>column 1 </th>
+      <th>column 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>value 1 </td>
+      <td>value 2</td>
+    </tr>
+  </tbody>
+</table>
+<hr/>
+<h3><a href="#theme-breaks-and-block-quotes" name="theme-breaks-and-block-quotes">Theme breaks and block quotes</a></h3>
+<p>A theme break may appear before a block quote with a blank line. After a block quote a blank line is required (because block quotes have lazy continuation).</p>
+<pre><code>&gt; Quoted text.
+
+---
+
+&gt; More quotes.
+</code></pre>
+<blockquote>
+  <p>Quoted text.</p>
+</blockquote>
+<hr/>
+<blockquote>
+  <p>More quotes.</p>
+</blockquote>
+<p>A theme break may appear within a block quote in <em>pegdown</em>, with quoted blank lines, but not in <em>pandoc</em>.</p>
 <p>Written:</p>
 <pre><code>&gt; ***
 &gt;
 &gt; quoted
 &gt;
 &gt; ***
-&gt;
+&gt; 
 &gt; text
 </code></pre>
 <p>Rendered:</p>
@@ -44,35 +150,47 @@ _ _ _
   <hr/>
   <p>text</p>
 </blockquote>
-<p>Can a theme break be contained in a list? Not in <em>pegdown</em> where it appears theme breaks interrupt a list. However, <em>pandoc</em> appears the same as <em>flexmark</em>.</p>
-<p>Notice using the same character as a list and as a theme break yields a pure theme break (it is interpreted as a theme break containing spaces).</p>
-<p>Written:</p>
-<pre><code>- item 1
-- 
-    ***
+<h3><a href="#theme-breaks-and-lists" name="theme-breaks-and-lists">Theme breaks and lists</a></h3>
+<p>A theme break may appear before or after a list with blank lines.</p>
+<pre><code>- list 1
 
+---
+
+- list 2
+</code></pre>
+<ul>
+  <li>list 1</li>
+</ul>
+<hr/>
+<ul>
+  <li>list 2</li>
+</ul>
+<p>A theme break may be contained in a list, if it is composed of characters that contrast with the list item marker. Notice using the same character as a list item and as a theme break yields a pure theme break, interrupting the list.</p>
+<p>Written:</p>
+<pre><code>- item 1, list 1
+
+- ***
+  
 - ---
 
-- 
-  ___
+- ___
 
-- item 2
-
+- item 2, list 2
 * ***
 </code></pre>
 <p>Rendered:</p>
 <ul>
-  <li>item 1</li>
-  <li>***
-
-  </li>
+  <li>
+  <p>item 1, list 1</p></li>
+  <li>
+  <hr/></li>
 </ul>
 <hr/>
 <ul>
-  <li></li>
-</ul>
-<hr/>
-<ul>
-  <li>item 2</li>
+  <li>
+  <p>___
+</p></li>
+  <li>
+  <p>item 2, list 2</p></li>
 </ul>
 <hr/>

@@ -6,46 +6,294 @@
   <meta name="generator" content="pandoc" />
   <title></title>
   <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
+  <link rel="shortcut icon" href="/sscc/assets/FavIcon/favicon.ico" />
+  <link href="/sscc/CSS/Publication.css" rel="stylesheet" media="screen" type="text/css" /> 
+  <link href="/sscc/CSS/Print.css" rel="stylesheet" type="text/css" media="print" />
+  <link rel="alternate" type="application/rss+xml" title="SSCC Info" href="http://www.ssc.wisc.edu/sscc/wp/?feed=rss2&cat=-12" />
+  
+  <link href="../Rmd/Rmd.css" rel="stylesheet" media="screen" type="text/css" /> 
+  <link href="../Rmd/RmdPrint.css" rel="stylesheet" type="text/css" media="print" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116005186-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-116005186-3');
+  </script>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-26623692-1']);
+    _gaq.push(['_trackPageview']);
+  
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  
+  </script>
+  
+  
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+  /* rhorrisberger 12/2014 R Markdown does not allow
+     centering of Last Revised.  This does it */
+  $(document).ready (function(){
+      var lastRevisedTag, found;
+      lastRevisedTag = $("#RightContent p").last();
+      found = lastRevisedTag.html().search(/last revised/i);
+      if (found != -1){
+        lastRevisedTag.addClass("reviseDate");
+      }
+  });
+  </script>
 </head>
 <body>
-<h1 id="theme-breaks-horizontal-rules">Theme Breaks (horizontal rules)</h1>
-<p>A theme break (a horizontal rule) is written as three or more dashes, underscores, or asterisks. These may be preceded by up to three spaces. (When rendered with <em>pegdown</em> or <em>pandoc</em> (default) they usually must be preceded by a blank line, and followed by a blank line.)</p>
+<div id="OuterWrapper">
+    <!-- #BeginLibraryItem "/Library/Header.lbi" -->
+    <div id="Header">
+        <div id="HeaderImage"> <a href="#table"><img src="/sscc/assets/main_header.jpg"  height="130" width="800" alt="SSCC - Social Science Computing Cooperative" border="0" usemap="#Map" title="SSCC - Social Science Computing Cooperative" /></a>
+          <map name="Map">
+            <area shape="rect" coords="5,24,298,120" href="/sscc/" alt="SSCC Home Page">
+          </map>
+          
+        </div>
+		<div id="HeaderNav">
+			&bull; <a id="lnkHome" href="https://www.ssc.wisc.edu/sscc/" title="HOME">HOME</a> 
+			&bull; <a href="http://www.ssc.wisc.edu/sscc/winstat" title="Log in to Winstat">WINSTAT</a> 
+			&bull; <a href="https://webmail.ssc.wisc.edu" title="Read your SSCC email on the web">WEBMAIL</a> 
+			&bull; <a href="http://www.ssc.wisc.edu/sscc/helpdesk.htm" title="Contact the SSCC Help Desk">HELP DESK</a> 
+			&bull; <a href="http://www.ssc.wisc.edu/sscc/statconsult.htm" title="SSCC Statistical Consulting">STAT CONSULTING</a> 
+			&bull;  
+			<span style="visibility:visible;">
+				<a href="https://www.ssc.wisc.edu/sscc_jsp/authenticate/logout.jsp" title="Log out of all SSCC web tools">LOG OUT</a> 
+				&bull;
+			</span>
+			<span style="visibility:hidden">
+			    <!--#include file="/authenticate/logoutlink.jsp" -->
+			</span>
+		</div>
+		<div id="HeaderSearch">
+			<form action="/sscc/results.html" id="cse-search-box">
+				<div>
+				   <input type="hidden" name="cx" value="009976823638626595604:fyieafx208s" />
+				   <input type="hidden" name="cof" value="FORID:11" />
+				   <input type="hidden" name="ie" value="UTF-8" />
+				   <input type="text" id="SearchInput" class="SearchBox" title="Search" name="q" value="Search" onblur="if (this.value == '') {this.value = 'Search';}" onfocus="if (this.value == 'Search') {this.value = '';}" size="31" />
+	 
+				</div>
+			</form>
+		</div>
+
+</div><!-- #EndLibraryItem -->
+
+<div id="MainWrapper">
+    <div id="RightWrapper">
+        <div id="RightInnerWrapper">
+            <div id="RightHeader">
+                <div id="RightHeaderContent">
+			        <a href="/sscc/pubs/home.htm">SSCC Knowledge Base</a>
+		        </div>
+            </div>
+            <div class="Clear"></div>
+                <div id="RightContent"> 
+                <!-- InstanceBeginEditable name="Text" -->
+<h1 id="markdown-theme-break-examples-horizontal-rules">Markdown Theme Break Examples (horizontal rules)</h1>
+<h2 id="using-pegdown-and-pandoc">Using <em>Pegdown</em> and <em>Pandoc</em></h2>
+<h3 id="doug-hemken">Doug Hemken</h3>
+<h3 id="may-2018">May 2018</h3>
+<p>A theme break (a horizontal rule) is written as three or more dashes, underscores, or asterisks. These may be preceded by up to three spaces. (When rendered with <em>pegdown</em> or <em>pandoc</em> they usually must be preceded by a blank line, and followed by a blank line.)</p>
+<p>This is a block element that <strong>cannot</strong> contain inline elements.</p>
 <p>Written as:</p>
 <pre><code>---
 ___
 ***</code></pre>
 <p>Rendered as:</p>
-<table style="width:4%;">
-<colgroup>
-<col width="4%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>___ ***</td>
-</tr>
-<tr class="even">
-<td>Too few marks do not work:</td>
-</tr>
-</tbody>
-</table>
+<hr />
+<hr />
+<hr />
+<p>Too few marks do not work:</p>
+<p>--</p>
 <p>__</p>
 <p>**</p>
 <p>The marks may be interspersed with spaces, but not any other characters.</p>
-<p>Written: <sub>~</sub> - - - _ _ _ * * * <sub>~</sub></p>
+<p>Written:</p>
+<pre><code>- - -
+
+_ _ _
+
+* * *</code></pre>
 <hr />
 <hr />
 <hr />
-<p>Theme breaks do not interrupt paragraphs (the marks may be interpreted as emphasis or setext headings).</p>
-<p>A theme break may appear in a block quote.</p>
-<p>Written: <sub>~</sub> &gt; <strong><em> &gt; quoted &gt; &gt; </em></strong> &gt; text <sub>~</sub> Rendered: &gt; <strong><em> &gt; quoted &gt; &gt; </em></strong> &gt; text</p>
-<p>A theme break may be contained in a list, if it is composed of characters that contrast with the list item marker. Notice using the same character as a list item and as a theme break yields a pure theme break, interrupting the list.</p>
-<p>Written: <sub>~</sub> - item 1 - *** - --- - ___ - item 2 * *** <sub>~</sub> Rendered:</p>
+<h3 id="theme-breaks-and-headers">Theme breaks and headers</h3>
+<p>A theme break may appear before or after a header with the usual blank lines.</p>
+<pre><code>#### Header 4
+
+---
+
+#### Another header
+
+Header 2
+---
+
+---
+
+Header 2 again
+---</code></pre>
+<h4 id="header-4">Header 4</h4>
+<hr />
+<h4 id="another-header">Another header</h4>
+<h2 id="header-2">Header 2</h2>
+<hr />
+<h2 id="header-2-again">Header 2 again</h2>
+<h3 id="theme-breaks-and-paragraphs">Theme breaks and paragraphs</h3>
+<p>Theme breaks do not interrupt paragraphs (dashes may be interpreted as setext headings). A blank line is required.</p>
+<pre><code>Some text.
+---
+
+More text.
+___
+
+Yet more.
+***</code></pre>
+<h2 id="some-text.">Some text.</h2>
+<p>More text. ___</p>
+<p>Yet more. ***</p>
+<h3 id="theme-breaks-and-code-blocks">Theme breaks and code blocks</h3>
+<p>A theme break may appear before or after a fenced code block or an indented code block, with the usual blank lines.</p>
+<pre><code>~~~
+generate y = x
+~~~
+
+***
+
+~~~
+summarize y
+~~~
+
+    generate y = x
+    
+***
+
+    summarize y</code></pre>
+<pre><code>generate y = x</code></pre>
+<hr />
+<pre><code>summarize y</code></pre>
+<pre><code>generate y = x</code></pre>
+<hr />
+<pre><code>summarize y</code></pre>
+<h3 id="theme-breaks-and-tables">Theme breaks and tables</h3>
+<p>A theme break requires a blank line before or after a table.</p>
+<pre><code>***
+
+column 1 | column 2
+---------|---------
+value 1  | value 2
+
+---</code></pre>
+<hr />
+<table>
+<thead>
+<tr class="header">
+<th>column 1</th>
+<th>column 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>value 1</td>
+<td>value 2</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="theme-breaks-and-block-quotes">Theme breaks and block quotes</h3>
+<p>A theme break may appear before a block quote with a blank line. After a block quote a blank line is required (because block quotes have lazy continuation).</p>
+<pre><code>&gt; Quoted text.
+
+---
+
+&gt; More quotes.</code></pre>
+<blockquote>
+<p>Quoted text.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p>More quotes.</p>
+</blockquote>
+<p>A theme break may appear within a block quote in <em>pegdown</em>, with quoted blank lines, but not in <em>pandoc</em>.</p>
+<p>Written:</p>
+<pre><code>&gt; ***
+&gt;
+&gt; quoted
+&gt;
+&gt; ***
+&gt; 
+&gt; text</code></pre>
+<p>Rendered:</p>
+<blockquote>
+<hr />
+<p>quoted</p>
+<hr />
+<p>text</p>
+</blockquote>
+<h3 id="theme-breaks-and-lists">Theme breaks and lists</h3>
+<p>A theme break may appear before or after a list with blank lines.</p>
+<pre><code>- list 1
+
+---
+
+- list 2</code></pre>
 <ul>
-<li>item 1</li>
-<li><hr />
-<hr /></li>
-<li><hr /></li>
-<li>item 2 * ***</li>
+<li>list 1</li>
 </ul>
+<hr />
+<ul>
+<li>list 2</li>
+</ul>
+<p>A theme break may be contained in a list, if it is composed of characters that contrast with the list item marker. Notice using the same character as a list item and as a theme break yields a pure theme break, interrupting the list.</p>
+<p>Written:</p>
+<pre><code>- item 1, list 1
+
+- ***
+  
+- ---
+
+- ___
+
+- item 2, list 2
+* ***</code></pre>
+<p>Rendered:</p>
+<ul>
+<li><p>item 1, list 1</p></li>
+<li><hr /></li>
+</ul>
+<hr />
+<ul>
+<li><hr /></li>
+<li>item 2, list 2 * ***</li>
+</ul>
+                </div>
+            </div>
+      </div>
+  </div>
+    <div class="Clear"></div><!-- #BeginLibraryItem "/Library/footer.lbi" -->
+	<div id="Footer">
+        <div id="UWLogo">
+            <div id="UWPic"><a href="http://www.wisc.edu" title="University of Wisconsin - Madison"><img src="/sscc/assets/UWLogo.jpg" alt="University of Wisconsin - Madison" title="University of Wisconsin - Madison" /></a></div>
+        </div>
+        <div id="BlueCurve">
+            <div id="FooterCopy">&copy;2009-2017 UW Board of Regents, <a href="http://www.wisc.edu">University of Wisconsin - Madison</a></div>
+            <div id="FooterNav">| <a href="/sscc/helpdesk.htm">Contact Us</a> | <a href="http://www.ssc.wisc.edu/sscc/wp/?feed=rss2"><img src="/sscc/assets/feed-icon-14x14.png" width="14" height="14" alt="RSS Feed Icon" class="RSSicon"/>RSS</a> |</div>
+        </div>
+    </div>
+<!-- #EndLibraryItem --></div>
+<div id="PrintLogo">
+<img src="/sscc/assets/SSCC_logoBW3.gif" width="350" height="85" alt="Social Science Computing Cooperative" /></div>
 </body>
 </html>

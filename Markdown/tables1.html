@@ -1,4 +1,3 @@
-<h2><a href="#tables-extension" id="tables-extension">Tables (extension)</a></h2>
 <style>
 table {
     border-collapse: collapse;
@@ -11,73 +10,100 @@ blockquote {
 	padding-left: 10px;
 }
 </style>
-<p>GFM enables the <code>table</code> extension, where an additional leaf block type is available.</p>
-<p>A <a href="@">table</a> is an arrangement of data with rows and columns, consisting of a single header row, a [delimiter row] separating the header from the data, and zero or more data rows.</p>
-<p>Each row consists of cells containing arbitrary text, in which [inlines] are parsed, separated by pipes (<code>|</code>).  A leading and trailing pipe is also recommended for clarity of reading, and if there&rsquo;s otherwise parsing ambiguity. Spaces between pipes and cell content are trimmed.  Block-level elements cannot be inserted in a table.</p>
-<p>The <a href="@">delimiter row</a> consists of cells whose only content are hyphens (<code>-</code>), and optionally, a leading or trailing colon (<code>:</code>), or both, to indicate left, right, or center alignment respectively.</p>
+<h1><a href="#markdown-table-basics" id="markdown-table-basics">Markdown Table Basics</a></h1>
+<h2><a href="#using-flexmark-in-stata" id="using-flexmark-in-stata">Using <em>Flexmark</em> in Stata</a></h2>
+<h3><a href="#doug-hemken" id="doug-hemken">Doug Hemken</a></h3>
+<h3><a href="#may-2018" id="may-2018">May 2018</a></h3>
+<p><strong>Flexmark</strong> extends the basic Markdown specification with the addition of &quot;piped&quot; tables, an additional block element.  Inline elements may be included within a table, but not other block elements.</p>
+<h2><a href="#what-demarcates-a-table" id="what-demarcates-a-table">What Demarcates A Table?</a></h2>
+<p>A <em>table</em> is an arrangement of data in rows and columns, consisting of a header row, a delimiter row separating the header from the data, and data rows.  In <em>flexmark</em> it is possible to have a table that displays as purely a header row, or a table that displays purely as data rows - each is marked with a delimiter row.</p>
+<p>Each row consists of cells containing arbitrary text, in which inlines are parsed, separated by pipes (<code>|</code>).  A leading and trailing pipe is also recommended for clarity of reading.</p>
+<p>The delimiter row consists of cells (separated by pipes) whose only content are hyphens (<code>-</code>) (at least three, like a theme break), or optionally, a leading or trailing colon (<code>:</code>), or both, to indicate left, right, or center alignment respectively.  Left justification is the default for data cells, centered for header cells.</p>
+<h2><a href="#table-delimiter-row" id="table-delimiter-row">Table Delimiter Row</a></h2>
 <pre><code>```
-| foo | bar |
-| --- | --- |
-| baz | bim |
+| Column One    | Column Two    |
+| ---           | ---           |
+| data cell one | data cell two |
 ```
 </code></pre>
 <table>
 <thead>
-<tr><th> foo </th><th> bar </th></tr>
+<tr><th> Column One    </th><th> Column Two    </th></tr>
 </thead>
 <tbody>
-<tr><td> baz </td><td> bim </td></tr>
+<tr><td> data cell one </td><td> data cell two </td></tr>
 </tbody>
 </table>
-<p>Flexmark and pegdown differ in how they treat leading spaces. In flexmark, one to three leading spaces are ignored. In pegdown, a leading space in the header is an extra cell, but leading spaces on all lines is a paragraph.</p>
+<p>No delimter row or too few hyphens and this is no longer a table:</p>
 <pre><code>```
- | foo | bar |
-| --- | --- |
-| baz | bim |
+| Column One    | Column Two    |
+| data cell one | data cell two |
+
+| Column One    | Column Two    |
+| -             | --            |
+| data cell one | data cell two |
+```
+</code></pre>
+<p>| Column One    | Column Two    | | data cell one | data cell two |</p>
+<p>| Column One    | Column Two    | | -             | &ndash;            | | data cell one | data cell two |</p>
+<p>However, a table can have only a header row, or only a data row:</p>
+<pre><code>```
+| Column One    | Column Two    |
+| ---           | ---           |
 ```
 </code></pre>
 <table>
 <thead>
-<tr><th> foo </th><th> bar </th></tr>
+<tr><th> Column One    </th><th> Column Two    </th></tr>
 </thead>
-<tbody>
-<tr><td> baz </td><td> bim </td></tr>
-</tbody>
+<tbody></tbody>
 </table>
 <pre><code>```
- | foo | bar |
- | --- | --- |
- | baz | bim |
+| ---           | ---           |
+| data cell one | data cell two |
 ```
-</code></pre>
-<table>
-<thead>
-<tr><th> foo </th><th> bar </th></tr>
-</thead>
-<tbody>
-<tr><td> baz </td><td> bim </td></tr>
-</tbody>
-</table>
-<p>Four leading spaces marks an indented code block, and the rest of the table is recognized (but has no header row).</p>
-<pre><code>```
-    | foo | bar |
-| --- | --- |
-| baz | bim |
-```
-</code></pre>
-<pre><code>| foo | bar |
 </code></pre>
 <table>
 <thead></thead>
 <tbody>
-<tr><td> baz </td><td> bim </td></tr>
+<tr><td> data cell one </td><td> data cell two </td></tr>
 </tbody>
 </table>
-<p>Cells in one column don&rsquo;t need to match length, though it&rsquo;s easier to read if they are. Likewise, use of leading and trailing pipes may be inconsistent:</p>
+<hr />
+<h2><a href="#leading-spaces" id="leading-spaces">Leading Spaces</a></h2>
+<p>In <em>flexmark</em>, one to three leading spaces are ignored.</p>
+<pre><code>```
+   | Column One    | Column Two    |
+  | ---           | ---           |
+ | data cell one | data cell two |
+```
+</code></pre>
+<table>
+<thead>
+<tr><th> Column One    </th><th> Column Two    </th></tr>
+</thead>
+<tbody>
+<tr><td> data cell one </td><td> data cell two </td></tr>
+</tbody>
+</table>
+<p>Four leading spaces mark an indented code block, and the rest of the table is recognized (but has no header row).</p>
+<pre><code>```
+    | Column One | Column Two |
+    | --- | --- |
+    | data cell one | data cell two |
+```
+</code></pre>
+<pre><code>| Column One | Column Two |
+| --- | --- |
+| data cell one | data cell two |
+</code></pre>
+<hr />
+<h2><a href="#cell-widths" id="cell-widths">Cell Widths</a></h2>
+<p>Cells widths in the same column don&rsquo;t need to match length, though it&rsquo;s easier to read if they do. Likewise, use of leading and trailing pipes may be inconsistent:</p>
 <pre><code>```
 | abc | defghi |
 :-: | -----------:
-bar | baz
+data cell | data cell two
 ```
 </code></pre>
 <table>
@@ -85,9 +111,48 @@ bar | baz
 <tr><th align="center"> abc </th><th align="right"> defghi </th></tr>
 </thead>
 <tbody>
-<tr><td align="center">bar </td><td align="right"> baz</td></tr>
+<tr><td align="center">data cell </td><td align="right"> data cell two</td></tr>
 </tbody>
 </table>
+<hr />
+<h2><a href="#number-of-cells" id="number-of-cells">Number of Cells</a></h2>
+<p>It is not necessary for each row to have the same number of cells.</p>
+<pre><code>```
+| Column One    | Column Two    |
+| ---           | ---           |
+| data cell one | data cell two | data cell three
+| data cell four
+```
+</code></pre>
+<table>
+<thead>
+<tr><th> Column One    </th><th> Column Two    </th></tr>
+</thead>
+<tbody>
+<tr><td> data cell one </td><td> data cell two </td><td> data cell three</td></tr>
+<tr><td> data cell four</td></tr>
+</tbody>
+</table>
+<p>You can leave cells empty by having two pipe characters.<br />
+An empty cell (adjacent pipes with no space) extends the cell before it (a space counts as text).</p>
+<pre><code>```
+| Column One    |               | Column Two    |
+| ---           | ---           |
+|| data cell one | data cell two |data cell three
+| || data cell four
+```
+</code></pre>
+<table>
+<thead>
+<tr><th> Column One    </th><th>               </th><th> Column Two    </th></tr>
+</thead>
+<tbody>
+<tr><td></td><td> data cell one </td><td> data cell two </td><td>data cell three</td></tr>
+<tr><td colspan="2"> </td><td> data cell four</td></tr>
+</tbody>
+</table>
+<hr />
+<h2><a href="#pipe-characters" id="pipe-characters">Pipe characters</a></h2>
 <p>Include a pipe in a cell&rsquo;s content by escaping it, including inside other inline spans:</p>
 <pre><code>```
 | f\|oo  |
@@ -105,183 +170,3 @@ bar | baz
 <tr><td> b <strong>|</strong> im </td></tr>
 </tbody>
 </table>
-<p>The table is broken at the first empty line, or beginning of another block-level structure:</p>
-<pre><code>```
-| abc | def |
-| --- | --- |
-| bar | baz |
-&gt; bar
-```
-</code></pre>
-<table>
-<thead>
-<tr><th> abc </th><th> def </th></tr>
-</thead>
-<tbody>
-<tr><td> bar </td><td> baz </td></tr>
-</tbody>
-</table>
-<blockquote>
-<p>bar</p>
-</blockquote>
-<p>Flexmark and pegdown interpret the first &ldquo;bar&rdquo; as a paragraph, while GFM specifies it as a (short) table row/cell.  At least flexmark and pegdown agree with each other.</p>
-<pre><code>```
-| abc | def |
-| --- | --- |
-| bar | baz |
-bar
-
-bar
-```
-</code></pre>
-<table>
-<thead>
-<tr><th> abc </th><th> def </th></tr>
-</thead>
-<tbody>
-<tr><td> bar </td><td> baz </td></tr>
-</tbody>
-</table>
-<p>bar</p>
-<p>bar</p>
-<p>In GFM, the header row must match the [delimiter row] in the number of cells.  If not, a table will not be recognized.  However flexmark and pegdown both see this as a table.</p>
-<pre><code>```
-| abc | def |
-| --- |
-| bar |
-```
-</code></pre>
-<table>
-<thead>
-<tr><th> abc </th><th> def </th></tr>
-</thead>
-<tbody>
-<tr><td> bar </td></tr>
-</tbody>
-</table>
-<p>The remainder of the table&rsquo;s rows may vary in the number of cells.  In GFM, if there are a number of cells fewer than the number of cells in the header row, empty cells are inserted.  If there are greater, the excess is ignored.  In flexmark and pegdown, the row with the greatest number of cells rules them all.</p>
-<pre><code>```
-| abc | def |
-| --- | --- |
-| bar |
-| bar | baz | boo |
-```
-</code></pre>
-<table>
-<thead>
-<tr><th> abc </th><th> def </th></tr>
-</thead>
-<tbody>
-<tr><td> bar </td></tr>
-<tr><td> bar </td><td> baz </td><td> boo </td></tr>
-</tbody>
-</table>
-<p>If there are no rows in the body, no <code>&lt;tbody&gt;</code> is generated in HTML output:</p>
-<pre><code>```
-| abc | def |
-| --- | --- |
-```
-</code></pre>
-<table>
-<thead>
-<tr><th> abc </th><th> def </th></tr>
-</thead>
-<tbody></tbody>
-</table>
-<p>If there are no rows in the header, no visible header is generated in HTML output:</p>
-<pre><code>```
-| --- | --- |
-| abc | def |
-```
-</code></pre>
-<table>
-<thead></thead>
-<tbody>
-<tr><td> abc </td><td> def </td></tr>
-</tbody>
-</table>
-<p>Examples not considered in the GFM extension. Table in a blockquote? Yes.</p>
-<pre><code>```
-&gt; sometext
-
-&gt; | foo | bar |
-&gt; | --- | --- |
-&gt; | baz | bim |
-```
-</code></pre>
-<blockquote>
-<p>sometext</p>
-<table>
-<thead>
-<tr><th> foo </th><th> bar </th></tr>
-</thead>
-<tbody>
-<tr><td> baz </td><td> bim </td></tr>
-</tbody>
-</table>
-</blockquote>
-<p>And note that lazy blockquoting works as well.</p>
-<pre><code>```
-&gt; sometext
-
-&gt; | foo | bar |
-| --- | --- |
-| baz | bim |
-```
-</code></pre>
-<blockquote>
-<p>sometext</p>
-<table>
-<thead>
-<tr><th> foo </th><th> bar </th></tr>
-</thead>
-<tbody>
-<tr><td> baz </td><td> bim </td></tr>
-</tbody>
-</table>
-</blockquote>
-<p>Table in a list?  Yes, a table may be a list item.</p>
-<pre><code>```
-- sometext
-
-- | foo | bar |
-| --- | --- |
-| baz | bim |
-```
-</code></pre>
-<ul>
-<li>
-<p>sometext</p>
-</li>
-<li>
-<table>
-<thead>
-<tr><th> foo </th><th> bar </th></tr>
-</thead>
-<tbody>
-<tr><td> baz </td><td> bim </td></tr>
-</tbody>
-</table>
-</li>
-</ul>
-<p>A table may also appear as a continuation of a list item.  Note there are four leading spaces.</p>
-<pre><code>```
-- sometext
-
-    | foo | bar |
-    | --- | --- |
-    | baz | bim |
-```
-</code></pre>
-<ul>
-<li>sometext
-<table>
-<thead>
-<tr><th> foo </th><th> bar </th></tr>
-</thead>
-<tbody>
-<tr><td> baz </td><td> bim </td></tr>
-</tbody>
-</table>
-</li>
-</ul>

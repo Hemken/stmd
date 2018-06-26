@@ -1,18 +1,3 @@
-<p>&lt;!DOCTYPE html&gt;</p>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>Basic Markdown Elements</title>
-<meta name="author" content="Doug Hemken" />
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-</script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
-</script>
-<!--#include virtual="../../../Rmd/headInclKB.html" -->
-
-<link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
 <style>
 table {
     border-collapse: collapse;
@@ -25,9 +10,6 @@ blockquote {
 	padding-left: 10px;
 }
 </style>
-
-</head>
-<!--#include virtual="/sscc/pubs/Rmd/topInclKB.html" -->
 <h1><a href="#markdown-elements" name="markdown-elements">Markdown Elements</a></h1>
 <p>The formatting elements specified by Markdown come in two basic types: there are <em>block</em> elements and <em>inline</em> elements.</p>
 <p><strong>Block</strong> elements include such things as <em>paragraphs</em> of text, <em>code blocks</em>, <em>block quotes</em>, <em>lists</em>, and <em>tables</em>. <em>Headings</em> and <em>theme breaks</em> (horizontal rules) are also thought of as block elements</p>
@@ -103,7 +85,7 @@ blockquote {
   <tbody>
     <tr>
       <td align="center">Math <code>$y=x_1+x_2$</code> </td>
-      <td align="center">Math \$y=x_1+x_2\$ </td>
+      <td align="center">Math $y=x_1+x_2$ </td>
     </tr>
   </tbody>
 </table>
@@ -212,5 +194,3 @@ value 1  | value 2
   <li>item 1</li>
   <li>item 2</li>
 </ol>
-<!--#include virtual="/sscc/pubs/Rmd/bottomInclKB.html" -->
-<p></body></p>

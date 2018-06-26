@@ -1,5 +1,37 @@
-<h1><a href="#theme-breaks-horizontal-rules" id="theme-breaks-horizontal-rules">Theme Breaks (horizontal rules)</a></h1>
-<p>A theme break (a horizontal rule) is written as three or more dashes, underscores, or asterisks.  These may be preceded by up to three spaces.  (When rendered with <em>pegdown</em> or <em>pandoc</em> (default) they usually must be preceded by a blank line, and followed by a blank line.)</p>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Markdown Theme Break Examples</title>
+<meta name="author" content="Doug Hemken" />
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+<!--#include virtual="../../../Rmd/headInclKB.html" -->
+<link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
+<style>
+table {
+    border-collapse: collapse;
+}
+table, th, td {
+   border: 1px solid black;
+}
+blockquote {
+    border-left: solid blue;
+	padding-left: 10px;
+}
+</style>
+</head>
+<body>
+<!--#include virtual="/sscc/pubs/Rmd/topInclKB.html" -->
+<h1><a href="#markdown-theme-break-examples-horizontal-rules" id="markdown-theme-break-examples-horizontal-rules">Markdown Theme Break Examples (horizontal rules)</a></h1>
+<h2><a href="#using-flexmark" id="using-flexmark">Using <em>Flexmark</em></a></h2>
+<h3><a href="#doug-hemken" id="doug-hemken">Doug Hemken</a></h3>
+<h3><a href="#may-2018" id="may-2018">May 2018</a></h3>
+<p>A theme break (a horizontal rule) is written as three or more dashes, underscores, or asterisks.  These may be preceded by up to three spaces.  (When rendered with <em>pegdown</em> or <em>pandoc</em> they usually must be preceded by a blank line, and followed by a blank line.)</p>
+<p>This is a block element that <strong>cannot</strong> contain inline elements.</p>
 <p>Written as:</p>
 <pre><code>---
 ___
@@ -22,8 +54,95 @@ _ _ _
 <hr />
 <hr />
 <hr />
-<p>Theme breaks do not interrupt paragraphs (the marks may be interpreted as emphasis or setext headings).</p>
-<p>A theme break may appear in a block quote.</p>
+<h3><a href="#theme-breaks-and-headers" id="theme-breaks-and-headers">Theme breaks and headers</a></h3>
+<p>A theme break may appear before or after a header with no blank lines.</p>
+<pre><code>#### Header 4
+---
+#### Another header
+
+Header 2
+---
+---
+Header 2 again
+---
+</code></pre>
+<h4><a href="#header-4" id="header-4">Header 4</a></h4>
+<hr />
+<h4><a href="#another-header" id="another-header">Another header</a></h4>
+<h2><a href="#header-2" id="header-2">Header 2</a></h2>
+<hr />
+<h2><a href="#header-2-again" id="header-2-again">Header 2 again</a></h2>
+<h3><a href="#theme-breaks-and-paragraphs" id="theme-breaks-and-paragraphs">Theme breaks and paragraphs</a></h3>
+<p>Theme breaks do not interrupt paragraphs (dashes may be interpreted as setext headings).</p>
+<pre><code>Some text.
+---
+More text.
+___
+
+Yet more.
+***
+</code></pre>
+<h2><a href="#some-text" id="some-text">Some text.</a></h2>
+<p>More text. ___</p>
+<p>Yet more. ***</p>
+<h3><a href="#theme-breaks-and-code-blocks" id="theme-breaks-and-code-blocks">Theme breaks and code blocks</a></h3>
+<p>A theme break may appear immediately before or after a fenced code block or an indented code block.</p>
+<pre><code>~~~
+generate y = x
+~~~
+***
+~~~
+summarize y
+~~~
+
+	generate y = x
+***
+	summarize y
+</code></pre>
+<pre><code>generate y = x
+</code></pre>
+<hr />
+<pre><code>summarize y
+</code></pre>
+<pre><code>generate y = x
+</code></pre>
+<hr />
+<pre><code>summarize y
+</code></pre>
+<h3><a href="#theme-breaks-and-tables" id="theme-breaks-and-tables">Theme breaks and tables</a></h3>
+<p>A theme break requires no blank line before a table, but does require one after (like a paragraph).</p>
+<pre><code>***
+column 1 | column 2
+---------|---------
+value 1  | value 2
+
+---
+</code></pre>
+<hr />
+<table>
+<thead>
+<tr><th>column 1 </th><th> column 2</th></tr>
+</thead>
+<tbody>
+<tr><td>value 1  </td><td> value 2</td></tr>
+</tbody>
+</table>
+<hr />
+<h3><a href="#theme-breaks-and-block-quotes" id="theme-breaks-and-block-quotes">Theme breaks and block quotes</a></h3>
+<p>A theme break may appear before a block quote with no blank line.  After a block quote a blank line is required (because block quotes have lazy continuation).</p>
+<pre><code>&gt; Quoted text.
+
+---
+&gt; More quotes.
+</code></pre>
+<blockquote>
+<p>Quoted text.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p>More quotes.</p>
+</blockquote>
+<p>A theme break may appear within a block quote.</p>
 <p>Written:</p>
 <pre><code>&gt; ***
 &gt; quoted
@@ -38,18 +157,31 @@ _ _ _
 <hr />
 <p>text</p>
 </blockquote>
+<h3><a href="#theme-breaks-and-lists" id="theme-breaks-and-lists">Theme breaks and lists</a></h3>
+<p>A theme break may appear before or after a list with no blank lines.</p>
+<pre><code>- list 1
+---
+- list 2
+</code></pre>
+<ul>
+<li>list 1</li>
+</ul>
+<hr />
+<ul>
+<li>list 2</li>
+</ul>
 <p>A theme break may be contained in a list, if it is composed of characters that contrast with the list item marker. Notice using the same character as a list item and as a theme break yields a pure theme break, interrupting the list.</p>
 <p>Written:</p>
-<pre><code>- item 1
+<pre><code>- item 1, list 1
 - ***
 - ---
 - ___
-- item 2
+- item 2, list 2
 * ***
 </code></pre>
 <p>Rendered:</p>
 <ul>
-<li>item 1</li>
+<li>item 1, list 1</li>
 <li>
 <hr />
 </li>
@@ -59,6 +191,8 @@ _ _ _
 <li>
 <hr />
 </li>
-<li>item 2</li>
+<li>item 2, list 2</li>
 </ul>
 <hr />
+<!--#include virtual="/sscc/pubs/Rmd/bottomInclKB.html" -->
+</body>
