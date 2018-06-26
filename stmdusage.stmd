@@ -1,0 +1,85 @@
+# Using the `stmd` command in Stata
+
+Stata provides commands to turn Markdown documents into HTML, and
+commands to execute Stata commands embedded within text documents,
+returning the commands and adding their output to the document.
+
+The `stmd` adds to this facility by allowing users to write dynamic
+documents in the standard dynamic Markdown style common with other
+programming languages.
+
+## Install ` stmd`
+
+## The Goal: Easy-to-write source text
+
+Conventional dynamic Markdown looks like the text in the first column,
+and is turned into a web document (HTML) that appears like the
+second column.
+
+<table>
+<thead>
+<tr><th> Markdown </th><th> Result </th></tr>
+</thead>
+<tbody>
+<tr valign="top"><td><code>
+<<dd_ignore>>
+
+~~~~
+An Example File
+===============
+
+Some preliminary text.
+
+A code block, evaluted:
+```{s}
+sysuse auto
+summarize weight
+```
+
+In-line text: the mean weight is `{s} %9.1f r(mean)` pounds.
+
+A list:
+
+- N = `{s} r(N)`
+- mean = `{s} %9.1f r(mean)`
+- sd = `{s} % 9.2f r(sd)`
+
+A graph:
+```{s}
+histogram weight
+```
+
+More text.
+<</dd_ignore>>
+~~~~
+
+</code>
+</td><td>
+
+# An Example File
+
+Some preliminary text.
+
+A code block, evaluted:
+```{s}
+sysuse auto
+summarize weight
+```
+
+In-line text: the mean weight is `s  %9.1f r(mean)` pounds.
+
+A list:
+
+- N = `s  r(N)`
+- mean = `s  %9.1f r(mean)`
+- sd = `s  % 9.2f r(sd)`
+
+A graph:
+```{s}
+histogram weight
+```
+
+More text.
+</td></tr>
+</tbody>
+</table>

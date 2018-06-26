@@ -1,0 +1,24 @@
+```{stata}
+sysuse auto, clear
+```
+
+Text about `sysuse`.  Text about `stata`?
+
+```{s}
+summarize weight
+```
+
+Mean weight `{stata} %9.1f r(mean)` (using "{stata}")  
+Mean weight `{s} %9.1f r(mean)` (using "{s}")
+
+```stata
+summarize price
+```
+
+Mean price `stata %9.1f r(mean)`
+
+```s
+summarize mpg
+```
+
+Mean mpg `s %9.1f r(mean)`

@@ -6,7 +6,7 @@
 {vieweralsosee "dyndoc" "help dyndoc"}{...}
 {vieweralsosee "dyntext" "help dyntext"}{...}
 {vieweralsosee "dynamic tags" "help dynamic tags"}{...}
-{vieweralsosee "pandoc" "help pandoc"}{...}
+{vieweralsosee "stpandoc" "help stpandoc"}{...}
 {vieweralsosee "dyn2do" "help dyn2do"}{...}
 {viewerjumpto "Syntax" "stmd##syntax"}{...}
 {viewerjumpto "Description" "stmd##description"}{...}
@@ -16,7 +16,7 @@
 {title:Title}
 
 {phang}
-{bf:stmd} Convert dynamic Markdown to HTML format using Stata {cmd: dyndoc}{p_end}
+{bf:stmd} Convert dynamic Markdown to HTML format, using Stata {cmd: dyndoc}{p_end}
 
 
 {marker syntax}{...}
@@ -44,7 +44,7 @@ filename
 {pstd}
 {cmd:stmd} Takes a dynamic Markdown document using conventional markdown
 	specification and converts it to HTML via Stata's {cmd: dyndoc}
-	command.  This is just a wrapper for {cmd: stmd2dyn} followed by
+	command.  {cmd:stmd} is just a wrapper for {cmd: stmd2dyn} followed by
 	{cmd: dyndoc}
 
 
@@ -88,7 +88,7 @@ and "stata" may be abbreviated simply "s".
 {pstd}
 In addition to marking a fenced code block for dynamic execution, various
 options may be included in the information tag that control whether a
-block is executed, and what may be included in the document.
+block is executed, and what resulting text may be included in the document.
 
 {pin}
 {it: NO EVAL}: To prevent code evaluation, simply don't include an
@@ -117,7 +117,7 @@ use the option {cmd: quietly}.
 {marker examples}{...}
 {title:Examples}
 
-{phang}{cmd:. stmd using example.stmd}{p_end}
+{phang}{cmd:. stmd example.stmd}{p_end}
 
 
 {title:Author}
