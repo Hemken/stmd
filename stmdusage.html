@@ -1,3 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Basic Markdown Elements</title>
+<meta name="author" content="Doug Hemken" />
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+<!--#include virtual="../../Rmd/headInclKB.html" -->
+<link rel="stylesheet" href="../../Rmd/Rmd.css" type="text/css" />
+<style>
+table {
+    border-collapse: collapse;
+}
+table, th, td {
+   border: 1px solid black;
+}
+blockquote {
+    border-left: solid blue;
+	padding-left: 10px;
+}
+</style>
+</head>
+<body>
+<!--#include virtual="/sscc/pubs/Rmd/topInclKB.html" -->
 <h1><a href="#using-the-command-in-stata" id="using-the-command-in-stata">Using the <code>stmd</code> command in Stata</a></h1>
 <p>Stata provides commands to turn Markdown documents into HTML, and commands to execute Stata commands embedded within text documents, returning the commands and adding their output to the document.</p>
 <p>The <code>stmd</code> adds to this facility by allowing users to write dynamic documents in the standard dynamic Markdown style common with other programming languages.  Code to be executed is enclosed in a code fence with an <em>information tag</em> that includes the language of the dynamic code, and may include options.</p>
@@ -85,8 +113,10 @@ More text.
 (bin=8, start=1760, width=385)
 
 </code></pre>
-<img src="Graph11.svg" >
+<img src="Graph9.svg" >
 <p>More text.</p>
 </td></tr>
 </tbody>
 </table>
+<!--#include virtual="/sscc/pubs/Rmd/bottomInclKB.html" -->
+</body>
