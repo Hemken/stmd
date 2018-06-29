@@ -1,6 +1,6 @@
-*! version 1.5.7
+*! version 1.5.8
 *! Doug Hemken
-*! 26 June 2018
+*! 29 June 2018
 
 // ISSUES
 // ======
@@ -86,7 +86,7 @@ void function docwrite(string scalar filename, ///
 real matrix function _fence_info(string colvector X) {
 
 	codefence = "^( ? ? ?)(```+|~~~+)([ ]*)$"
-	infofence = "^( ? ? ?)(```+|~~~+)\{?s(tata)?\/?(,.*)?\}?$"
+	infofence = "^( ? ? ?)(```+|~~~+)\{?(s|stata)?\/?(,.*)?\}?$"
 	fence = ustrregexm(X, codefence)
 	codebegin = ustrregexm(X, infofence)
 	fence = fence + codebegin
@@ -144,7 +144,7 @@ real matrix function _fence_info(string colvector X) {
 }
 
 string colvector function _info_tags(string colvector X) {
-	infofence = "^( ? ? ?)(```+|~~~+)\{?s(tata)?\/?(,.*)?\}?$"
+	infofence = "^( ? ? ?)(```+|~~~+)\{?(s|stata)?\/?(,.*)?\}?$"
 //infofence
 	infotags = J(rows(X),1,"")
 	for (i=1; i<=rows(X); i++) {
@@ -243,11 +243,11 @@ string colvector function _stitch(string colvector X,
 string colvector function _inline_code(string colvector X, real colvector cbdepth) {
 	for (i=1; i<=rows(X); i++) {
 		if (cbdepth[i] == 0) {
-			dispdir = ustrregexm(X[i,1], "(`|~)\{?s(tata)?\}?( )+(.*)(`)")
+			dispdir = ustrregexm(X[i,1], "(`|~)\{?(s|stata)?\}?( )+(.*)(`)")
 			while (dispdir) {
-				X[i,1] = ustrregexra(X[i,1], "(`|~)\{?s(tata)?\}?( )+", "<<dd_display: ")
+				X[i,1] = ustrregexra(X[i,1], "(`|~)\{?(s|stata)?\}?( )+", "<<dd_display: ")
 				X[i,1] = ustrregexra(X[i,1], "`", ">>")
-				dispdir = ustrregexm(X[i,1], "(`|~)\{?s(tata)?\}?( )+(.*)(`)")
+				dispdir = ustrregexm(X[i,1], "(`|~)\{?(s|stata)?\}?( )+(.*)(`)")
 				}
 			}
 		}

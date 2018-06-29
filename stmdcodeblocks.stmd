@@ -1,0 +1,213 @@
+<<dd_include: header.txt>>
+
+# Writing Dynamic Stata Code Blocks
+
+When you write a document in the standard dynamic Markdown format, it is
+processed in two stages.  First the Stata code blocks and in-line references
+are processed, and the results are substituted into your document.  Then
+the Markdown elements of your document are processed, producing a final
+HTML document.
+
+## Specify the Stata language
+The standard approach to including dynamic content in a Markdown document
+is to place some code-to-be-processed in a *fenced code block* (demarcated
+with three or more backticks or tildes).  This fenced code block has an
+additional *information tag*, the first word of which is reserved for the
+name of the programming language to be invoked.
+
+This usually looks like
+````
+~~~{stata}
+  -- code --
+~~~
+````
+
+Similarly, dynamic *in-line code* (demarcated with single backticks) has
+an additional info tag for the programming language.  It typically looks
+like
+````
+some text `{stata} --code--` more text
+````
+
+In Stata Markdown, the in-line code is limited to *display* commands.
+
+The `stmd` command only processes code in Stata  (this could change in
+the future).  The language may be
+specified in a number of alternative ways.
+
+- {stata}
+- stata
+- {s}
+- s
+
+That is, you may use the keyword \"stata\" or the keyword \"s\", with 
+or without curly braces.  The first option, \"{stata}\" with braces,
+is compatible with `knitr` documents in R.  The last two options, \"{s}\" and
+\"s\" are compatible with `markstat` documents.
+
+## Examples
+### Code Blocks
+<style>
+ tr {
+   valign: top;
+ }
+ code {
+	padding: 0;
+ }
+ pre {
+    margin: 5px;
+ }
+</style>
+
+<table>
+<thead>
+<tr><th> Markdown </th><th> Resulting Document </th></tr>
+</thead>
+<tbody>
+<tr><td>
+
+Using \"{stata}\"
+
+~~~~
+```{stata}
+sysuse auto, clear
+tabstat weight, stat(mean sd)
+```
+~~~~
+
+</td><td>
+
+```{stata}
+sysuse auto, clear
+tabstat weight, stat(mean sd)
+```
+
+</td></tr>
+<tr><td>
+
+Using \"{s}\"
+
+~~~~
+```{s}
+tabstat price, stat(mean sd)
+```
+~~~~
+
+</td><td>
+
+```{s}
+tabstat price, stat(mean sd)
+```
+
+</td></tr>
+<tr><td>
+
+Using \"stata\" (no braces)
+
+~~~~
+```stata
+tabstat mpg, stat(mean sd)
+```
+~~~~
+
+</td><td>
+
+```stata
+tabstat mpg, stat(mean sd)
+```
+
+</td></tr>
+<tr><td>
+
+Using \"s\" (no braces)
+
+~~~~
+```s
+tabstat disp, stat(mean sd)
+```
+~~~~
+
+</td><td>
+
+```s
+tabstat disp, stat(mean sd)
+```
+
+</td></tr>
+</tbody>
+</table>
+
+### In-line Code
+<table>
+<thead>
+<tr><th> Markdown </th><th> Resulting Document </th></tr>
+</thead>
+<tbody>
+<tr><td>
+
+Using \"{stata}\" in-line
+
+~~~~
+```{stata, quietly}
+summarize price
+```
+
+Mean price `{stata} %9.1f r(mean)`
+~~~~
+
+</td><td>
+
+```{stata, quietly}
+summarize price
+```
+
+Mean price: `{stata} %9.1f r(mean)`
+
+</td></tr>
+<tr><td>
+
+Using \"{s}\" in-line
+
+~~~~
+Standard deviation of price: `{s} %9.1f r(sd)`
+~~~~
+
+</td><td>
+
+Standard deviation of price: `{s} %9.1f r(sd)`
+
+</td></tr>
+<tr><td>
+
+Using \"stata\" (no braces)
+
+~~~~
+Minimum price: `stata %9.1f r(min)`
+~~~~
+
+</td><td>
+
+Minimum price: `stata %9.1f r(min)`
+
+</td></tr>
+<tr><td>
+
+Using \"s\" (no braces)
+
+~~~~
+Maximum price: `stata %9.1f r(max)`
+~~~~
+
+</td><td>
+
+Maximum price: `stata %9.1f r(max)`
+
+</td></tr>
+</tbody>
+</table>
+
+Code that uses the keyword \"stata\" as code is diplayed as static
+code: `stata`.
+
+
+<<dd_include: bottommatter.txt>>

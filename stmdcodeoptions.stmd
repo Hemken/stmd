@@ -1,0 +1,107 @@
+<<dd_include: header.txt>>
+
+# Dynamic Stata Code Block Options
+
+When you include dynamic Stata code in a Markdown document, you do
+not have to show your reader all the code you use.  Just what is
+visible to your reader is controlled by code block *attributes*.
+This optional specification is made as part of the code fence,
+after the language specification and a comma.
+
+You have the option of showing the reader 
+
+- only the output from your code (no commands)
+- only the code but not the output (perhaps you use stored results,
+later)
+- neither code nor output (yet the code needs to be evaluated)
+
+You also have the option of showing the reader
+
+- unevaluated code
+- suppressing the dot-prompt in code that is shown
+
+See also `help dynamic tags##code` in Stata Help.  When processing
+your dynamic document using `knitr` in R, these attributes are
+referred to as \"chunk options\".
+
+Most of these options can be specified using the same keywords that
+are used in Stata\'s dynamic tags.  For compatability, most of these
+options also have a `knitr` style of specification, and one has a
+`markstat` style of specification.
+
+## Examples
+### Output Only, No Commands
+You can show your reader only the output from a code chunk with
+the `nocommands` option in the code fence info tag.  The `knitr`
+version of this option is `echo=FALSE`.
+~~~~
+```{stata, nocommands}
+sysuse auto
+tabstat weight, stat(mean sd)
+```
+~~~~
+
+```{stata, nocommands}
+sysuse auto
+tabstat weight, stat(mean sd)
+```
+
+~~~~
+```{stata, echo=FALSE}
+tabulate foreign
+```
+~~~~
+
+```{stata, echo=FALSE}
+tabulate foreign
+```
+
+~~~~
+```s, nocommands
+pwcorr mpg weight disp
+```
+~~~~
+
+```s, nocommands
+pwcorr mpg weight disp
+```
+
+### Code Only, No Output
+You can show your reader only the code you use, without the output,
+yet the code is evaluated.  Notice that this suppresses all output in
+your Stata results viewer, as well as in your document.  This 
+suppresses the notes that many commands make, but not error messages
+(which cause your document to simply stop processing, unless you
+have used the `nostop` option with `stmd` for your whole document).
+~~~~
+```{stata, nooutput}
+sysuse auto, clear
+regress mpg weight
+```
+~~~~
+
+```{stata, nooutput}
+sysuse auto, clear // no dataset note
+regress mpg weight // no output
+```
+
+This may also be specified in the `knitr` manner with `results=FALSE` or
+`results="hide"` (note the capitalization and the quotes).
+
+### Neither Code nor Output
+To have code evaluated in the background, use the `quietly` option.
+
+```{stata, quietly}
+generate gpm=1/mpg
+```
+
+```{stata, nocommands, nooutput}
+regress gpm weight
+```
+
+
+
+, and the `markstat` version
+is to include a forward slash at the end of the language specification.
+
+<<dd_include: bottommatter.txt>>

@@ -1,8 +1,11 @@
+<h2><a href="#examples" id="examples">Examples</a></h2>
+<p>Using &quot;{stata}&quot;</p>
 <pre><code class="language-{stata}">. sysuse auto, clear
 (1978 Automobile Data)
 
 </code></pre>
 <p>Text about <code>sysuse</code>.  Text about <code>stata</code>?</p>
+<p>Using &quot;{s}&quot;</p>
 <pre><code class="language-{s}">. summarize weight
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
@@ -12,6 +15,7 @@
 </code></pre>
 <p>Mean weight    3019.5 (using &ldquo;{stata}&rdquo;)<br />
 Mean weight    3019.5 (using &ldquo;{s}&rdquo;)</p>
+<p>Using &quot;stata&quot; (no braces)</p>
 <pre><code class="language-stata">. summarize price
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
@@ -19,7 +23,8 @@ Mean weight    3019.5 (using &ldquo;{s}&rdquo;)</p>
        price |         74    6165.257    2949.496       3291      15906
 
 </code></pre>
-<p>Mean price    6165.3</p>
+<p>Mean price    6165.3 (using &ldquo;stata&rdquo;)</p>
+<p>Using &quot;s&quot;</p>
 <pre><code class="language-s">. summarize mpg
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
@@ -27,4 +32,4 @@ Mean weight    3019.5 (using &ldquo;{s}&rdquo;)</p>
          mpg |         74     21.2973    5.785503         12         41
 
 </code></pre>
-<p>Mean mpg      21.3</p>
+<p>Mean mpg      21.3 (using &ldquo;s&rdquo;)</p>

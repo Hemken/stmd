@@ -1,9 +1,13 @@
+## Examples
+
+Using \"{stata}\"
 ```{stata}
 sysuse auto, clear
 ```
 
 Text about `sysuse`.  Text about `stata`?
 
+Using \"{s}\"
 ```{s}
 summarize weight
 ```
@@ -11,14 +15,16 @@ summarize weight
 Mean weight `{stata} %9.1f r(mean)` (using "{stata}")  
 Mean weight `{s} %9.1f r(mean)` (using "{s}")
 
+Using \"stata\" (no braces)
 ```stata
 summarize price
 ```
 
-Mean price `stata %9.1f r(mean)`
+Mean price `stata %9.1f r(mean)` (using "stata")
 
+Using \"s\"
 ```s
 summarize mpg
 ```
 
-Mean mpg `s %9.1f r(mean)`
+Mean mpg `s %9.1f r(mean)` (using "s")

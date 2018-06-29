@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Basic Markdown Elements</title>
+<title>SSCC Stata Markdown</title>
 <meta name="author" content="Doug Hemken" />
 <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+ MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
 </script>
 <script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
+ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
 </script>
 <!--#include virtual="../../Rmd/headInclKB.html" -->
 <link rel="stylesheet" href="../../Rmd/Rmd.css" type="text/css" />
 <style>
-table {
-    border-collapse: collapse;
-}
-table, th, td {
-   border: 1px solid black;
-}
-blockquote {
-    border-left: solid blue;
-	padding-left: 10px;
-}
+ table {
+  border-collapse: collapse;
+  }
+ table, th, td {
+  border: 1px solid black;
+  }
+ blockquote {
+  border-left: solid blue;
+  padding-left: 10px;
+  }
 </style>
 </head>
 <body>
@@ -54,12 +54,17 @@ blockquote {
 </code></pre>
 <h2><a href="#the-goal-easy-to-write-source-text" id="the-goal-easy-to-write-source-text">The Goal: Easy-to-write source text</a></h2>
 <p>Conventional dynamic Markdown looks like the text in the first column, and is turned into a web document (HTML) that appears like the second column.</p>
+<style>
+ #OuterWrapper {
+   width: auto;
+ }
+</style>
 <table>
 <thead>
 <tr><th> Markdown </th><th> Result </th></tr>
 </thead>
 <tbody>
-<tr valign="top"><td><code>
+<tr valign="top"><td padding=0>
 <pre><code>An Example File
 ===============
 
@@ -71,7 +76,8 @@ sysuse auto
 summarize weight
 ```
 
-In-line text: the mean weight is `{s} %9.1f r(mean)` pounds.
+In-line text: the mean weight 
+is `{s} %9.1f r(mean)` pounds.
 
 A list:
 
@@ -86,7 +92,6 @@ histogram weight
 
 More text.
 </code></pre>
-</code>
 </td><td>
 <h1><a href="#an-example-file" id="an-example-file">An Example File</a></h1>
 <p>Some preliminary text.</p>
@@ -113,7 +118,7 @@ More text.
 (bin=8, start=1760, width=385)
 
 </code></pre>
-<img src="Graph9.svg" >
+<img src="Graph5.svg" >
 <p>More text.</p>
 </td></tr>
 </tbody>
