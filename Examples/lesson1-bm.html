@@ -1,21 +1,18 @@
-<p>The general scheme for writing commands will be something like this<br />
-(see <code>help language</code>, this is a pared down version):</p>
-<pre><code>[prefix:] command [varlist] [if] [, options]                                
+<p>The general scheme for writing commands will be something like this (see <code>help language</code>, this is a pared down version):</p>
+<pre><code>[prefix:] command [varlist] [if] [, options]
 </code></pre>
 <p>For example, try:</p>
-<pre><code class="language-{stata,">help summarize                                                              
+<pre><code class="language-{stata,">
+help summarize
+
 </code></pre>
 <p>and you will see</p>
-<pre><code>summarize [varlist] [if] [in] [weight] [, options]                          
+<pre><code>summarize [varlist] [if] [in] [weight] [, options]
 </code></pre>
-<p>The name of the command is <em>summarize</em>.  It can be abbreviated as<br />
-short as <em>su</em> (although <em>sum</em> is more common in practice).  This is<br />
-indicated by the underlining.</p>
-<p>This command takes (&ldquo;accepts&rdquo;) a <em>variable list</em>.  The square brackets<br />
-indicate that the variable list is actually optional for this command,<br />
-as is everything besides the command name, <em>summarize</em>.</p>
+<p>The name of the command is <em>summarize</em>.  It can be abbreviated as short as <em>su</em> (although <em>sum</em> is more common in practice).  This is indicated by the underlining.</p>
+<p>This command takes (&ldquo;accepts&rdquo;) a <em>variable list</em>.  The square brackets indicate that the variable list is actually optional for this command, as is everything besides the command name, <em>summarize</em>.</p>
 <p>Having loaded a data set, we can try out this command</p>
-<pre><code>. summarize                                                                   
+<pre><code class="language-{stata}">. summarize
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
@@ -36,22 +33,21 @@ displacement |         74    197.2973    91.83722         79        425
 
 </code></pre>
 <h2><a href="#varlist" id="varlist"><em>Varlist</em></a></h2>
-<p>Next we add a variable list.  There are a number of ways we can<br />
-write lists of variables in Stata.  (See <code>help varlist</code>.)</p>
+<p>Next we add a variable list.  There are a number of ways we can write lists of variables in Stata.  (See <code>help varlist</code>.)</p>
 <ul>
 <li>write out the variable name(s)</li>
 <li>use wildcards</li>
 <li>use a first-to-last (sequential) list</li>
 <li>the keyword <code>_all</code></li>
 </ul>
-<pre><code>. summarize price mpg // spelled-out list                                     
+<pre><code class="language-{stata}">. summarize price mpg // spelled-out list
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
        price |         74    6165.257    2949.496       3291      15906
          mpg |         74     21.2973    5.785503         12         41
 
-. summarize mpg - trunk // first-to-last list                                 
+. summarize mpg - trunk // first-to-last list
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
@@ -60,14 +56,14 @@ write lists of variables in Stata.  (See <code>help varlist</code>.)</p>
     headroom |         74    2.993243    .8459948        1.5          5
        trunk |         74    13.75676    4.277404          5         23
 
-. summarize *n   // wildcard list                                             
+. summarize *n   // wildcard list
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
         turn |         74    39.64865    4.399354         31         51
      foreign |         74    .2972973    .4601885          0          1
 
-. summarize _all // or use &quot; * &quot;                                              
+. summarize _all // or use &quot; * &quot;
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
@@ -87,25 +83,16 @@ displacement |         74    197.2973    91.83722         79        425
      foreign |         74    .2972973    .4601885          0          1
 
 </code></pre>
-<p>Some languages have indexed lists, like <em>myvar1-myvar4</em>, meaning the<br />
-four variables myvar1, myvar2, myvar3, and myvar4, regardless of where<br />
-they are located in the data set.  Not Stata.  In Stata this would be<br />
-a first-to-last (positional) list.  It might be the list you want, or<br />
-it might not - it depends how the data set was constructed.</p>
+<p>Some languages have indexed lists, like <em>myvar1-myvar4</em>, meaning the four variables myvar1, myvar2, myvar3, and myvar4, regardless of where they are located in the data set.  Not Stata.  In Stata this would be a first-to-last (positional) list.  It might be the list you want, or it might not - it depends how the data set was constructed.</p>
 <h3><a href="#exercise" id="exercise">Exercise</a></h3>
-<p>How else could you specify the list with myvar1, myvar2, myvar3, and<br />
-myvar4?  (State any assumptions you make.)</p>
+<p>How else could you specify the list with myvar1, myvar2, myvar3, and myvar4?  (State any assumptions you make.)</p>
 <h2><a href="#if" id="if"><em>If</em></a></h2>
-<p>An <code>if</code> condition allows your command to act on a <em>subset</em> of the<br />
-observations in your data set.  (See <code>help if</code>.)  The syntax for<br />
-most commands can be</p>
-<pre><code>command if expression                                                       
+<p>An <code>if</code> condition allows your command to act on a <em>subset</em> of the observations in your data set.  (See <code>help if</code>.)  The syntax for most commands can be</p>
+<pre><code>command if expression
 </code></pre>
-<p>where <em>expression</em> is something that is true or false for each observation<br />
-in the data set.</p>
-<p>For example, to see the average price of a foreign car in this<br />
-data set we might try</p>
-<pre><code>. summarize price if foreign==1                                               
+<p>where <em>expression</em> is something that is true or false for each observation in the data set.</p>
+<p>For example, to see the average price of a foreign car in this data set we might try</p>
+<pre><code class="language-{stata}">. summarize price if foreign==1
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------

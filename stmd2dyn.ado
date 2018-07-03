@@ -1,6 +1,6 @@
-*! version 1.5.8
+*! version 1.5.9
 *! Doug Hemken
-*! 29 June 2018
+*! 3 July 2018
 
 // ISSUES
 // ======
@@ -42,6 +42,7 @@ display in error "target file can not be the same as the source file"
 //mata: X	
 * Then identify code blocks and tags
 	mata: fenceinfo = _fence_info(X) // fences
+//mata: fenceinfo
 	mata: infotags  = _info_tags(X)  // retrieve infotags
 	mata: tagmatchs = _tag_match(infotags) // parse infotags
 	mata: dotags = _dd_do(fenceinfo, tagmatchs) // generate <<dd_do>>
@@ -86,21 +87,22 @@ void function docwrite(string scalar filename, ///
 real matrix function _fence_info(string colvector X) {
 
 	codefence = "^( ? ? ?)(```+|~~~+)([ ]*)$"
-	infofence = "^( ? ? ?)(```+|~~~+)\{?(s|stata)?\/?(,.*)?\}?$"
+	infofence = "^( ? ? ?)(```+|~~~+)\{?(s|stata)\/?(,.*)?\}?$"
+
 	fence = ustrregexm(X, codefence)
 	codebegin = ustrregexm(X, infofence)
-	fence = fence + codebegin
-	prespace = J(rows(X),1,.)
-	cbdepth = J(rows(X),1,0)
-	fencel = J(rows(X),7,.)
-	doblock = 0
-	//cbflen = 0
+	fence = fence + codebegin  // any code fence
+	prespace = J(rows(X),1,.)  // possible spaces before code fence
+	cbdepth = J(rows(X),1,0)   // depth of code fencing
+	fencel = J(rows(X),7,.)    // # of characters used in fence
+	doblock = 0                // dynamic code
+
 	for (i=1; i<=rows(X); i++) {
-		// check out the fence
-		if (i>=2) {
+		// find and characterize fences
+		if (i>=2) {  //lag fence depth and fence length(s)
 			cbdepth[i]=cbdepth[i-1]
 			fencel[i,.]=fencel[i-1,.]
-		}
+			}
 		if (ustrregexm(X[i,1], infofence) | ustrregexm(X[i,1], codefence)) {
 			if (ustrregexm(X[i,1], infofence)) {
 				prespace[i] = ustrlen(ustrregexs(1))
@@ -110,12 +112,12 @@ real matrix function _fence_info(string colvector X) {
 				prespace[i] = ustrlen(ustrregexs(1))
 				fl = ustrlen(ustrregexs(2))
 			}
-			// doable?
-			if (cbdepth[i]==0 & ustrregexm(X[i,1], infofence)) {
-				cbdepth[i]=cbdepth[i]+1
-				fencel[i, cbdepth[i]]   = fl
-				codebegin[i] = 1 // redundant
-				doblock = 1
+		// doable?
+		if (cbdepth[i]==0 & ustrregexm(X[i,1], infofence)) {
+			cbdepth[i]=cbdepth[i]+1
+			fencel[i, cbdepth[i]]   = fl
+			codebegin[i] = 1 // redundant
+			doblock = 1
 			}
 			// not doable: deeper?
 			else if (ustrregexm(X[i,1], infofence) | cbdepth[i]==0) {
@@ -144,7 +146,7 @@ real matrix function _fence_info(string colvector X) {
 }
 
 string colvector function _info_tags(string colvector X) {
-	infofence = "^( ? ? ?)(```+|~~~+)\{?(s|stata)?\/?(,.*)?\}?$"
+	infofence = "^( ? ? ?)(```+|~~~+)\{?(s|stata)\/?(,.*)?\}?$"
 //infofence
 	infotags = J(rows(X),1,"")
 	for (i=1; i<=rows(X); i++) {
@@ -168,15 +170,17 @@ real matrix function _tag_match(string colvector infotags) {
 	noresults3 = ustrregexm(infotags, "nooutput")
 	noresults4 = ustrregexm(infotags, "quietly")
 	noresults = noresults1+noresults2+noresults3+noresults4
-	noprompt1 = ustrregexm(infotags, "noprompt=TRUE")
-	noprompt2 = ustrregexm(infotags, "noprompt")
-	noprompt = noprompt1+noprompt2
+	//noprompt1 = ustrregexm(infotags, "noprompt=TRUE")
+	//noprompt2 = ustrregexm(infotags, "noprompt")
+	//noprompt = noprompt1+noprompt2
+	noprompt = ustrregexm(infotags, "noprompt")
 	
 	return(codeopts, noeval, noecho, noresults, noprompt)
 }
 
 string colvector function _dd_do(real matrix fenceinfo, real matrix tagmatch) {
 	dotags = J(rows(fenceinfo),1,"")
+	noeval = 0
 	for (i=1; i<=rows(fenceinfo); i++) {
 		if (fenceinfo[i,2]==1) {
 			if (sum(tagmatch[i,.])==0) dotags[i,1]=("<<dd_do>>")
@@ -186,8 +190,12 @@ string colvector function _dd_do(real matrix fenceinfo, real matrix tagmatch) {
 				}
 			else if (tagmatch[i,3]==0 & tagmatch[i,4]==1) dotags[i,1]=("<<dd_do: nooutput>>")
 			else if (tagmatch[i,5]==1) dotags[i,1]=("<<dd_do: noprompt>>")
+			else if (tagmatch[i,2]==1) noeval=1
 			}
-		else if (fenceinfo[i,2]==-1) dotags[i,1]=("<</dd_do>>")
+		else if (fenceinfo[i,2]==-1) {
+			if (noeval==0) dotags[i,1]=("<</dd_do>>")
+			else if (noeval==1) noeval=0
+			}
 		else dotags[i,1]=("")
 		}
 	return(dotags)
@@ -221,17 +229,33 @@ string colvector function _gr_link() {
 	
 string colvector function _stitch(string colvector X,
 		real matrix fenceinfo, string colvector dotags) {
-	lce = 0
+	lce = 0     // last code end line
+	quiet = 0   // quietly flag
 	Y = _gr_preamble()
 	for (i=1; i<=rows(X); i++) {
 	//X[i,.]
 		if (fenceinfo[i,2]==1) {
-			Y = Y \ X[(lce+1)..i,.]\dotags[i,.]
-			lce = i
+			if (dotags[i,1]=="<<dd_do: quietly>>") {
+	//X[i,.],dotags[i,.]
+					Y = Y \ X[(lce+1)..(i-1),.]\dotags[i,.]
+					lce = i
+					quiet = 1
+				}
+				else {
+					Y = Y \ X[(lce+1)..i,.]\dotags[i,.]
+					lce = i
+				}
 			}
 		else if (fenceinfo[i,2]==-1) {
-			Y= Y \X[(lce+1)..(i-1),.]\dotags[i,.]\X[i,.]\_gr_link()
-			lce = i
+			if (quiet==1) {
+				Y= Y \X[(lce+1)..(i-1),.]\dotags[i,.]\_gr_link()
+				lce = i
+				quiet=0
+				}
+				else {
+					Y= Y \X[(lce+1)..(i-1),.]\dotags[i,.]\X[i,.]\_gr_link()
+					lce = i
+				}
 			}
 		else if (i==rows(X)) {
 			Y= Y \ X[(lce+1)..i,.]
@@ -243,11 +267,11 @@ string colvector function _stitch(string colvector X,
 string colvector function _inline_code(string colvector X, real colvector cbdepth) {
 	for (i=1; i<=rows(X); i++) {
 		if (cbdepth[i] == 0) {
-			dispdir = ustrregexm(X[i,1], "(`|~)\{?(s|stata)?\}?( )+(.*)(`)")
+			dispdir = ustrregexm(X[i,1], "(`|~)\{?(s|stata)\}?( )+(.*)(`)")
 			while (dispdir) {
-				X[i,1] = ustrregexra(X[i,1], "(`|~)\{?(s|stata)?\}?( )+", "<<dd_display: ")
+				X[i,1] = ustrregexra(X[i,1], "(`|~)\{?(s|stata)\}?( )+", "<<dd_display: ")
 				X[i,1] = ustrregexra(X[i,1], "`", ">>")
-				dispdir = ustrregexm(X[i,1], "(`|~)\{?(s|stata)?\}?( )+(.*)(`)")
+				dispdir = ustrregexm(X[i,1], "(`|~)\{?(s|stata)\}?( )+(.*)(`)")
 				}
 			}
 		}

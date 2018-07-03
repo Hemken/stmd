@@ -9,7 +9,7 @@ sysuse auto
 summarize weight
 ```
 
-In-line text: `s c(current_date)`
+In-line text: `s r(mean)`
 
 A graph (`nocommands`):
 ```{s, echo=FALSE}
@@ -33,4 +33,4 @@ Another graph (`noprompt`):
 scatter price weight
 ```
 
-
+Final text.

@@ -9,20 +9,20 @@ sysuse auto
 summarize weight
 ```
 
-The current date is `s c(current_date)`
+The mean weight is `s r(mean)`
 
 ```{stata}
 return list
 ```
 
-Using `s
+Using `s`, formatted
 
-The mean weight is `s r(mean)`.
+The mean weight is `s %6.1f r(mean)`.
 
-Using ```stata
+Using ``stata`
 
-The maximum weight is `s r(max)`.
+The maximum weight is `stata r(max)`.
 
-Using ```{s}, and two calls per line.
+Using `{s}` and `{stata}`, and two calls per line.
 
 The weight range is `{s} r(min)` to `{stata} r(max)`.

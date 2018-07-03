@@ -9,7 +9,9 @@ sysuse auto
 summarize weight
 ```
 
-A code block, evaluted:
+## Dynamic Code Blocks and In-lines
+
+A code block, evaluted, with ```s:
 ```s
 sysuse auto
 summarize weight
@@ -17,15 +19,34 @@ summarize weight
 
 A code block with ```stata
 ```stata
-summarize price weight
+summarize price
 ```
+
+Mean price `s %9.1f r(mean)` (using "s")
+
+Mean price `stata %9.1f r(mean)` (using "stata")
 
 A code block with ```{s}
 ```{s}
-summarize mpg displacement
+summarize mpg
 ```
 
 A code block with ```{stata}
 ```{stata}
-tabulate foreign
+summarize weight
+```
+
+Mean weight `{stata} %9.1f r(mean)` (using "{stata}")  
+
+Mean weight `{s} %9.1f r(mean)` (using "{s}")
+
+
+## Not dynamic code
+Not to be confused with dyamic code:
+
+Text about `sysuse`.  Text about `stata`?
+
+```{sas}
+proc means;
+run;
 ```

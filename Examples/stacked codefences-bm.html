@@ -1,0 +1,31 @@
+<h1><a href="#title" id="title">Title</a></h1>
+<p>A covered code block, which should not execute.</p>
+<pre><code>```{stata}
+sysuse auto
+summarize
+```
+</code></pre>
+<p>And then an uncovered version, which should execute.</p>
+<pre><code class="language-{stata}">. sysuse auto
+(1978 Automobile Data)
+
+. summarize
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        make |          0
+       price |         74    6165.257    2949.496       3291      15906
+         mpg |         74     21.2973    5.785503         12         41
+       rep78 |         69    3.405797    .9899323          1          5
+    headroom |         74    2.993243    .8459948        1.5          5
+-------------+---------------------------------------------------------
+       trunk |         74    13.75676    4.277404          5         23
+      weight |         74    3019.459    777.1936       1760       4840
+      length |         74    187.9324    22.26634        142        233
+        turn |         74    39.64865    4.399354         31         51
+displacement |         74    197.2973    91.83722         79        425
+-------------+---------------------------------------------------------
+  gear_ratio |         74    3.014865    .4562871       2.19       3.89
+     foreign |         74    .2972973    .4601885          0          1
+
+</code></pre>

@@ -1,0 +1,13 @@
+# Quietly
+
+\"Quietly\" should remove the `pre` and `code` tags.
+
+```{stata, quietly}
+sysuse auto, clear
+```
+
+More text.
+
+```{s}
+summarize mpg
+```

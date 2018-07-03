@@ -49,3 +49,7 @@ di ustrregexs(4)
 assert ustrregexm("```{s, echo=FALSE}", "`infofence'")
 assert ustrregexm("```{sas, echo=FALSE}", "`infofence'")==0
 assert ustrregexm("```{stata, echo=FALSE}", "`infofence'")
+
+local infofence "^( ? ? ?)(```+|~~~+)\{?(s|stata)\/?(,.*)?\}?$"
+assert ustrregexm("```{stata, quietly}", "`infofence'")
+assert ustrregexm("```{sas, quietly}", "`infofence'")==0

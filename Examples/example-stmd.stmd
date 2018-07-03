@@ -9,7 +9,7 @@ sysuse auto
 summarize weight
 ```
 
-In-line text: `s c(current_date)`
+In-line text: mean weight=`s %6.1f r(mean)`
 
 A graph:
 ```{s}
