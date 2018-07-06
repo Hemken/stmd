@@ -9,8 +9,8 @@
 <script type="text/javascript" async
  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
 </script>
-<!--#include virtual="../../Rmd/headInclKB.html" -->
-<link rel="stylesheet" href="../../Rmd/Rmd.css" type="text/css" />
+<!--#include virtual="../../../Rmd/headInclKB.html" -->
+<link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
 <style>
  table {
   border-collapse: collapse;
@@ -54,6 +54,11 @@
 </code></pre>
 <h2><a href="#the-goal-easy-to-write-source-text" id="the-goal-easy-to-write-source-text">The Goal: Easy-to-write source text</a></h2>
 <p>Conventional dynamic Markdown looks like the text in the first column, and is turned into a web document (HTML) that appears like the second column.</p>
+<p>There are two main parts to this:</p>
+<ul>
+<li>Markdown, to format your document</li>
+<li>dynamic Stata code, to execute Stata commands and include the results in your document.</li>
+</ul>
 <style>
  #OuterWrapper {
    width: auto;
@@ -71,22 +76,22 @@
 Some preliminary text.
 
 A code block, evaluted:
-```{s}
+```{stata}
 sysuse auto
 summarize weight
 ```
 
 In-line text: the mean weight 
-is `{s} %9.1f r(mean)` pounds.
+is `{stata} %9.1f r(mean)` pounds.
 
 A list:
 
-- N = `{s} r(N)`
-- mean = `{s} %9.1f r(mean)`
-- sd = `{s} % 9.2f r(sd)`
+- N = `{stata} r(N)`
+- mean = `{stata} %9.1f r(mean)`
+- sd = `{stata} % 9.2f r(sd)`
 
 A graph:
-```{s}
+```{stata}
 histogram weight
 ```
 
@@ -96,7 +101,7 @@ More text.
 <h1><a href="#an-example-file" id="an-example-file">An Example File</a></h1>
 <p>Some preliminary text.</p>
 <p>A code block, evaluted:</p>
-<pre><code class="language-{s}">. sysuse auto
+<pre><code class="language-{stata}">. sysuse auto
 (1978 Automobile Data)
 
 . summarize weight
@@ -118,10 +123,11 @@ More text.
 (bin=8, start=1760, width=385)
 
 </code></pre>
-<img src="Graph5.svg" >
+<img src="Graph.svg" >
 <p>More text.</p>
 </td></tr>
 </tbody>
 </table>
+<p>The <code>stmd</code> command takes a text document, converts the dynamic code to Markdown, and then converts the Markdown to it's final HTML format.</p>
 <!--#include virtual="/sscc/pubs/Rmd/bottomInclKB.html" -->
 </body>

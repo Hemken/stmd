@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SSCC Stata Markdown</title>
+<meta name="author" content="Doug Hemken" />
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+<!--#include virtual="../../../Rmd/headInclKB.html" -->
+<link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
+<style>
+ table {
+  border-collapse: collapse;
+  }
+ table, th, td {
+  border: 1px solid black;
+  }
+ blockquote {
+  border-left: solid blue;
+  padding-left: 10px;
+  }
+</style>
+</head>
+<body>
+<!--#include virtual="/sscc/pubs/Rmd/topInclKB.html" -->
+<h1><a href="#using-the-command-in-stata" id="using-the-command-in-stata">Using the <code>stmd</code> command in Stata</a></h1>
+<p>Stata provides commands to turn Markdown documents into HTML, and commands to execute Stata commands embedded within text documents, returning the commands and adding their output to the document.</p>
+<p>The <code>stmd</code> adds to this facility by allowing users to write dynamic documents in the standard dynamic Markdown style common with other programming languages.  Code to be executed is enclosed in a code fence with an <em>information tag</em> that includes the language of the dynamic code, and may include options.</p>
+<p>Stata code to be executed is included in a document within a fenced code block like the following:</p>
+<pre><code>```{stata, ... }
+
+--- stata commands here ---
+
+```
+</code></pre>
+<h2><a href="#install-" id="install-">Install <code>stmd</code></a></h2>
+<p>Use</p>
+<pre><code>net from https://www.ssc.wisc.edu/~hemken/Stataworkshops
+</code></pre>
+<p>and follow the links to install <code>stmd</code>.</p>
+<p>Alternatively, use</p>
+<pre><code>net install stmd, from(https://www.ssc.wisc.edu/~hemken/Stataworkshops)
+</code></pre>
+<h2><a href="#process-documents" id="process-documents">Process Documents</a></h2>
+<p>See <code>help stmd</code> for details.</p>
+<p>Basic use to process a document is</p>
+<pre><code>stmd example.stmd, saving(example.html) replace
+</code></pre>
+<p>or just</p>
+<pre><code>stmd example.stmd
+</code></pre>
+<h2><a href="#the-goal-easy-to-write-source-text" id="the-goal-easy-to-write-source-text">The Goal: Easy-to-write source text</a></h2>
+<p>Conventional dynamic Markdown looks like the text in the first column, and is turned into a web document (HTML) that appears like the second column.</p>
+<p>There are two main parts to this:</p>
+<ul>
+<li>Markdown, to format your document</li>
+<li>dynamic Stata code, to execute Stata commands and include the results in your document.</li>
+</ul>
+<style>
+ #OuterWrapper {
+   width: auto;
+ }
+</style>
+<table>
+<thead>
+<tr><th> Markdown </th><th> Result </th></tr>
+</thead>
+<tbody>
+<tr valign="top"><td padding=0>
+<pre><code>An Example File
+===============
+
+Some preliminary text.
+
+A code block, evaluted:
+```{stata}
+sysuse auto
+summarize weight
+```
+
+In-line text: the mean weight 
+is `{stata} %9.1f r(mean)` pounds.
+
+A list:
+
+- N = `{stata} r(N)`
+- mean = `{stata} %9.1f r(mean)`
+- sd = `{stata} % 9.2f r(sd)`
+
+A graph:
+```{stata}
+histogram weight
+```
+
+More text.
+</code></pre>
+</td><td>
+<h1><a href="#an-example-file" id="an-example-file">An Example File</a></h1>
+<p>Some preliminary text.</p>
+<p>A code block, evaluted:</p>
+<pre><code class="language-{stata}">. sysuse auto
+(1978 Automobile Data)
+
+. summarize weight
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      weight |         74    3019.459    777.1936       1760       4840
+
+</code></pre>
+<p>In-line text: the mean weight is    3019.5 pounds.</p>
+<p>A list:</p>
+<ul>
+<li>N = 74</li>
+<li>mean =    3019.5</li>
+<li>sd =    777.19</li>
+</ul>
+<p>A graph:</p>
+<pre><code class="language-{s}">. histogram weight
+(bin=8, start=1760, width=385)
+
+</code></pre>
+<img src="Graph.svg" >
+<p>More text.</p>
+</td></tr>
+</tbody>
+</table>
+<p>The <code>stmd</code> command takes a text document, converts the dynamic code to Markdown, and then converts the Markdown to it's final HTML format.</p>
+<!--#include virtual="/sscc/pubs/Rmd/bottomInclKB.html" -->
+</body>

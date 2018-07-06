@@ -12,9 +12,9 @@
 <script type="text/javascript" async
  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
 </script>
-<!--#include virtual="../../Rmd/headInclKB.html" -->
+<!--#include virtual="../../../Rmd/headInclKB.html" -->
           
-<link rel="stylesheet" href="../../Rmd/Rmd.css" type="text/css" />
+<link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
 <style>
  table {
   border-collapse: collapse;

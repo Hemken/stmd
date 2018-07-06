@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SSCC Stata Markdown</title>
+<meta name="author" content="Doug Hemken" />
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+<!--#include virtual="../../../Rmd/headInclKB.html" -->
+<link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
+<style>
+ table {
+  border-collapse: collapse;
+  }
+ table, th, td {
+  border: 1px solid black;
+  }
+ blockquote {
+  border-left: solid blue;
+  padding-left: 10px;
+  }
+</style>
+</head>
+<body>
+<!--#include virtual="/sscc/pubs/Rmd/topInclKB.html" -->
+<h1><a href="#dynamic-stata-code-block-options" id="dynamic-stata-code-block-options">Dynamic Stata Code Block Options</a></h1>
+<p>When you include dynamic Stata code in a Markdown document, you do not have to show your reader all the code you use.  Just what is visible to your reader is controlled by code block <em>attributes</em>. This optional specification is made as part of the code fence, after the language specification and a comma.</p>
+<p>You have the option of showing the reader:</p>
+<ul>
+<li>only the output from your code (no commands)</li>
+<li>only the code but not the output (perhaps you use stored results, later)</li>
+<li>neither code nor output (yet the code needs to be evaluated)</li>
+</ul>
+<p>You also have the option of showing the reader:</p>
+<ul>
+<li>unevaluated code</li>
+<li>suppressing the dot-prompt in code that is shown</li>
+</ul>
+<p>See also <code>help dynamic tags##code</code> in Stata Help.  When processing your dynamic document using <code>knitr</code> in R, these attributes are referred to as &quot;chunk options&quot;.</p>
+<p>Most of these options can be specified using the same keywords that are used in Stata's dynamic tags.  For compatability, most of these options also have a <code>knitr</code> style of specification or a <code>markstat</code> style of specification.</p>
+<h2><a href="#examples" id="examples">Examples</a></h2>
+<h3><a href="#output-only-no-commands" id="output-only-no-commands">Output Only, No Commands</a></h3>
+<p>You can show your reader only the output from a code chunk with the <code>nocommands</code> option in the code fence info tag.  The <code>knitr</code> version of this option is <code>echo=FALSE</code>.</p>
+<p>Your code block looks like this:</p>
+<pre><code>```{stata, nocommands}
+sysuse auto, clear
+tabstat weight, stat(mean sd)
+```
+</code></pre>
+<p>But the result in your document is just:</p>
+<pre><code class="language-{stata,">(1978 Automobile Data)
+
+
+    variable |      mean        sd
+-------------+--------------------
+      weight |  3019.459  777.1936
+----------------------------------
+
+</code></pre>
+<p>Again, the code block:</p>
+<pre><code>```{stata, echo=FALSE}
+tabulate foreign
+```
+</code></pre>
+<p>And the result in your document:</p>
+<pre><code class="language-{stata,">
+   Car type |      Freq.     Percent        Cum.
+------------+-----------------------------------
+   Domestic |         52       70.27       70.27
+    Foreign |         22       29.73      100.00
+------------+-----------------------------------
+      Total |         74      100.00
+
+</code></pre>
+<p>Code block:</p>
+<pre><code>```s, nocommands
+pwcorr mpg weight disp
+```
+</code></pre>
+<p>What appears in your document:</p>
+<pre><code class="language-s,">
+             |      mpg   weight displa~t
+-------------+---------------------------
+         mpg |   1.0000 
+      weight |  -0.8072   1.0000 
+displacement |  -0.7056   0.8949   1.0000 
+
+</code></pre>
+<h3><a href="#code-only-no-output" id="code-only-no-output">Code Only, No Output</a></h3>
+<p>You can show your reader only the code you use, without the output, yet the code is evaluated.  Notice that this suppresses all output in your Stata results viewer, as well as in your document.  This suppresses the notes that many commands make, but not error messages (which cause your document to simply stop processing, unless you have used the <code>nostop</code> option with <code>stmd</code> for your whole document).</p>
+<p>Code block:</p>
+<pre><code>```{stata, nooutput}
+sysuse auto, clear
+regress mpg weight
+```
+</code></pre>
+<p>In your document:</p>
+<pre><code class="language-{stata,">. sysuse auto, clear // no dataset note
+
+. regress mpg weight // no output
+
+</code></pre>
+<p>You might use this is you want to discuss how to write some code, and then later deal with the output.</p>
+<pre><code class="language-stata,">
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(1, 72)        =    134.62
+       Model |   1591.9902         1   1591.9902   Prob &gt; F        =    0.0000
+    Residual |  851.469256        72  11.8259619   R-squared       =    0.6515
+-------------+----------------------------------   Adj R-squared   =    0.6467
+       Total |  2443.45946        73  33.4720474   Root MSE        =    3.4389
+
+------------------------------------------------------------------------------
+         mpg |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      weight |  -.0060087   .0005179   -11.60   0.000    -.0070411   -.0049763
+       _cons |   39.44028   1.614003    24.44   0.000     36.22283    42.65774
+------------------------------------------------------------------------------
+
+</code></pre>
+<p>This may also be specified in the <code>knitr</code> manner with <code>results=FALSE</code> or <code>results=&quot;hide&quot;</code> (note the capitalization and the quotes).</p>
+<h3><a href="#neither-code-nor-output" id="neither-code-nor-output">Neither Code nor Output</a></h3>
+<p>To have code evaluated in the background, use the <code>quietly</code> option.</p>
+<p>Code block:</p>
+<pre><code>```{stata, quietly}
+generate gpm=1/mpg
+```
+</code></pre>
+<p>(Although I show you my code here, including the code fence, the actual execution takes place quietly <em>after</em> this paragraph.)</p>
+<p>In your document:</p>
+<p>This is equivalent to using both <code>nocommands</code> and <code>nooutput</code>.</p>
+<p>Code block:</p>
+<pre><code>```{stata, nocommands, nooutput}
+regress gpm weight
+```
+</code></pre>
+<p>In your document:</p>
+<p>(The <code>markstat</code> style of specification uses a forward slash at the end of the language specification.)</p>
+<pre><code class="language-stata">. regress
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(1, 72)        =    194.71
+       Model |  .008729651         1  .008729651   Prob &gt; F        =    0.0000
+    Residual |  .003227977        72  .000044833   R-squared       =    0.7300
+-------------+----------------------------------   Adj R-squared   =    0.7263
+       Total |  .011957628        73  .000163803   Root MSE        =     .0067
+
+------------------------------------------------------------------------------
+         gpm |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      weight |   .0000141   1.01e-06    13.95   0.000     .0000121    .0000161
+       _cons |   .0077077   .0031426     2.45   0.017     .0014431    .0139723
+------------------------------------------------------------------------------
+
+</code></pre>
+<!--#include virtual="/sscc/pubs/Rmd/bottomInclKB.html" -->
+</body>

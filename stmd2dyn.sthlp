@@ -1,7 +1,8 @@
 {smcl}
-{* *! version 1.1 19nov2017}{...}
+{* *! version 1.3 6jul2018}{...}
 {* *! Doug Hemken}{...}
 {vieweralsosee "" "--"}{...}
+{vieweralsosee "markdown" "help markdown"}{...}
 {vieweralsosee "dyndoc" "help dyndoc"}{...}
 {vieweralsosee "dyntext" "help dyntext"}{...}
 {vieweralsosee "dynamic tags" "help dynamic tags"}{...}
@@ -57,6 +58,14 @@ filename
 {phang}
 {opt replace} replace {it:filename2} if it already exists{p_end}
 
+{dlgtab:More}
+
+{phang}
+{it:options} additional options which may be passed to {cmd:dydndoc}
+are {cmd:remove}, {cmd:hardwrap}, {cmd:nomsg}, and {cmd:nostop}{p_end}
+
+
+
 
 {marker remarks}{...}
 {title:Remarks}
@@ -65,6 +74,8 @@ filename
 If {it: filename2} is not specified, then {it: filename} with an
 .dyn file extension is tried.
 
+{pstd}
+For more on how to format documents, see {cmd: help stmd}.
 
 
 {marker examples}{...}

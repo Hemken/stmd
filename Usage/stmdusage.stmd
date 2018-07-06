@@ -1,4 +1,4 @@
-<<dd_include: header.txt>>
+<<dd_include: topmatter.txt>>
 
 # Using the `stmd` command in Stata
 
@@ -58,6 +58,12 @@ Conventional dynamic Markdown looks like the text in the first column,
 and is turned into a web document (HTML) that appears like the
 second column.
 
+There are two main parts to this:
+
+- Markdown, to format your document
+- dynamic Stata code, to execute Stata commands and include the
+results in your document.
+
 <style>
  #OuterWrapper {
    width: auto;
@@ -79,22 +85,22 @@ An Example File
 Some preliminary text.
 
 A code block, evaluted:
-```{s}
+```{stata}
 sysuse auto
 summarize weight
 ```
 
 In-line text: the mean weight 
-is `{s} %9.1f r(mean)` pounds.
+is `{stata} %9.1f r(mean)` pounds.
 
 A list:
 
-- N = `{s} r(N)`
-- mean = `{s} %9.1f r(mean)`
-- sd = `{s} % 9.2f r(sd)`
+- N = `{stata} r(N)`
+- mean = `{stata} %9.1f r(mean)`
+- sd = `{stata} % 9.2f r(sd)`
 
 A graph:
-```{s}
+```{stata}
 histogram weight
 ```
 
@@ -109,7 +115,7 @@ More text.
 Some preliminary text.
 
 A code block, evaluted:
-```{s}
+```{stata}
 sysuse auto
 summarize weight
 ```
@@ -131,5 +137,9 @@ More text.
 </td></tr>
 </tbody>
 </table>
+
+The `stmd` command takes a text document, converts the dynamic code
+to Markdown, and then converts the Markdown to it\'s final HTML
+format.
 
 <<dd_include: bottommatter.txt>>

@@ -1,4 +1,4 @@
-<<dd_include: header.txt>>
+<<dd_include: topmatter.txt>>
 
 # Writing Dynamic Stata Code Blocks
 
@@ -17,7 +17,7 @@ name of the programming language to be invoked.
 
 This usually looks like
 ````
-~~~{stata}
+~~~stata
   -- code --
 ~~~
 ````
@@ -26,22 +26,26 @@ Similarly, dynamic *in-line code* (demarcated with single backticks) has
 an additional info tag for the programming language.  It typically looks
 like
 ````
-some text `{stata} --code--` more text
+some text `stata --code--` more text
 ````
 
-In Stata Markdown, the in-line code is limited to *display* commands.
+In Stata Markdown, the in-line code is limited to *display* commands
+(not arbitrary Stata commands).
 
-The `stmd` command only processes code in Stata  (this could change in
-the future).  The language may be
+The `stmd` command only processes code in Stata (this could change in
+the future, to include Mata or other languages).  The language for 
+each code block may be
 specified in a number of alternative ways.
 
-- {stata}
 - stata
-- {s}
+- {stata}
 - s
+- {s}
 
 That is, you may use the keyword \"stata\" or the keyword \"s\", with 
-or without curly braces.  The first option, \"{stata}\" with braces,
+or without curly braces.  The first option, the simple keyword \"stata\",
+gives you HTML with a `class="language-stata"` declaration, useful if your
+documents make use of style sheets.  The \"{stata}\" with braces,
 is compatible with `knitr` documents in R.  The last two options, \"{s}\" and
 \"s\" are compatible with `markstat` documents.
 
@@ -138,6 +142,10 @@ tabstat disp, stat(mean sd)
 </table>
 
 ### In-line Code
+In-line dynamic code begins with a backtick followed by a language
+keyword, followed by a space, followed by a Stata `display` directive
+(a `display` command without the keyword "display").
+
 <table>
 <thead>
 <tr><th> Markdown </th><th> Resulting Document </th></tr>
@@ -205,9 +213,6 @@ Maximum price: `stata %9.1f r(max)`
 </td></tr>
 </tbody>
 </table>
-
-Code that uses the keyword \"stata\" as code is diplayed as static
-code: `stata`.
 
 
 <<dd_include: bottommatter.txt>>

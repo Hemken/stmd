@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SSCC Stata Markdown</title>
+<meta name="author" content="Doug Hemken" />
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+<!--#include virtual="../../../Rmd/headInclKB.html" -->
+<link rel="stylesheet" href="../../../Rmd/Rmd.css" type="text/css" />
+<style>
+ table {
+  border-collapse: collapse;
+  }
+ table, th, td {
+  border: 1px solid black;
+  }
+ blockquote {
+  border-left: solid blue;
+  padding-left: 10px;
+  }
+</style>
+</head>
+<body>
+<!--#include virtual="/sscc/pubs/Rmd/topInclKB.html" -->
+<h1><a href="#writing-dynamic-stata-code-blocks" id="writing-dynamic-stata-code-blocks">Writing Dynamic Stata Code Blocks</a></h1>
+<p>When you write a document in the standard dynamic Markdown format, it is processed in two stages.  First the Stata code blocks and in-line references are processed, and the results are substituted into your document.  Then the Markdown elements of your document are processed, producing a final HTML document.</p>
+<h2><a href="#specify-the-stata-language" id="specify-the-stata-language">Specify the Stata language</a></h2>
+<p>The standard approach to including dynamic content in a Markdown document is to place some code-to-be-processed in a <em>fenced code block</em> (demarcated with three or more backticks or tildes).  This fenced code block has an additional <em>information tag</em>, the first word of which is reserved for the name of the programming language to be invoked.</p>
+<p>This usually looks like</p>
+<pre><code>~~~stata
+  -- code --
+~~~
+</code></pre>
+<p>Similarly, dynamic <em>in-line code</em> (demarcated with single backticks) has an additional info tag for the programming language.  It typically looks like</p>
+<pre><code>some text `stata --code--` more text
+</code></pre>
+<p>In Stata Markdown, the in-line code is limited to <em>display</em> commands (not arbitrary Stata commands).</p>
+<p>The <code>stmd</code> command only processes code in Stata (this could change in the future, to include Mata or other languages).  The language for each code block may be specified in a number of alternative ways.</p>
+<ul>
+<li>stata</li>
+<li>{stata}</li>
+<li>s</li>
+<li>{s}</li>
+</ul>
+<p>That is, you may use the keyword &quot;stata&quot; or the keyword &quot;s&quot;, with or without curly braces.  The first option, the simple keyword &quot;stata&quot;, gives you HTML with a <code>class=&quot;language-stata&quot;</code> declaration, useful if your documents make use of style sheets.  The &quot;{stata}&quot; with braces, is compatible with <code>knitr</code> documents in R.  The last two options, &quot;{s}&quot; and &quot;s&quot; are compatible with <code>markstat</code> documents.</p>
+<h2><a href="#examples" id="examples">Examples</a></h2>
+<h3><a href="#code-blocks" id="code-blocks">Code Blocks</a></h3>
+<style>
+ tr {
+   valign: top;
+ }
+ code {
+	padding: 0;
+ }
+ pre {
+    margin: 5px;
+ }
+</style>
+<table>
+<thead>
+<tr><th> Markdown </th><th> Resulting Document </th></tr>
+</thead>
+<tbody>
+<tr><td>
+<p>Using &quot;{stata}&quot;</p>
+<pre><code>```{stata}
+sysuse auto, clear
+tabstat weight, stat(mean sd)
+```
+</code></pre>
+</td><td>
+<pre><code class="language-{stata}">. sysuse auto, clear
+(1978 Automobile Data)
+
+. tabstat weight, stat(mean sd)
+
+    variable |      mean        sd
+-------------+--------------------
+      weight |  3019.459  777.1936
+----------------------------------
+
+</code></pre>
+</td></tr>
+<tr><td>
+<p>Using &quot;{s}&quot;</p>
+<pre><code>```{s}
+tabstat price, stat(mean sd)
+```
+</code></pre>
+</td><td>
+<pre><code class="language-{s}">. tabstat price, stat(mean sd)
+
+    variable |      mean        sd
+-------------+--------------------
+       price |  6165.257  2949.496
+----------------------------------
+
+</code></pre>
+</td></tr>
+<tr><td>
+<p>Using &quot;stata&quot; (no braces)</p>
+<pre><code>```stata
+tabstat mpg, stat(mean sd)
+```
+</code></pre>
+</td><td>
+<pre><code class="language-stata">. tabstat mpg, stat(mean sd)
+
+    variable |      mean        sd
+-------------+--------------------
+         mpg |   21.2973  5.785503
+----------------------------------
+
+</code></pre>
+</td></tr>
+<tr><td>
+<p>Using &quot;s&quot; (no braces)</p>
+<pre><code>```s
+tabstat disp, stat(mean sd)
+```
+</code></pre>
+</td><td>
+<pre><code class="language-s">. tabstat disp, stat(mean sd)
+
+    variable |      mean        sd
+-------------+--------------------
+displacement |  197.2973  91.83722
+----------------------------------
+
+</code></pre>
+</td></tr>
+</tbody>
+</table>
+<h3><a href="#in-line-code" id="in-line-code">In-line Code</a></h3>
+<p>In-line dynamic code begins with a backtick followed by a language keyword, followed by a space, followed by a Stata <code>display</code> directive (a <code>display</code> command without the keyword &ldquo;display&rdquo;).</p>
+<table>
+<thead>
+<tr><th> Markdown </th><th> Resulting Document </th></tr>
+</thead>
+<tbody>
+<tr><td>
+<p>Using &quot;{stata}&quot; in-line</p>
+<pre><code>```{stata, quietly}
+summarize price
+```
+
+Mean price `{stata} %9.1f r(mean)`
+</code></pre>
+</td><td>
+<p>Mean price:    6165.3</p>
+</td></tr>
+<tr><td>
+<p>Using &quot;{s}&quot; in-line</p>
+<pre><code>Standard deviation of price: `{s} %9.1f r(sd)`
+</code></pre>
+</td><td>
+<p>Standard deviation of price:    2949.5</p>
+</td></tr>
+<tr><td>
+<p>Using &quot;stata&quot; (no braces)</p>
+<pre><code>Minimum price: `stata %9.1f r(min)`
+</code></pre>
+</td><td>
+<p>Minimum price:    3291.0</p>
+</td></tr>
+<tr><td>
+<p>Using &quot;s&quot; (no braces)</p>
+<pre><code>Maximum price: `stata %9.1f r(max)`
+</code></pre>
+</td><td>
+<p>Maximum price:   15906.0</p>
+</td></tr>
+</tbody>
+</table>
+<!--#include virtual="/sscc/pubs/Rmd/bottomInclKB.html" -->
+</body>

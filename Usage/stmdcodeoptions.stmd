@@ -1,4 +1,4 @@
-<<dd_include: header.txt>>
+<<dd_include: topmatter.txt>>
 
 # Dynamic Stata Code Block Options
 
@@ -8,14 +8,14 @@ visible to your reader is controlled by code block *attributes*.
 This optional specification is made as part of the code fence,
 after the language specification and a comma.
 
-You have the option of showing the reader 
+You have the option of showing the reader: 
 
 - only the output from your code (no commands)
 - only the code but not the output (perhaps you use stored results,
 later)
 - neither code nor output (yet the code needs to be evaluated)
 
-You also have the option of showing the reader
+You also have the option of showing the reader:
 
 - unevaluated code
 - suppressing the dot-prompt in code that is shown
@@ -26,7 +26,7 @@ referred to as \"chunk options\".
 
 Most of these options can be specified using the same keywords that
 are used in Stata\'s dynamic tags.  For compatability, most of these
-options also have a `knitr` style of specification, and one has a
+options also have a `knitr` style of specification or a
 `markstat` style of specification.
 
 ## Examples
@@ -34,34 +34,41 @@ options also have a `knitr` style of specification, and one has a
 You can show your reader only the output from a code chunk with
 the `nocommands` option in the code fence info tag.  The `knitr`
 version of this option is `echo=FALSE`.
+
+Your code block looks like this:
 ~~~~
 ```{stata, nocommands}
-sysuse auto
+sysuse auto, clear
 tabstat weight, stat(mean sd)
 ```
 ~~~~
 
+But the result in your document is just:
 ```{stata, nocommands}
-sysuse auto
+sysuse auto, clear
 tabstat weight, stat(mean sd)
 ```
 
+Again, the code block:
 ~~~~
 ```{stata, echo=FALSE}
 tabulate foreign
 ```
 ~~~~
 
+And the result in your document:
 ```{stata, echo=FALSE}
 tabulate foreign
 ```
 
+Code block:
 ~~~~
 ```s, nocommands
 pwcorr mpg weight disp
 ```
 ~~~~
 
+What appears in your document:
 ```s, nocommands
 pwcorr mpg weight disp
 ```
@@ -73,6 +80,8 @@ your Stata results viewer, as well as in your document.  This
 suppresses the notes that many commands make, but not error messages
 (which cause your document to simply stop processing, unless you
 have used the `nostop` option with `stmd` for your whole document).
+
+Code block:
 ~~~~
 ```{stata, nooutput}
 sysuse auto, clear
@@ -80,9 +89,17 @@ regress mpg weight
 ```
 ~~~~
 
+In your document:
 ```{stata, nooutput}
 sysuse auto, clear // no dataset note
 regress mpg weight // no output
+```
+
+You might use this is you want to discuss how to write some code,
+and then later deal with the output.
+
+```stata, nocommands
+regress
 ```
 
 This may also be specified in the `knitr` manner with `results=FALSE` or
@@ -91,17 +108,40 @@ This may also be specified in the `knitr` manner with `results=FALSE` or
 ### Neither Code nor Output
 To have code evaluated in the background, use the `quietly` option.
 
+Code block:
+~~~~
+```{stata, quietly}
+generate gpm=1/mpg
+```
+~~~~
+
+(Although I show you my code here, including the code fence,
+the actual execution takes place quietly *after* this paragraph.)
+
+In your document:
 ```{stata, quietly}
 generate gpm=1/mpg
 ```
 
+This is equivalent to using both `nocommands` and `nooutput`.
+
+Code block:
+~~~~
+```{stata, nocommands, nooutput}
+regress gpm weight
+```
+~~~~
+
+In your document:
 ```{stata, nocommands, nooutput}
 regress gpm weight
 ```
 
+(The `markstat` style of specification
+uses a forward slash at the end of the language specification.)
 
-
-, and the `markstat` version
-is to include a forward slash at the end of the language specification.
+```stata
+regress
+```
 
 <<dd_include: bottommatter.txt>>
