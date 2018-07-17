@@ -1,0 +1,94 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="stmarkdown.css">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML">
+</script>
+</head>
+<h1><a href="#using-stata-dynamic-tags-in-a-text-file-with-the-dyndoc-command" id="using-stata-dynamic-tags-in-a-text-file-with-the-dyndoc-command">Using Stata dynamic tags in a text file with the dyndoc command</a></h1>
+<p>Let us consider an example where we study the <strong>mpg</strong> and <strong>weight</strong> variables in <strong>auto.dta</strong>.  In our examples below, we will first write the commands so that they will be displayed in our target HTML file.  Then, we will write the commands so that Stata will process the Stata dynamic tags, displaying the results of the Stata commands in the target HTML file.</p>
+<p>We first use the <strong>sysuse</strong> command to load the dataset and then describe the data using the <strong>describe</strong> command.</p>
+<pre><code>```{stata}
+sysuse auto, clear
+describe
+```
+</code></pre>
+<p>This produces the following Stata results:</p>
+<pre><code class="language-{stata}">. sysuse auto, clear
+(1978 Automobile Data)
+
+. describe
+
+Contains data from D:\Programs\Stata15\ado\base/a/auto.dta
+  obs:            74                          1978 Automobile Data
+ vars:            12                          13 Apr 2016 17:45
+ size:         3,182                          (_dta has notes)
+------------------------------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------------------------------------------
+make            str18   %-18s                 Make and Model
+price           int     %8.0gc                Price
+mpg             int     %8.0g                 Mileage (mpg)
+rep78           int     %8.0g                 Repair Record 1978
+headroom        float   %6.1f                 Headroom (in.)
+trunk           int     %8.0g                 Trunk space (cu. ft.)
+weight          int     %8.0gc                Weight (lbs.)
+length          int     %8.0g                 Length (in.)
+turn            int     %8.0g                 Turn Circle (ft.)
+displacement    int     %8.0g                 Displacement (cu. in.)
+gear_ratio      float   %6.2f                 Gear Ratio
+foreign         byte    %8.0g      origin     Car type
+------------------------------------------------------------------------------------------------------------------------------
+Sorted by: foreign
+
+</code></pre>
+<p>Now, we want to check if <strong>mpg</strong> is always greater than 0 and less than 100. We use the <strong>assert</strong> command to perform the check.  In this case, we do not want to include any output in the target HTML file, so we use the <strong>echo=FALSE, results=&ldquo;hide&rdquo;</strong> attributes to modify the output of the code block.<br />
+Alternatively, we could specify <strong>quietly</strong>.</p>
+<pre><code>```{stata, echo=FALSE, results=&quot;hide&quot;}
+assert mpg &gt; 0 &amp; mpg &lt; 100
+```
+</code></pre>
+<p>This is executed immediately after this line.</p>
+<p>If the data had not satisfied the conditions, <strong>dyndoc</strong> would have failed with an error message, as would occur if we ran the same <strong>assert</strong> command in a do-file.</p>
+<p>Next, we want to summarize the <strong>weight</strong> variable:</p>
+<pre><code>```{stata}
+summarize weight
+```
+</code></pre>
+<p>This produces the following in the target HTML file:</p>
+<pre><code class="language-{stata}">. summarize weight
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      weight |         74    3019.459    777.1936       1760       4840
+
+</code></pre>
+<p>We want to use the minimum and maximum values of <strong>weight</strong> in a sentence. Instead of copying and pasting the numbers from the <strong>summarize</strong> output, we can use the <strong>dd_display</strong> Stata dynamic tag with the <strong>r(min)</strong> and <strong>r(max)</strong> stored results:</p>
+<pre><code>&gt; The variable weight has minimum value `s %4.2f r(min)` and 
+has maximum value `s %4.2f `r(max)'`.
+</code></pre>
+<p>This produces the following in the target HTML file:</p>
+<blockquote>
+<p>The variable weight has minimum value 1760.00 and has maximum value 4840.00.</p>
+</blockquote>
+<p>The <strong>dd_display</strong> dynamic tag uses Stata&rsquo;s <strong>display</strong> command to evaluate expressions.  It can be used as a calculator. For example, if we want to include the $$range = max - min$$ in a sentence, instead of calculating the number and then copying and pasting it, we can use</p>
+<pre><code>&gt; The variable weight has range `s %4.2f r(max)-r(min)`.
+</code></pre>
+<p>which produces the following in the target HTML file:</p>
+<blockquote>
+<p>The variable weight has range 3080.00.</p>
+</blockquote>
+<p>Now, we want to graph <strong>mpg</strong> and <strong>weight</strong> using a scatterplot.  We use the <strong>dd_do</strong> tag with the <strong>nooutput</strong> attribute to generate the scatterplot first.  The <strong>nooutput</strong> attribute leaves just the command in the output,</p>
+<pre><code>```{stata, nooutput}
+scatter mpg weight, mcolor(blue%50)
+```
+</code></pre>
+<p>which generates a scatterplot of <strong>mpg</strong> and <strong>weight</strong> with 50% opacity color markers.</p>
+<pre><code class="language-{stata,">. scatter mpg weight, mcolor(blue%50)
+
+</code></pre>
+<img src="Graph6.svg" >
+<p>This should have exported the graph to a file and included an image link to the HTML file.</p>

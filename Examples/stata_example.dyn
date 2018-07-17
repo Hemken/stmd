@@ -1,3 +1,8 @@
+<<dd_do: quietly>>
+capture graph describe Graph
+tempname gdate
+local `gdate' = "`r(command_date)' `r(command_time)'" 
+<</dd_do>>
 <<dd_version: 1>>
 <<dd_include: header.txt >>
 
@@ -16,7 +21,7 @@ We first use the **sysuse** command to load the dataset and then describe
 the data using the **describe** command. 
 
 ~~~~
-```stata
+```{stata}
 sysuse auto, clear
 describe
 ```
@@ -24,76 +29,121 @@ describe
 
 This produces the following Stata results:
 
-```stata
+```{stata}
+<<dd_do>>
 sysuse auto, clear
 describe
+<</dd_do>>
 ```
+<<dd_do: quietly>>
+capture _return hold rtemp
+capture graph describe Graph
+local checkdate = "`r(command_date)' `r(command_time)'" 
+<</dd_do>>
+<<dd_skip_if: ="``gdate''"~="" & "``gdate''"=="`checkdate'">>
+<<dd_graph>>
+<<dd_skip_end>>
+<<dd_do: quietly>>
+local `gdate' = "`r(command_date)' `r(command_time)'"
+capture _return restore rtemp
+sleep 500
+<</dd_do>>
 
 Now, we want to check if **mpg** is always greater than 0 and less than 100.
 We use the **assert** command to perform the check.  In this case, we do not
 want to include any output in the target HTML file, so we use the 
-**quietly**
+**echo=FALSE, results="hide"**
 attributes to modify the output of the code block.  
-Alternatively, we could specify **echo=FALSE, results="hide"**.    
+Alternatively, we could specify **quietly**.    
 
 ~~~~
-```stata, quietly
+```{stata, echo=FALSE, results="hide"}
 assert mpg > 0 & mpg < 100
 ```
 ~~~~
 
 This is executed immediately after this line.
 
-```stata, quietly
+```{stata, echo=FALSE, results="hide"}
+<<dd_do: quietly>>
 assert mpg > 0 & mpg < 100
+<</dd_do>>
 ```
+<<dd_do: quietly>>
+capture _return hold rtemp
+capture graph describe Graph
+local checkdate = "`r(command_date)' `r(command_time)'" 
+<</dd_do>>
+<<dd_skip_if: ="``gdate''"~="" & "``gdate''"=="`checkdate'">>
+<<dd_graph>>
+<<dd_skip_end>>
+<<dd_do: quietly>>
+local `gdate' = "`r(command_date)' `r(command_time)'"
+capture _return restore rtemp
+sleep 500
+<</dd_do>>
 
 If the data had not satisfied the conditions, **dyndoc** would have failed with an error
 message, as would occur if we ran the same **assert** command in a do-file. 
 
 
-Next, we want to summarize the **weight** variable and work with the returned values:
+Next, we want to summarize the **weight** variable:
 
 ~~~~
-```stata, nooutput
+```{stata}
 summarize weight
 ```
 ~~~~
 
 This produces the following in the target HTML file:
 
-```stata, nooutput
+```{stata}
+<<dd_do>>
 summarize weight
+<</dd_do>>
 ```
+<<dd_do: quietly>>
+capture _return hold rtemp
+capture graph describe Graph
+local checkdate = "`r(command_date)' `r(command_time)'" 
+<</dd_do>>
+<<dd_skip_if: ="``gdate''"~="" & "``gdate''"=="`checkdate'">>
+<<dd_graph>>
+<<dd_skip_end>>
+<<dd_do: quietly>>
+local `gdate' = "`r(command_date)' `r(command_time)'"
+capture _return restore rtemp
+sleep 500
+<</dd_do>>
 
 We want to use the minimum and maximum values of **weight** in a sentence.
 Instead of copying and pasting the numbers from the **summarize** output, we can
-use the **in-line code** markdown with the **r(min)** and **r(max)**
+use the **dd_display** Stata dynamic tag with the **r(min)** and **r(max)**
 stored results:
 
 ~~~~
-> The variable weight has minimum value `s %4.2f r(min)` and 
-has maximum value `s %4.2f `r(max)'`.
+> The variable weight has minimum value <<dd_display:  %4.2f r(min)>> and 
+has maximum value <<dd_display:  %4.2f >>r(max)'>>.
 ~~~~
 
 This produces the following in the target HTML file:
 
-> The variable weight has minimum value `s %4.2f r(min)` and 
-has maximum value `s %4.2f r(max)`.
+> The variable weight has minimum value <<dd_display:  %4.2f r(min)>> and 
+has maximum value <<dd_display:  %4.2f r(max)>>.
 
 
-The **in-line code** uses Stata's **display** command to evaluate
+The **dd_display** dynamic tag uses Stata's **display** command to evaluate
 expressions.  It can be used as a calculator. For example, if we want to
 include the $$range = max - min$$ in a sentence, instead of calculating the
 number and then copying and pasting it, we can use 
 
 ~~~~
-> The variable weight has range `s %4.2f r(max)-r(min)`.
+> The variable weight has range <<dd_display:  %4.2f r(max)-r(min)>>.
 ~~~~
 
 which produces the following in the target HTML file:
 
-> The variable weight has range `s %4.2f r(max)-r(min)`.
+> The variable weight has range <<dd_display:  %4.2f r(max)-r(min)>>.
 
 Now, we want to graph **mpg** and **weight** using a scatterplot.  We use the
 **dd_do** tag with the **nooutput** attribute to generate the scatterplot
@@ -109,8 +159,23 @@ which generates a scatterplot of **mpg** and **weight** with 50% opacity
 color markers.
 
 ```{stata, nooutput}
+<<dd_do: nooutput>>
 scatter mpg weight, mcolor(blue%50)
+<</dd_do>>
 ```
+<<dd_do: quietly>>
+capture _return hold rtemp
+capture graph describe Graph
+local checkdate = "`r(command_date)' `r(command_time)'" 
+<</dd_do>>
+<<dd_skip_if: ="``gdate''"~="" & "``gdate''"=="`checkdate'">>
+<<dd_graph>>
+<<dd_skip_end>>
+<<dd_do: quietly>>
+local `gdate' = "`r(command_date)' `r(command_time)'"
+capture _return restore rtemp
+sleep 500
+<</dd_do>>
 
 This should have exported the graph to a file and included an image link to the
 HTML file. 

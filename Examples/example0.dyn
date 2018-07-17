@@ -1,0 +1,30 @@
+An Example File
+===============
+
+Some preliminary text.
+
+A code block, evaluted:
+```s
+<<dd_do>>
+sysuse auto
+summarize weight
+<</dd_do>>
+```
+
+In-line text: the mean weight is <<dd_display: %9.1f r(mean)>> pounds.
+
+A list:
+
+- N = <<dd_display: r(N)>>
+- mean = <<dd_display: %9.1f r(mean)>>
+- sd = <<dd_display: % 9.2f r(sd)>>
+
+A graph:
+```s
+<<dd_do>>
+histogram weight
+<</dd_do>>
+```
+<<dd_graph>>
+
+More text.
