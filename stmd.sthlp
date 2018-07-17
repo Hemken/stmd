@@ -1,14 +1,12 @@
 {smcl}
-{* *! version 1.3 18jun2018}{...}
+{* *! version 1.4 17jul2018}{...}
 {* *! Doug Hemken}{...}
 {vieweralsosee "" "--"}{...}
-{vieweralsosee "markdown" "help markdown"}{...}
 {vieweralsosee "stmd2dyn" "help stmd2dyn"}{...}
+{vieweralsosee "markdown" "help markdown"}{...}
 {vieweralsosee "dyndoc" "help dyndoc"}{...}
 {vieweralsosee "dyntext" "help dyntext"}{...}
 {vieweralsosee "dynamic tags" "help dynamic tags"}{...}
-{vieweralsosee "stpandoc" "help stpandoc"}{...}
-{vieweralsosee "dyn2do" "help dyn2do"}{...}
 {viewerjumpto "Syntax" "stmd##syntax"}{...}
 {viewerjumpto "Description" "stmd##description"}{...}
 {viewerjumpto "Options" "stmd##options"}{...}
@@ -34,6 +32,13 @@ filename
 {syntab:Main}
 {synopt:{opt sav:ing(filename2)}}save HTML file as {it:filename2}{p_end}
 {synopt:{opt replace}}replace {it:filename2} if it already exists{p_end}
+
+{syntab:Other}
+{synopt :{opt hardwrap}}replace hard wraps (actual line breaks) with
+the HTML tag {cmd:<br>}{p_end}
+{synopt :{opt nomsg}}suppress message of a link to {it:targetfile}{p_end}
+{synopt :{opt noremove}}suppress {cmd:<<dd_remove>> processing{p_end}
+{synopt :{opt nostop}}do not stop when an error occurs{p_end}
 {synoptline}
 {p2colreset}{...}
 {p 4 6 2}
@@ -46,7 +51,7 @@ filename
 {cmd:stmd} Takes a dynamic Markdown document using conventional markdown
 	specification and converts it to HTML via Stata's {cmd: dyndoc}
 	command.  {cmd:stmd} is just a wrapper for {cmd: stmd2dyn} followed by
-	{cmd: dyndoc}
+	{cmd: dyndoc}.
 
 
 {marker options}{...}
@@ -60,10 +65,25 @@ filename
 {phang}
 {opt replace} replace {it:filename2} if it already exists{p_end}
 
-{dlgtab:More}
+{dlgtab:Other}
 {phang}
-{it:options} additional options which may be passed to {cmd:dydndoc}
-are {cmd:remove}, {cmd:hardwrap}, {cmd:nomsg}, and {cmd:nostop}{p_end}
+Additional options which may be passed to {cmd:dydndoc}
+are {cmd:hardwrap}, {cmd:nomsg}, {cmd:noremove}, and {cmd:nostop}{p_end}
+
+{phang}
+{opt hardwrap} specifies that hard wraps (actual line breaks) in the
+Markdown document be replaced with the HTML line break tag {cmd:<br>}.
+
+{phang}
+{opt nomsg} suppresses the message that contains a link to the target file.
+
+{phang}
+{opt noremove} specifies that {cmd:<<dd_remove>>} and {cmd:<</dd_remove>>} 
+tags should not be processed.
+
+{phang}
+{opt nostop} allows the document to continue being processed even if an error
+occurs.
 
 {marker remarks}{...}
 {title:Remarks}
@@ -83,7 +103,7 @@ information tag.  For example {p_end}
 
 {pstd}would be a dynamic code block that loaded the {cmd: auto} data set.  To
 accomodate some existing Stata markdown usage, this may be written as three
-or more backticks or tildes, the curly braces around "stata" are optional,
+or more backticks or tildes, curly braces around "stata" may be added,
 and "stata" may be abbreviated simply "s".
 
 {pstd}
@@ -99,13 +119,9 @@ This takes the general form {p_end}
 {pin}{cmd: ```} {p_end}
 
 {pin}
-{it: NO EVAL}: To prevent code evaluation, simply don't include an
-information tag.  Alternatively, include the {cmd: eval=FALSE} option
-(from R).
-
-{pin}
 {it: NO COMMANDS}: To prevent the code from being echoed in your
-document use any of {cmd: nocommands}, {cmd: echo=FALSE}, or a forward
+document use the {cmd: nocommands} option.  Alternatively, this
+may be specified as {cmd: echo=FALSE}, or a forward
 slash immediately after "stata".
 
 {pin}
@@ -115,12 +131,18 @@ use the option {cmd: noprompt}.
 {pin}
 {it: NO OUTPUT}: To prevent the output from appearing in your document
 (but to still see the commands and have them execute),
-use the option {cmd: nooutput}, {cmd: results=FALSE} or {cmd: results="hide"}.
+use the option {cmd: nooutput}.  Alternatively, use
+{cmd: results=FALSE} or {cmd: results="hide"}.
 
 {pin}
 {it: NO COMMANDS OR OUTPUT}: To prevent ANY output from appearing in your document
 (but to still have your code execute),
 use the option {cmd: quietly}.
+
+{pin}
+{it: NO EVALUATION}: To prevent code evaluation, simply don't include an
+information tag.  Alternatively, include the {cmd: eval=FALSE} option
+(from R).
 
 {pstd}
 For example, this would show your regression results, but not the
