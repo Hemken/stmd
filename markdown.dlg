@@ -1,16 +1,19 @@
 /*
-*! stmd2dyn dialog version 1.0.0, 24 July 2018, Doug Hemken, dehemken@wisc.edu
-*!    for stmd2dyn version 1.5.9, 3 July 2018
+*! markdown dialog version 1.0.0, 24 July 2018, Doug Hemken, dehemken@wisc.edu
+*!    for markdown version 1.0.1, 26 March 2018, Hua Peng, StataCorp
 
-Stata Markdown
---------------
+Markdown
+--------
 
-stmd2dyn filename [ , saving(filename2) replace ]
+markdown filename [ , saving(filename2) replace hardwrap nomsg ]
+
+Note: does not include optional "arguments", 
+	does not include pegdown option
 
 To install in User Statistics menu via Stata commands:
   
   . window menu append submenu "stUser" "Documents"
-  . window menu append item "Documents" "Stata Markdown to DYN (stmd2dyn)" "db stmd2dyn"
+  . window menu append item "Documents" "MD to HTML (markdown)" "db markdown"
 
   . window menu refresh
 
@@ -21,27 +24,29 @@ VERSION 15
 
 POSITION . . 410 250
 
-DIALOG main, label("stmd2dyn - Translate Stata Markdown to DYN") tabtitle("Main")
+DIALOG main, label("markdown - Translate Markdown format to HTML") tabtitle("Main")
 BEGIN
   TEXT	tx_source			10  10   . ., label("Source document:")
   FILE     file_source      10 +20   390  ., error("Source document") ///
 	label("Browse")
   TEXT	tx_target			10 +25 . ., label("Target document:")
-  FILE     file_target      10 +20   390  ., error("Target document") ///
+  FILE     file_target      10 +20   390  ., error("Target(required)") ///
 	label("Browse")
 CHECKBOX cb_replace  15 +25 . ., label("replace target document")
+CHECKBOX cb_hardwrap 15 +25 . ., label("hardwrap - line breaks preserved")
+CHECKBOX cb_nomsg    15 +25 . ., label("nomsg - no output file note")
 END
 
 OK ok1,      label("OK")
 CANCEL can1, label("Cancel")
 SUBMIT sub1, label("Submit")
-HELP hlp1,   view("help stmd2dyn")
+HELP hlp1,   view("help markdown")
 RESET res1
 COPY copy1
 
 PROGRAM command
 BEGIN
-    put "stmd2dyn "
+    put "markdown "
     require main.file_source
     put `"""' main.file_source `"""' " "
     put ", "
@@ -50,5 +55,11 @@ BEGIN
 	}
 	if main.cb_replace {
 		put "replace "
+	}
+	if main.cb_hardwrap {
+		put "hardwrap "
+	}
+	if main.cb_nomsg {
+		put "nomsg "
 	}
 END

@@ -31,6 +31,7 @@ BEGIN
 	label("Browse")
 CHECKBOX cb_replace  15 +25 . ., label("replace target document")
 CHECKBOX cb_hardwrap 15 +25 . ., label("hardwrap - line breaks preserved")
+CHECKBOX cb_nomsg      15 +25 . ., label("nomsg - no output file note")
 CHECKBOX cb_nostop   15 +25 . ., label("nostop - ignore errors")
 END
 
@@ -51,12 +52,15 @@ BEGIN
 		put "saving(" `"""' main.file_target `"""' ") "
 	}
 	if main.cb_replace {
-		put "replace"
+		put "replace "
 	}
 	if main.cb_hardwrap {
-		put "hardwarp"
+		put "hardwrap "
+	}
+	if main.cb_nomsg {
+		put "nomsg "
 	}
 	if main.cb_nostop {
-		put "nostop"
+		put "nostop "
 	}
 END

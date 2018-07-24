@@ -1,6 +1,6 @@
 window menu clear
 window menu append submenu "stUser" "Documents"
-window menu append item "Documents" "Stata Markdown to HTML (&stmd)" "db stmd"
+window menu append item "Documents" "Stata Markdown to HTML (stmd)" "db stmd"
 window menu append item "Documents" "Stata Markdown to DYN  (stmd2dyn)" "db stmd2dyn"
 window menu append separator "Documents"
 window menu append item "Documents" "DYN to HTML (dyndoc)" "db dyndoc"
