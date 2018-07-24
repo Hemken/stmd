@@ -4,12 +4,12 @@ An Example File
 Some preliminary text.
 
 A code block, evaluted:
-```s
+```stata
 sysuse auto
 summarize weight
 ```
 
-In-line text: the mean weight is `s %9.1f r(mean)` pounds.
+In-line text: the mean weight is `stata %9.1f r(mean)` pounds.
 
 A list:
 
@@ -18,7 +18,7 @@ A list:
 - sd = `s % 9.2f r(sd)`
 
 A graph:
-```s
+```stata
 histogram weight
 ```
 

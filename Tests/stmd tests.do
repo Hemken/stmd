@@ -3,6 +3,12 @@ do "update stmd install.do "
 
 cd z:/public_web/stataworkshops/stmd/Examples/
 
+capture erase graph.svg
+cscript
+//Basic, with code, inline, graphs
+stmd example0.stmd, replace
+file_equal example0.html using example0-bm.html, display
+
 capture erase graph1.svg
 capture erase graph2.svg
 cscript
