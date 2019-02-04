@@ -1,6 +1,6 @@
-*! version 1.5.9
+*! version 1.6
 *! Doug Hemken
-*! 3 July 2018
+*! 4 Feb 2019
 
 // ISSUES
 // ======
@@ -8,14 +8,16 @@
 // better, more extensive preamble, e.g. linesize, other options?
 // NOGRaph option
 
-capture program drop stmd2dyn
-capture mata: mata clear
+// capture program drop stmd2dyn
+// capture mata: mata clear
 program define stmd2dyn, rclass
 	syntax anything(name=infile), [ ///
 		SAVing(string) replace ///
 		noGRAPHlinks ///
 		]
 
+	version 15
+	
 	local infile = ustrtrim(usubinstr(`"`infile'"', `"""', "", .))
 *display `"infile is `infile'"'	
 	confirm file `"`infile'"'

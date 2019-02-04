@@ -1,10 +1,10 @@
-*! version 1.3
+*! version 1.4
 *! Doug Hemken
-*! 18 June 2018
+*! 4 Feb 2019
 
 // pass arguments to dyndoc
 
-capture program drop stmd
+// capture program drop stmd
 program define stmd, rclass
 	syntax anything(name=infile)    /// input file name
 		[,							/// 
@@ -14,7 +14,9 @@ program define stmd, rclass
 		nomsg						///
 		nostop						///
 		]
-		
+	
+	version 15
+	
 *display `"`infile'"'
 	* infile checks	
 	local infile = ustrtrim(usubinstr(`"`infile'"', `"""', "", .))
