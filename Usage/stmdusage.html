@@ -36,14 +36,18 @@
 
 ```
 </code></pre>
+<p>The <code>stmd</code> command takes a text document, converts the dynamic code to Markdown, and then converts the Markdown to it's final HTML format.</p>
 <h2><a href="#install-" id="install-">Install <code>stmd</code></a></h2>
 <p>Use</p>
+<pre><code>ssc describe stmd
+</code></pre>
+<p>and follow the links to install <code>stmd</code>.  This includes <code>stmd2dyn</code>, <code>dyn2do</code>, and a script to install menu items.  If you don&rsquo;t care about the menu items just try</p>
+<pre><code>ssc install stmd
+</code></pre>
+<p>Alternatively, use</p>
 <pre><code>net from https://www.ssc.wisc.edu/~hemken/Stataworkshops
 </code></pre>
-<p>and follow the links to install <code>stmd</code>.</p>
-<p>Alternatively, use</p>
-<pre><code>net install stmd, from(https://www.ssc.wisc.edu/~hemken/Stataworkshops)
-</code></pre>
+<p>You can also obtain the source code, including these web pages for extra documentation, from <a href="https://github.com/Hemken/stmd">https://github.com/Hemken/stmd</a> .</p>
 <h2><a href="#process-documents" id="process-documents">Process Documents</a></h2>
 <p>See <code>help stmd</code> for details.</p>
 <p>Basic use to process a document is</p>
@@ -61,7 +65,7 @@
 </ul>
 <style>
  #OuterWrapper {
-   width: auto;
+   width: 65%;
  }
 </style>
 <table>
@@ -128,6 +132,5 @@ More text.
 </td></tr>
 </tbody>
 </table>
-<p>The <code>stmd</code> command takes a text document, converts the dynamic code to Markdown, and then converts the Markdown to it's final HTML format.</p>
 <!--#include virtual="/sscc/pubs/Rmd/bottomInclKB.html" -->
 </body>

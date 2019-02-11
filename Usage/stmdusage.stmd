@@ -23,19 +23,34 @@ the following:
 ```
 ````
 
+The `stmd` command takes a text document, converts the dynamic code
+to Markdown, and then converts the Markdown to it\'s final HTML
+format.
+
+
 ## Install `stmd`
 
 Use
 ```
-net from https://www.ssc.wisc.edu/~hemken/Stataworkshops
+ssc describe stmd
 ```
 
-and follow the links to install `stmd`.
+and follow the links to install `stmd`.  This includes
+`stmd2dyn`, `dyn2do`, and a script to install menu items.  If
+you don't care about the menu items just try
+
+```
+ssc install stmd
+```
 
 Alternatively, use
 ```
-net install stmd, from(https://www.ssc.wisc.edu/~hemken/Stataworkshops)
+net from https://www.ssc.wisc.edu/~hemken/Stataworkshops
 ```
+
+You can also obtain the source code, including these web pages
+for extra documentation, from <https://github.com/Hemken/stmd> .
+
 
 ## Process Documents
 
@@ -66,7 +81,7 @@ results in your document.
 
 <style>
  #OuterWrapper {
-   width: auto;
+   width: 65%;
  }
 </style>
 
@@ -137,9 +152,5 @@ More text.
 </td></tr>
 </tbody>
 </table>
-
-The `stmd` command takes a text document, converts the dynamic code
-to Markdown, and then converts the Markdown to it\'s final HTML
-format.
 
 <<dd_include: bottommatter.txt>>
