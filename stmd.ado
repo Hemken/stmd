@@ -1,6 +1,6 @@
-*! version 1.4
+*! version 1.5
 *! Doug Hemken
-*! 4 Feb 2019
+*! 20 Sep 2019
 
 // pass arguments to dyndoc
 
@@ -40,7 +40,7 @@ display in error "target file can not be the same as the source file"
 	* intermediate dyndoc file
 	tempfile dyn
 	* process
-	stmd2dyn `infile', saving(`dyn') `replace'
-	dyndoc `dyn', saving(`saving') `replace' `remove' `hardwrap' `msg' `stop'
+	stmd2dyn "`infile'", saving(`dyn') `replace'
+	dyndoc `"`dyn'"', saving(`"`saving'"') `replace' `remove' `hardwrap' `msg' `stop'
 	
 end
