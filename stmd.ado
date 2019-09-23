@@ -1,21 +1,25 @@
-*! version 1.5
+*! version 1.6
 *! Doug Hemken
-*! 20 Sep 2019
-
-// pass arguments to dyndoc
+*! 23 Sep 2019
 
 // capture program drop stmd
 program define stmd, rclass
-	syntax anything(name=infile)    /// input file name
+	syntax anything(everything)     /// input file name, plus arguments
 		[,							/// 
 		SAVing(string) REPLace		///  name of HTML file
 		noREMove					///
+		embedimage					/// requires Stata 16
 		hardwrap					///
 		nomsg						///
 		nostop						///
+		pegdown						///
+		docx						/// requires Stata 16
+		flexdocx					/// requires Stata 16
 		]
 	
 	version 15
+	
+	gettoken infile opargs : anything
 	
 *display `"`infile'"'
 	* infile checks	
@@ -41,6 +45,8 @@ display in error "target file can not be the same as the source file"
 	tempfile dyn
 	* process
 	stmd2dyn "`infile'", saving(`dyn') `replace'
-	dyndoc `"`dyn'"', saving(`"`saving'"') `replace' `remove' `hardwrap' `msg' `stop'
+	dyndoc `"`dyn'"' `opargs', saving(`"`saving'"') `replace' `remove' ///
+		`embedimage'	///
+		`hardwrap' `msg' `stop' `pegdown' `docx' `flexdocx'
 	
 end

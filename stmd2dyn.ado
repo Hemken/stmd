@@ -1,6 +1,6 @@
-*! version 1.6
+*! version 1.7
 *! Doug Hemken
-*! 4 Feb 2019
+*! 23 Sep 2019
 
 // ISSUES
 // ======
@@ -58,7 +58,7 @@ display in error "target file can not be the same as the source file"
 * Write out the result
 	mata: saving = st_local("saving")
 	mata: docwrite(saving, document)
-	display "  {text:Output saved as {it:`saving'}}"
+	display "  {text:Dyndoc file saved as {it:`saving'}}"
 
 * Finish up
 	return local outfile "`saving'"
