@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.4 17jul2018}{...}
+{* *! version 1.7 29sep2019}{...}
 {* *! Doug Hemken}{...}
 {vieweralsosee "" "--"}{...}
 {vieweralsosee "stmd2dyn" "help stmd2dyn"}{...}
@@ -14,8 +14,11 @@
 {viewerjumpto "Examples" "stmd##examples"}{...}
 {title:Title}
 
-{phang}
-{bf:stmd} Convert dynamic Markdown to HTML format, using Stata {cmd: dyndoc}{p_end}
+{p2colset 1 9 19 2}{...}
+{p2col:{bf:stmd} {hline 2}}
+Convert standard dynamic Markdown to HTML, DOCX, or PDF format, using 
+  Stata {cmd: dyndoc}{p_end}
+{p2colreset}{...}
 
 
 {marker syntax}{...}
@@ -23,22 +26,41 @@
 
 {p 8 17 2}
 {cmd:stmd}
-filename
+{it:srcfile}
+[{it:arguments}]
 [{cmd:,} {it:options}]
+{p_end}
+
+{phang}
+{it:srcfile} is a plain text file containing text
+and code blocks in standard dynamic Markdown format.{p_end}
+
+{phang}
+{it:arguments} are stored in the local macros {cmd:`1'}, {cmd:`2'}, etc,
+and passed to {it:srcfile}.{p_end}
+
+{phang}
+Enclose filenames in double quotes
+if they contain blanks or other special characters.{p_end}
 
 {synoptset 20 tabbed}{...}
 {synopthdr}
 {synoptline}
 {syntab:Main}
-{synopt:{opt sav:ing(filename2)}}save HTML file as {it:filename2}{p_end}
-{synopt:{opt replace}}replace {it:filename2} if it already exists{p_end}
+{synopt:{opt sav:ing(targetfile)}}specify the target HTML, Word, 
+or PDF file to be saved{p_end}
+{synopt:{opt replace}}replace {it:targetfile} if it already exists{p_end}
 
 {syntab:Other}
-{synopt :{opt hardwrap}}replace hard wraps (actual line breaks) with
-the HTML tag {cmd:<br>}{p_end}
-{synopt :{opt nomsg}}suppress message of a link to {it:targetfile}{p_end}
-{synopt :{opt noremove}}suppress {cmd:<<dd_remove>> processing{p_end}
-{synopt :{opt nostop}}do not stop when an error occurs{p_end}
+{synopt :{opt docx}}output a Word (.docx) document{p_end}
+{synopt :{opt pdf}}output a PDF document{p_end}
+{synopt :{opt embedimage}}for HTML documents, embed images 
+rather than link them{p_end}
+{synopt :{opt hardwrap}}conserve line breaks from the 
+{it:srcfile}{p_end}
+{synopt :{opt nomsg}}suppress file messages{p_end}
+{synopt :{opt noremove}}suppress {cmd:<<dd_remove>>} processing{p_end}
+{synopt :{opt nostop}}do not stop if an error occurs{p_end}
 {synoptline}
 {p2colreset}{...}
 {p 4 6 2}
@@ -48,10 +70,10 @@ the HTML tag {cmd:<br>}{p_end}
 {title:Description}
 
 {pstd}
-{cmd:stmd} Takes a dynamic Markdown document using conventional markdown
-	specification and converts it to HTML via Stata's {cmd: dyndoc}
-	command.  {cmd:stmd} is just a wrapper for {cmd: stmd2dyn} followed by
-	{cmd: dyndoc}.
+{cmd:stmd} takes a dynamic Markdown document which uses conventional
+ markdown specification and converts it to HTML, Word, or PDF via
+ Stata's {cmd: dyndoc} command.  {cmd:stmd} is a wrapper for
+ {cmd: stmd2dyn} followed by {cmd: dyndoc}.
 
 
 {marker options}{...}
@@ -60,22 +82,39 @@ the HTML tag {cmd:<br>}{p_end}
 {dlgtab:Main}
 
 {phang}
-{opt saving} {it: filename2} to specify the final HTML file name.{p_end}
+{opt saving} {it: targetfile} to specify the final document's file
+ name. If not specified this defaults to
+{it:srcfile} with the appropriate file extension.{p_end}
 
 {phang}
-{opt replace} replace {it:filename2} if it already exists{p_end}
+{opt replace} replace the {it:targetfile} if it already exists{p_end}
 
 {dlgtab:Other}
 {phang}
-Additional options which may be passed to {cmd:dydndoc}
-are {cmd:hardwrap}, {cmd:nomsg}, {cmd:noremove}, and {cmd:nostop}{p_end}
+Additional options (which are passed to {cmd:dydndoc})
+are {cmd:docx}, {cmd:pdf}, {cmd:embedimage}, {cmd:hardwrap}, 
+{cmd:nomsg}, {cmd:noremove}, and {cmd:nostop}{p_end}
 
 {phang}
-{opt hardwrap} specifies that hard wraps (actual line breaks) in the
-Markdown document be replaced with the HTML line break tag {cmd:<br>}.
+{opt docx} specifies the {it:targetfile} be saved in
+Microsoft Word format.
 
 {phang}
-{opt nomsg} suppresses the message that contains a link to the target file.
+{opt pdf} specifies the {it:targetfile} be saved in
+Adobe PDF format.
+
+{phang}
+{opt embedimage} specifies that any images be saved as
+part of the (HTML) {it:targetfile}, rather than as
+linked files.
+
+{phang}
+{opt hardwrap} specifies that hard wraps (line breaks) in the
+{it:srcfile} are reproduced in the {it:targetfile}.
+
+{phang}
+{opt nomsg} suppresses intermediate file messages and the 
+link to the {it:targetfile}.
 
 {phang}
 {opt noremove} specifies that {cmd:<<dd_remove>>} and {cmd:<</dd_remove>>} 
@@ -87,10 +126,6 @@ occurs.
 
 {marker remarks}{...}
 {title:Remarks}
-
-{pstd}
-If {it: filename2} is not specified, then {it: filename} with an
-.html file extension is tried.
 
 {pstd}
 The conventional style for dynamic Markdown files is for the dynamic

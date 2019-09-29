@@ -1,6 +1,6 @@
 *! version 1.7
 *! Doug Hemken
-*! 23 Sep 2019
+*! 28 Sep 2019
 
 // ISSUES
 // ======
@@ -8,12 +8,13 @@
 // better, more extensive preamble, e.g. linesize, other options?
 // NOGRaph option
 
-// capture program drop stmd2dyn
-// capture mata: mata clear
+capture program drop stmd2dyn
+capture mata: mata clear
 program define stmd2dyn, rclass
 	syntax anything(name=infile), [ ///
 		SAVing(string) replace ///
 		noGRAPHlinks ///
+		nomsg ///
 		]
 
 	version 15
@@ -58,7 +59,10 @@ display in error "target file can not be the same as the source file"
 * Write out the result
 	mata: saving = st_local("saving")
 	mata: docwrite(saving, document)
-	display "  {text:Dyndoc file saved as {it:`saving'}}"
+	if ("`msg'" != "nomsg") {
+		display "  {text:Dyndoc file saved as {it:`saving'}}"
+	}
+	
 
 * Finish up
 	return local outfile "`saving'"

@@ -10,7 +10,7 @@ dyndoc filename [ , saving(filename2) replace hardwrap noremove nomsg nostop ]
 Note: does not include optional "arguments", does not include noremove option,
 	does not include pegdown option
 
-To install in User Statistics menu via Stata commands:
+To install in User Documents menu via Stata commands:
   
   . window menu append submenu "stUser" "Documents"
   . window menu append item "Documents" "DYN to HTML (dyndoc)" "db dyndoc"

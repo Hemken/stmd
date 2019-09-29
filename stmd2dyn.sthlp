@@ -1,6 +1,6 @@
 {vieweralsosee "" "--"}{...}
 {smcl}
-{* *! version 1.4 17jul2018}{...}
+{* *! version 1.7 29sep2019}{...}
 {* *! Doug Hemken}{...}
 {vieweralsosee "" "--"}{...}
 {vieweralsosee "stmd" "help stmd"}{...}
@@ -15,7 +15,7 @@
 {title:Title}
 
 {phang}
-{bf:stmd2dyn} Convert common Markdown to Stata {cmd: dyndoc} 
+{bf:stmd2dyn} Convert standard dynamic Markdown to Stata {cmd: dyndoc} 
 dynamic document format.{p_end}
 
 
@@ -24,15 +24,16 @@ dynamic document format.{p_end}
 
 {p 8 17 2}
 {cmd:stmd2dyn}
-filename
+{it:srcfile}
+[{it:arguments}]
 [{cmd:,} {it:options}]
 
 {synoptset 20 tabbed}{...}
 {synopthdr}
 {synoptline}
 {syntab:Main}
-{synopt:{opt sav:ing(filename2)}}save {cmd: dyndoc} file as {it:filename2}{p_end}
-{synopt:{opt replace}}replace {it:filename2} if it already exists{p_end}
+{synopt:{opt sav:ing(targetfile)}}save {cmd: dyndoc} file as {it:targetfile}{p_end}
+{synopt:{opt replace}}replace {it:targetfile} if it already exists{p_end}
 
 {syntab:Other}
 {synopt :{opt hardwrap}}replace hard wraps (actual line breaks) with
@@ -60,11 +61,11 @@ the HTML tag {cmd:<br>}{p_end}
 {dlgtab:Main}
 
 {phang}
-{opt saving} {it: filename2} to save the {cmd: dyndoc}, which can
+{opt saving} {it: targetfile} to save the {cmd: dyndoc}, which can
 	then be processed by Stata.{p_end}
 
 {phang}
-{opt replace} replace {it:filename2} if it already exists{p_end}
+{opt replace} replace {it:targetfile} if it already exists{p_end}
 
 {dlgtab:More}
 
@@ -92,7 +93,7 @@ occurs.
 {title:Remarks}
 
 {pstd}
-If {it: filename2} is not specified, then {it: filename} with an
+If {it: targetfile} is not specified, then {it: srcfile} with an
 .dyn file extension is tried.
 
 {pstd}
