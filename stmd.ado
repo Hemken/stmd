@@ -1,11 +1,10 @@
-*! version 1.7
+*! version 1.7.1
 *! Doug Hemken
-*! 28 Sep 2019
+*! 30 Sep 2019
 
 // ISSUES
 // ======
 // revise dialogs
-// revise Help files
 
 // capture program drop stmd
 program define stmd, rclass
@@ -25,7 +24,19 @@ program define stmd, rclass
 	
 	version 15
 
-
+	* version checks
+	if (c(stata_version) < 16) {
+		if ("`docx'"=="docx" | "`flexdocx'"=="flexdocx" | "`pdf'"=="pdf") {
+			display in error "option {cmd:`docx' `flexdocx' `pdf'} requires Stata 16"
+			display "try {cmd:dynpandoc} if installed"
+			exit 9
+		}
+		else if ("`embedimage'"=="embedimage") {
+			display in error "option {cmd:embedimage} requires Stata 16"
+			display "option ignored"
+			local embedimage ""
+		}
+	}
 	
 	gettoken infile opargs : anything
 	

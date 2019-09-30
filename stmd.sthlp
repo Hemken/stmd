@@ -3,10 +3,11 @@
 {* *! Doug Hemken}{...}
 {vieweralsosee "" "--"}{...}
 {vieweralsosee "stmd2dyn" "help stmd2dyn"}{...}
-{vieweralsosee "markdown" "help markdown"}{...}
 {vieweralsosee "dyndoc" "help dyndoc"}{...}
 {vieweralsosee "dyntext" "help dyntext"}{...}
 {vieweralsosee "dynamic tags" "help dynamic tags"}{...}
+{vieweralsosee "markdown" "help markdown"}{...}
+{vieweralsosee "docx2pdf" "help docx2pdf"}{...}
 {viewerjumpto "Syntax" "stmd##syntax"}{...}
 {viewerjumpto "Description" "stmd##description"}{...}
 {viewerjumpto "Options" "stmd##options"}{...}
@@ -82,7 +83,7 @@ rather than link them{p_end}
 {dlgtab:Main}
 
 {phang}
-{opt saving} {it: targetfile} to specify the final document's file
+{opth saving:(filename:targetfile)} to specify the final document's file
  name. If not specified this defaults to
 {it:srcfile} with the appropriate file extension.{p_end}
 

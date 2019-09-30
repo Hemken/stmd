@@ -1,6 +1,5 @@
-{vieweralsosee "" "--"}{...}
 {smcl}
-{* *! version 1.7 29sep2019}{...}
+{* *! version 1.7 30sep2019}{...}
 {* *! Doug Hemken}{...}
 {vieweralsosee "" "--"}{...}
 {vieweralsosee "stmd" "help stmd"}{...}
@@ -25,8 +24,16 @@ dynamic document format.{p_end}
 {p 8 17 2}
 {cmd:stmd2dyn}
 {it:srcfile}
-[{it:arguments}]
 [{cmd:,} {it:options}]
+
+{phang}
+{it:srcfile} is a plain text file containing text
+and code blocks in standard dynamic Markdown format.{p_end}
+
+{phang}
+Enclose filenames in double quotes
+if they contain blanks or other special characters.{p_end}
+
 
 {synoptset 20 tabbed}{...}
 {synopthdr}
@@ -36,11 +43,7 @@ dynamic document format.{p_end}
 {synopt:{opt replace}}replace {it:targetfile} if it already exists{p_end}
 
 {syntab:Other}
-{synopt :{opt hardwrap}}replace hard wraps (actual line breaks) with
-the HTML tag {cmd:<br>}{p_end}
 {synopt :{opt nomsg}}suppress message of a link to {it:targetfile}{p_end}
-{synopt :{opt noremove}}suppress {cmd:<<dd_remove>> processing{p_end}
-{synopt :{opt nostop}}do not stop when an error occurs{p_end}
 {synoptline}
 {p2colreset}{...}
 {p 4 6 2}
@@ -50,7 +53,7 @@ the HTML tag {cmd:<br>}{p_end}
 {title:Description}
 
 {pstd}
-{cmd:stmd2dyn} Takes a Markdown document using conventional markdown
+{cmd:stmd2dyn} takes a Markdown document which uses standard markdown
 	specification and converts it to Stata's dialect using {cmd: dyndoc}
 	dynamic tags.
 
@@ -61,7 +64,7 @@ the HTML tag {cmd:<br>}{p_end}
 {dlgtab:Main}
 
 {phang}
-{opt saving} {it: targetfile} to save the {cmd: dyndoc}, which can
+{opth saving:(filename:targetfile)} to save the {cmd: dyndoc}, which can
 	then be processed by Stata.{p_end}
 
 {phang}
@@ -70,23 +73,7 @@ the HTML tag {cmd:<br>}{p_end}
 {dlgtab:More}
 
 {phang}
-Additional options which may be passed to {cmd:dydndoc}
-are {cmd:hardwrap}, {cmd:nomsg}, {cmd:noremove}, and {cmd:nostop}{p_end}
-
-{phang}
-{opt hardwrap} specifies that hard wraps (actual line breaks) in the
-Markdown document be replaced with the HTML line break tag {cmd:<br>}.
-
-{phang}
 {opt nomsg} suppresses the message that contains a link to the target file.
-
-{phang}
-{opt noremove} specifies that {cmd:<<dd_remove>>} and {cmd:<</dd_remove>>} 
-tags should not be processed.
-
-{phang}
-{opt nostop} allows the document to continue being processed even if an error
-occurs.
 
 
 {marker remarks}{...}
@@ -94,7 +81,7 @@ occurs.
 
 {pstd}
 If {it: targetfile} is not specified, then {it: srcfile} with an
-.dyn file extension is tried.
+.dyn file extension is used.
 
 {pstd}
 For more on how to format documents, see {cmd: help stmd}.

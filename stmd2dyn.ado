@@ -8,8 +8,8 @@
 // better, more extensive preamble, e.g. linesize, other options?
 // NOGRaph option
 
-capture program drop stmd2dyn
-capture mata: mata clear
+// capture program drop stmd2dyn
+// capture mata: mata clear
 program define stmd2dyn, rclass
 	syntax anything(name=infile), [ ///
 		SAVing(string) replace ///
