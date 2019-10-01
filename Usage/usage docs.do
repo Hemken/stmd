@@ -1,4 +1,4 @@
-cd "z:/public_web/stataworkshops/stmd/usage"
+cd "z:/Stata/stmd/usage"
 
 capture erase Graph.svg
 stmd stmdusage.stmd, replace

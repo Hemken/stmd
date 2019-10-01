@@ -2,15 +2,17 @@
 
 # Using the `stmd` command in Stata
 
-Stata provides commands to turn Markdown documents into HTML, and
+Stata provides commands to turn Markdown documents into HTML, Word,
+or PDF documents.  Additionally, there are
 commands to execute Stata commands embedded within text documents,
-returning the commands and adding their output to the document.
+returning the commands and adding their output to the document -
+for example, generating a Markdown document.
 
-The `stmd` adds to this facility by allowing users to write dynamic
-documents in the standard dynamic Markdown style common with other
-programming languages.  Code to be executed is enclosed in a code
-fence with an *information tag* that includes the language of
-the dynamic code, and may include options.
+The `stmd` adds to this facility by allowing users to write *dynamic*
+documents in standard dynamic Markdown style. 
+Code to be executed is enclosed in a *code
+fence* with an *information tag* that includes the language of
+the dynamic code, and may also include options.
 
 Stata code to be executed is included in a document
 within a fenced code block like
@@ -24,13 +26,13 @@ the following:
 ````
 
 The `stmd` command takes a text document, converts the dynamic code
-to Markdown, and then converts the Markdown to it\'s final HTML
-format.
+to Markdown, and then converts the Markdown to it\'s final HTML, Word,
+or PDF format.
 
 
 ## Install `stmd`
 
-Use
+In Stata, use
 ```
 ssc describe stmd
 ```
@@ -43,7 +45,7 @@ you don't care about the menu items just try
 ssc install stmd
 ```
 
-Alternatively, use
+> Alternatively, use
 ```
 net from https://www.ssc.wisc.edu/~hemken/Stataworkshops
 ```
@@ -66,6 +68,8 @@ or just
 stmd example.stmd
 ```
 
+(HTML is the default output.)
+
 
 ## The Goal: Easy-to-write source text
 
@@ -81,7 +85,7 @@ results in your document.
 
 <style>
  #OuterWrapper {
-   width: 65%;
+   width: 75%;
  }
 </style>
 

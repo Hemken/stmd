@@ -26,9 +26,9 @@
 </head>
 <body>
 <!--#include virtual="/sscc/pubs/Rmd/topInclKB.html" -->
-<h1><a href="#using-the-command-in-stata" id="using-the-command-in-stata">Using the <code>stmd</code> command in Stata</a></h1>
-<p>Stata provides commands to turn Markdown documents into HTML, and commands to execute Stata commands embedded within text documents, returning the commands and adding their output to the document.</p>
-<p>The <code>stmd</code> adds to this facility by allowing users to write dynamic documents in the standard dynamic Markdown style common with other programming languages.  Code to be executed is enclosed in a code fence with an <em>information tag</em> that includes the language of the dynamic code, and may include options.</p>
+<h1><a href="#using-the-stmd-command-in-stata" id="using-the-stmd-command-in-stata">Using the <code>stmd</code> command in Stata</a></h1>
+<p>Stata provides commands to turn Markdown documents into HTML, Word, or PDF documents.  Additionally, there are commands to execute Stata commands embedded within text documents, returning the commands and adding their output to the document - for example, generating a Markdown document.</p>
+<p>The <code>stmd</code> adds to this facility by allowing users to write <em>dynamic</em> documents in standard dynamic Markdown style. Code to be executed is enclosed in a <em>code fence</em> with an <em>information tag</em> that includes the language of the dynamic code, and may also include options.</p>
 <p>Stata code to be executed is included in a document within a fenced code block like the following:</p>
 <pre><code>```{stata, ... }
 
@@ -36,17 +36,19 @@
 
 ```
 </code></pre>
-<p>The <code>stmd</code> command takes a text document, converts the dynamic code to Markdown, and then converts the Markdown to it's final HTML format.</p>
-<h2><a href="#install-" id="install-">Install <code>stmd</code></a></h2>
-<p>Use</p>
+<p>The <code>stmd</code> command takes a text document, converts the dynamic code to Markdown, and then converts the Markdown to it's final HTML, Word, or PDF format.</p>
+<h2><a href="#install-stmd" id="install-stmd">Install <code>stmd</code></a></h2>
+<p>In Stata, use</p>
 <pre><code>ssc describe stmd
 </code></pre>
 <p>and follow the links to install <code>stmd</code>.  This includes <code>stmd2dyn</code>, <code>dyn2do</code>, and a script to install menu items.  If you don&rsquo;t care about the menu items just try</p>
 <pre><code>ssc install stmd
 </code></pre>
+<blockquote>
 <p>Alternatively, use</p>
 <pre><code>net from https://www.ssc.wisc.edu/~hemken/Stataworkshops
 </code></pre>
+</blockquote>
 <p>You can also obtain the source code, including these web pages for extra documentation, from <a href="https://github.com/Hemken/stmd">https://github.com/Hemken/stmd</a> .</p>
 <h2><a href="#process-documents" id="process-documents">Process Documents</a></h2>
 <p>See <code>help stmd</code> for details.</p>
@@ -56,6 +58,7 @@
 <p>or just</p>
 <pre><code>stmd example.stmd
 </code></pre>
+<p>(HTML is the default output.)</p>
 <h2><a href="#the-goal-easy-to-write-source-text" id="the-goal-easy-to-write-source-text">The Goal: Easy-to-write source text</a></h2>
 <p>Conventional dynamic Markdown looks like the text in the first column, and is turned into a web document (HTML) that appears like the second column.</p>
 <p>There are two main parts to this:</p>
@@ -65,7 +68,7 @@
 </ul>
 <style>
  #OuterWrapper {
-   width: 65%;
+   width: 75%;
  }
 </style>
 <table>
@@ -127,7 +130,7 @@ More text.
 (bin=8, start=1760, width=385)
 
 </code></pre>
-<img src="Graph.svg" >
+<p><img src="Graph.svg" ></p>
 <p>More text.</p>
 </td></tr>
 </tbody>
