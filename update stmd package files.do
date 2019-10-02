@@ -7,8 +7,10 @@ copy stmd.sthlp     `destpath'/stmd.sthlp,     replace
 copy stmd2dyn.ado   `destpath'/stmd2dyn.ado,   replace
 copy stmd2dyn.sthlp `destpath'/stmd2dyn.sthlp, replace
 
-copy stmd.dlg       `destpath'/stmd.dlg,       replace
-copy stmd2dyn.dlg   `destpath'/stmd2dyn.dlg,   replace
-copy dyndoc.dlg     `destpath'/dyndoc.dlg,     replace
-copy dyntext.dlg    `destpath'/dyntext.dlg,    replace
-copy markdown.dlg   `destpath'/markdown.dlg,   replace
+copy Dialogs/stmd.dlg       `destpath'/Dialogs/stmd.dlg,       replace
+copy Dialogs/stmd15.dlg     `destpath'/Dialogs/stmd15.dlg,     replace
+copy Dialogs/stmd2dyn.dlg   `destpath'/Dialogs/stmd2dyn.dlg,   replace
+copy Dialogs/dyndoc.dlg     `destpath'/Dialogs/dyndoc.dlg,     replace
+copy Dialogs/dyndoc15.dlg   `destpath'/Dialogs/dyndoc15.dlg,   replace
+copy Dialogs/dyntext.dlg    `destpath'/Dialogs/dyntext.dlg,    replace
+copy Dialogs/markdown.dlg   `destpath'/Dialogs/markdown.dlg,   replace
