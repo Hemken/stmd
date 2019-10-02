@@ -1,6 +1,6 @@
 *! version 1.7.1
 *! Doug Hemken
-*! 30 Sep 2019
+*! 2 Oct 2019
 
 // ISSUES
 // ======
@@ -105,4 +105,24 @@ display in error "target file can not be the same as the source file"
 	}
 	
 	
+end
+
+mata:
+void _getfileextension(string scalar path, 
+	string scalar loc)
+{
+	string scalar p
+	
+	p = strtrim(strlower(pathsuffix(path)))
+	st_local(loc, p) 
+}
+
+void _getpathparent( string scalar path, 
+                     string scalar loc)
+{
+	string scalar p
+	
+	p = pathgetparent(path)
+	st_local(loc, p) 
+}
 end

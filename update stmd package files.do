@@ -1,5 +1,5 @@
 * update stmd package files
-
+cd "Z:/Stata/stmd"
 local destpath "Z:/PUBLIC_Web/Stataworkshops/stmd"
 
 copy stmd.ado       `destpath'/stmd.ado,       replace

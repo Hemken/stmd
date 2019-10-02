@@ -1,6 +1,6 @@
-*! version 1.7
+*! version 1.7.1
 *! Doug Hemken
-*! 28 Sep 2019
+*! 2 Oct 2019
 
 // ISSUES
 // ======
@@ -223,7 +223,7 @@ string colvector function _gr_link() {
 		`"local checkdate = "\`r(command_date)' \`r(command_time)'" "' \
 		`"<</dd_do>>"' \
 		`"<<dd_skip_if: ="\`\`gdate''"~="" & "\`\`gdate''"=="\`checkdate'">>"' \
-		`"<<dd_graph>>"' \
+		`"<<dd_graph: png markdown>>"' \
 		`"<<dd_skip_end>>"' \
 		`"<<dd_do: quietly>>"' \
 		`"local \`gdate' = "\`r(command_date)' \`r(command_time)'""' \
