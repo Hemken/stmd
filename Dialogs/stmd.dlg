@@ -30,11 +30,11 @@ BEGIN
   FILE     file_target      10 +20   390  ., error("Target document") ///
 	label("Browse")
 CHECKBOX cb_replace  15 +25 . ., label("replace target document")
-CHECKBOX cb_docx     15 +25 . ., label("convert to Word (docx)")
+CHECKBOX cb_docx     15 +50 . ., label("convert to Word (docx)")
 CHECKBOX cb_pdf      15 +25 . ., label("convert to PDF")
-CHECKBOX cb_image    15 +25 . ., label("embedimage (in HTML)")
+CHECKBOX cb_image    15 +50 . ., label("embed images (in HTML)")
 CHECKBOX cb_hardwrap 15 +25 . ., label("hardwrap - line breaks preserved")
-CHECKBOX cb_nomsg      15 +25 . ., label("nomsg - no output file note")
+CHECKBOX cb_nomsg    15 +25 . ., label("nomsg - no output file note")
 CHECKBOX cb_nostop   15 +25 . ., label("nostop - ignore errors")
 END
 

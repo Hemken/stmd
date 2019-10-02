@@ -14,3 +14,4 @@ copy Dialogs/dyndoc.dlg     `destpath'/Dialogs/dyndoc.dlg,     replace
 copy Dialogs/dyndoc15.dlg   `destpath'/Dialogs/dyndoc15.dlg,   replace
 copy Dialogs/dyntext.dlg    `destpath'/Dialogs/dyntext.dlg,    replace
 copy Dialogs/markdown.dlg   `destpath'/Dialogs/markdown.dlg,   replace
+copy Dialogs/stmd_menu_setup.do   `destpath'/Dialogs/stmd_menu_setup.do,   replace
