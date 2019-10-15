@@ -84,9 +84,11 @@ There are two main parts to this:
 results in your document.
 
 <style>
- #OuterWrapper {
-   width: 75%;
- }
+ table {
+  border-collapse: collapse;
+  background: white;
+  margin-left: -200px;
+  }
 </style>
 
 <table>
