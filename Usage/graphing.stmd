@@ -11,7 +11,7 @@
 
 Begin by drawing a graph.  If you are using standard Markdown and creating
 an HTML file, this will produce a separate PNG graphics file in the same
-folder as your HTML file (? even if you specify a different output path?).
+folder as your HTML file.
 
 This text in your Markdown
 ````

@@ -1,0 +1,9 @@
+#### Descriptive Statistics where rep78 == <<dd_display: `1' >>
+```stata, nocommands
+frame rep78_`1': summarize mpg weight
+```
+
+#### Regressing mpg on weight (rep78==<<dd_display: `1' >>)
+```stata, nocommands
+frame rep78_`1': twoway (scatter mpg weight) (lfit mpg weight)
+```

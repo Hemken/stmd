@@ -1,6 +1,6 @@
-*! version 1.7.1
+*! version 1.7.2
 *! Doug Hemken
-*! 2 Oct 2019
+*! 17 Oct 2019
 
 // ISSUES
 // ======
@@ -11,13 +11,14 @@
 // capture program drop stmd2dyn
 // capture mata: mata clear
 program define stmd2dyn, rclass
-	syntax anything(name=infile), [ ///
+	syntax anything(everything), [ ///
 		SAVing(string) replace ///
 		noGRAPHlinks ///
 		nomsg ///
 		]
 
 	version 15
+	gettoken infile opargs : anything
 	
 	local infile = ustrtrim(usubinstr(`"`infile'"', `"""', "", .))
 *display `"infile is `infile'"'	

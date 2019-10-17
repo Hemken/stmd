@@ -6,7 +6,7 @@ table, th, td {
    border: 1px solid black;
 }
 blockquote {
-    border-left: solid blue;
+    outline-style: solid;
 	padding-left: 10px;
 }
 </style>

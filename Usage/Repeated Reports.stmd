@@ -1,0 +1,97 @@
+<<dd_include: "topmatter.txt">>
+
+# Repeat a Report with Different Data
+
+- [Using Subsets of a Single Data Set](#using-subsets-of-a-single-data-set)
+- [Using Frames (Stata 16)](#using-frames-stata-16)
+- [Using Separate Data Sets](#using-separate-data-sets)
+
+Each of these methods makes use of *passing arguments* in the
+`stmd` command.  Repetition is accomplished by putting `stmd`
+inside a loop.
+
+## Using Subsets of a Single Data Set
+
+Suppose this is the content of our Stata Markdown, in a file
+name "repeated subsets.stmd".
+
+
+````
+<<dd_include: "repeated subsets.stmd">>
+````
+
+We can process this for each subset of the data with the
+following commands (in a separate do file)
+
+
+````
+<<dd_include: "Subset reports.do">>
+
+````
+
+The last of the five reports is
+
+----
+<<dd_include: "rep78 eq 5.html">>
+
+----
+
+## Using Frames (Stata 16)
+
+We can modify out report Markdown and the set up for our loop over
+the `stmd` command to make use of Stata's `frames`.  The key element
+is once again passing an argument with the `stmd` command.
+
+Suppose this is the content of our Stata Markdown, in a file
+now named "repeated frames.stmd".
+
+````
+<<dd_include: "repeated frames.stmd">>
+````
+
+We can process this for each subset of the data with the
+following commands (in a separate do file)
+
+````
+<<dd_include: "Frame reports.do>>"
+
+````
+
+The third of these five reports is
+
+----
+
+<<dd_include: "rep78_3.html">>
+
+---
+
+## Using Separate Data Sets
+
+Actually, we can repeat this report just by swapping out data sets -
+no argument passing is required for that.  But we will make use of
+a passed argument to write headings for our report sections.
+
+Suppose this is the content of our Stata Markdown, in a file
+now named "repeated datasets.stmd".
+
+````
+<<dd_include: "repeated datasets.stmd">>
+
+````
+
+We can process this for each subset of the data with the
+following commands (in a separate do file)
+
+````
+<<dd_include: "Dataset reports.do">>
+
+````
+
+The first of these five reports is
+
+---
+
+<<dd_include: "rep78_data_1.html">>
+
+---
+<<dd_include: "bottommatter.txt">>
